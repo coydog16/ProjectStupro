@@ -1,5 +1,16 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
+# Environment variables - add for security
+.env
+.env.*
+!.env.example
+
+# app config
+app/backend/app/config/dev.py
+app/backend/app/config/prod.py
+!app/backend/app/config/*.example
+
+
 # dependencies
 /node_modules
 /.pnp
@@ -27,6 +38,10 @@ yarn-error.log*
 /flask-config/postgres/logs
 /db/pgsql/data
 /db/pgsql/logs
+
+# documentation
+/docs/archive/
+/docs/personal/
 
 # python
 __pycache__/

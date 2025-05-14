@@ -1,0 +1,22 @@
+# app/config/prod.py
+# 本番環境用設定ファイル
+import os
+from datetime import timedelta
+
+class Config:
+    # 基本設定
+    DEBUG = False
+    SECRET_KEY = os.environ.get('SECRET_KEY')
+    
+    # データベース設定
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
+    
+    # JWT設定
+    JWT_SECRET_KEY = os.environ.get('JWT_SECRET_KEY')
+    JWT_ACCESS_TOKEN_EXPIRES = timedelta(minutes=15)
+    JWT_REFRESH_TOKEN_EXPIRES = timedelta(days=7)
+    
+    # CORS設定
+    # 本番環境では適切なオリジンを設定してください
+    CORS_ORIGINS = os.environ.get('ALLOWED_ORIGINS', '').split(',')

@@ -14,9 +14,13 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# requirements.txtはマウントされたものを使用
-# コンテナ起動時にインストール
-RUN pip install --upgrade pip
+# Pipのアップグレードと基本的なPythonパッケージのインストール（ビルド時）
+RUN pip install --upgrade pip \
+    && pip install flask==2.2.3 \
+    flask-sqlalchemy==3.0.3 \
+    psycopg2-binary==2.9.5 \
+    gunicorn==20.1.0 \
+    python-dotenv==1.0.0
 
 # ポート設定
 EXPOSE 5000
