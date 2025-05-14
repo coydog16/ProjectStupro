@@ -1,9 +1,6 @@
 FROM postgres:17
 
-ENV POSTGRES_USER=navStupro
-ENV POSTGRES_PASSWORD=navStupro
-ENV POSTGRES_DB=navstupro
-ENV PGPASSWORD=navStupro
+# 環境変数は直接指定せず、ビルド時の引数やdocker-compose.ymlから注入する形に変更
 ENV TZ=Asia/Tokyo
 
 # PostgreSQLの設定ファイルをコピー
