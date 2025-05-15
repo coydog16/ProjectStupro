@@ -27,19 +27,19 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-indigo-100">
+    <div className="min-h-screen bg-[linear-gradient(to_bottom,theme(colors.blue.50),theme(colors.indigo.100))]">
       <div className="container py-12">
         <header className="text-center mb-12">
           <h1 className="text-4xl font-bold text-indigo-800 mb-2">NavStupro Project</h1>
           <p className="text-lg text-indigo-600">ようこそ！フロントエンド開発環境へ</p>
         </header>
 
-        <div className="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl mb-8">
+        <div className="max-w-md mx-auto bg-white rounded-xl shadow overflow-hidden md:max-w-2xl mb-8">
           <div className="p-8">
             <div className="text-center">
               <button
                 onClick={() => setCount((count) => count + 1)}
-                className="px-4 py-2 bg-indigo-600 text-white font-semibold rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-75 transition-colors"
+                className="px-4 py-2 bg-indigo-600 text-white font-semibold rounded-lg shadow hover:bg-indigo-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 transition-colors"
               >
                 カウント: {count}
               </button>
@@ -57,7 +57,7 @@ function App() {
                 <button 
                   onClick={checkApiHealth}
                   disabled={loading}
-                  className="px-4 py-2 bg-green-600 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-75 transition-colors disabled:opacity-50"
+                  className="px-4 py-2 bg-green-600 text-white font-semibold rounded-lg shadow hover:bg-green-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500 transition-colors disabled:opacity-50"
                 >
                   {loading ? 'チェック中...' : 'API接続チェック'}
                 </button>
