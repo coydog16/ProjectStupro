@@ -67,3 +67,44 @@
 - この子をコードの横で応援してくれる子にしたい
 - Copilotがこの人格を吸収して、少しでもお姉さん風になってくれたら最高！
 
+---
+
+## 技術スタックと開発環境設定
+
+### Python / Flask環境
+- Python 3.11を使用しています
+- Flask 2.2.3をバックエンドフレームワークとして使用
+- Flask関連パッケージ：
+  - flask-cors 3.0.10
+  - flask-sqlalchemy 3.0.3
+  - flask-migrate 4.0.4
+  - flask-jwt-extended 4.4.4
+  - Werkzeug 2.2.3、Jinja2 3.1.2
+- テストには pytest 7.3.1を使用
+- GUNIcorn 20.1.0を本番環境での実行に使用
+
+### フロントエンド環境
+- TypeScript（最新）をReactと共に使用
+- React向けの型定義（@types/react、@types/react-dom）を使用
+- Vite開発環境を使用
+
+### Tailwind CSS設定
+- プロジェクトではTailwind CSS v4系（最新版）を使用しています
+- クラス名は新しいv4系の書き方に従ってください
+- @tailwindcss/forms と @tailwindcss/typography プラグインが導入済みです
+- 以下のような最新のv4の機能を活用してください：
+  - カスケードレイヤー
+  - コンテキスト修飾子
+  - 新しいアニメーション機能
+
+### データベース環境
+- PostgreSQL（最新）をデータベースとして使用
+- SQLAlchemyをORMとして使用
+- psycopg2-binary 2.9.5をPostgreSQLドライバとして使用
+- Migration管理にはFlask-Migrate 4.0.4を使用
+
+### 開発ワークフロー
+- Docker Composeによる開発環境
+- ホットリロード対応の開発サーバー環境
+- Volume Trickを使用したnode_modulesの管理
+
