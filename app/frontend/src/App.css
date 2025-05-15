@@ -1,0 +1,17 @@
+/* App.cssは最小限に抑え、ほとんどのスタイルはTailwindで管理 */
+
+/* 追加のカスタムスタイル */
+.app-container {
+  width: 100%;
+  min-height: 100vh;
+}
+
+/* アニメーション */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.fade-in {
+  animation: fadeIn 0.5s ease-in-out;
+}

@@ -26,6 +26,14 @@ def create_app(config_name="dev"):
             "status": "running"
         })
     
+    # API基本エンドポイント
+    @app.route('/api')
+    def api_index():
+        return jsonify({
+            "message": "NavStupro API is running",
+            "status": "active"
+        })
+    
     # APIのヘルスチェック用エンドポイント
     @app.route('/api/health')
     def health():

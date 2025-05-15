@@ -7,7 +7,7 @@ services:
     expose:
       - "5000"
     environment:
-      - FLASK_APP=${FLASK_APP:-app}
+      - FLASK_APP=${FLASK_APP:-app.app:app}
       - FLASK_ENV=${FLASK_ENV:-development}
       - FLASK_DEBUG=${FLASK_DEBUG:-1}
       - SECRET_KEY=${SECRET_KEY:-dev_secret_key_please_change_in_production}
