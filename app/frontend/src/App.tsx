@@ -4,15 +4,20 @@ import './App.css'
 
 function App() {
   const [count, setCount] = useState(0)
-  const [apiStatus, setApiStatus] = useState<{status?: string, message?: string, error?: string}>({})
+  const [apiStatus, setApiStatus] = useState<{status?: string, message?: string, error?: string, version?: string}>({})
   const [loading, setLoading] = useState(false)
+  
+  // バックエンドとの接続を確認するため、APIヘルスチェックを再度有効化
+  useEffect(() => {
+    checkApiHealth();
+  }, []);
 
   // APIヘルスチェック関数
   const checkApiHealth = async () => {
     setLoading(true)
     try {
-      // 開発環境では、直接バックエンドにアクセス
-      const response = await fetch('http://localhost/api/health')
+      // vite.configのプロキシ設定を使ってバックエンドにアクセス
+      const response = await fetch('/api/health')
       if (response.ok) {
         const data = await response.json()
         setApiStatus(data)
