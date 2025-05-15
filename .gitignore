@@ -63,3 +63,6 @@ var/
 *.egg-info/
 .installed.cfg
 *.egg
+
+# VSCode設定
+.vscode/

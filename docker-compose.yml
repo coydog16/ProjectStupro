@@ -30,6 +30,9 @@ services:
       - NODE_ENV=development
       - PORT=3000
       - REACT_APP_API_URL=${REACT_APP_API_URL:-http://localhost/api}
+    # VSCode DevContainer用の設定
+    init: true
+    user: node
 
   nginx:
     image: nginx:1.25
