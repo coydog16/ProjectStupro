@@ -6,12 +6,19 @@ WORKDIR /app
 # 必要なnpmパッケージをグローバルにインストール
 RUN npm install -g npm@latest
 
-# パッケージをインストールして開発サーバーを起動
-# 必要な設定ファイルは単純に自動生成（既存のファイルがあれば上書きしない）
-CMD ["sh", "-c", "npm install && npm install -D typescript @types/react @types/react-dom @types/node tailwindcss postcss autoprefixer @tailwindcss/forms @tailwindcss/typography && \
-if [ ! -f tailwind.config.js ] || [ ! -f postcss.config.js ]; then npx tailwindcss init -p && \
-  sed -i 's/plugins: \\[\\],/plugins: [require(\"@tailwindcss\\/forms\"), require(\"@tailwindcss\\/typography\")],/' tailwind.config.js; \
-fi && \
-if [ ! -f tsconfig.json ]; then npx tsc --init --jsx react-jsx; fi && \
-if [ ! -f tsconfig.node.json ]; then echo '{\"compilerOptions\":{\"composite\":true,\"module\":\"ESNext\",\"moduleResolution\":\"bundler\"},\"include\":[\"vite.config.ts\"]}' > tsconfig.node.json; fi && \
-npm run dev -- --host"]
+# package.jsonが存在しない場合に備えて、最小限の初期ファイルを作成
+RUN echo '{"name":"frontend","version":"0.1.0","private":true,"scripts":{"dev":"vite"},"dependencies":{},"devDependencies":{}}' > package.json
+
+# 開発用依存パッケージをインストール（ビルド時に固定）
+RUN npm install -D typescript @types/react @types/react-dom @types/node \
+    tailwindcss postcss autoprefixer @tailwindcss/forms @tailwindcss/typography vite
+
+# 設定ファイルを生成（コンテナビルド時に一度だけ実行される処理）
+# パッケージがインストールされていることを前提としている
+RUN npx tailwindcss init -p && \
+    sed -i 's/plugins: \\[\\],/plugins: [require("@tailwindcss\/forms"), require("@tailwindcss\/typography")],/' tailwind.config.js && \
+    npx tsc --init --jsx react-jsx && \
+    echo '{"compilerOptions":{"composite":true,"module":"ESNext","moduleResolution":"bundler"},"include":["vite.config.ts"]}' > tsconfig.node.json
+
+# パッケージのインストールと開発サーバーの起動（コンテナ実行時のコマンド）
+CMD ["sh", "-c", "npm install && npm run dev -- --host"]
