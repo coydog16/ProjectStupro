@@ -1,4 +1,4 @@
-version: '3'
+version: "3"
 
 services:
   # 開発用統合コンテナ
@@ -12,18 +12,29 @@ services:
       # node_modulesをボリュームにマウント
       - frontend_node_modules:/workspace/app/frontend/node_modules
     ports:
-      - "3000:3000"  # フロントエンド開発サーバー
-      - "5000:5000"  # バックエンド開発サーバー
+      - "3000:3000" # フロントエンド開発サーバー
+      - "5000:5000" # バックエンド開発サーバー
     environment:
       - NODE_ENV=development
       - FLASK_APP=app/backend/app/app.py
       - FLASK_DEBUG=1
     # VSCode DevContainer用の設定
     init: true
-    user: node  # ホストと同じUID 1000を使用
+    user: nav # ホストと同じUID 1000を使用
     # コンテナが終了しないようにする
     tty: true
     stdin_open: true
+    # フロントエンドディレクトリの依存関係をインストールする
+    command: >
+      bash -c "cd /workspace/app/frontend && 
+      if [ ! -f package.json ]; then npm init -y; fi && 
+      npm install react react-dom &&
+      npm install -D typescript @types/node @types/react @types/react-dom 
+      tailwindcss @tailwindcss/forms @tailwindcss/typography 
+      vite @vitejs/plugin-react 
+      @typescript-eslint/eslint-plugin @typescript-eslint/parser eslint &&
+      npm run dev -- --host &
+      exec bash"
 
   # PostgreSQLデータベース
   postgres:

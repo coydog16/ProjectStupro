@@ -66,3 +66,8 @@ var/
 
 # VSCode設定
 .vscode/
+/app/frontend/public/index.html
+/app/frontend/postcss.config.js
+/app/frontend/public/index.html
+/app/frontend/postcss.config.js
+/app/frontend/postcss.config.js
