@@ -1,5 +1,5 @@
 /* App.cssは最小限に抑え、ほとんどのスタイルはTailwindで管理 */
-
+@import "tailwindcss";
 /* 追加のカスタムスタイル */
 .app-container {
   width: 100%;

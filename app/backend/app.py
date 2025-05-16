@@ -3,19 +3,22 @@
 """
 Flask Application - NavStupro Project
 基本的なFlaskアプリケーション設定と初期化
+
+このモジュールは、Flaskアプリケーションのメインエントリポイントです。
+app/app.pyにあるアプリケーションファクトリと実装を利用します。
 """
-from flask import Flask, jsonify
-from flask_cors import CORS
+# 必要なモジュールのインポート
 import sys
 import os
 
-# 直接相対インポートを使用する
+# パスを設定してappサブパッケージへのアクセスを保証する
 backend_dir = os.path.dirname(os.path.abspath(__file__))
 app_module_dir = os.path.join(backend_dir, 'app')
 sys.path.insert(0, backend_dir)
 
-# app/config/__init__.pyからget_configをインポート
-from app.config import get_config
+# appサブパッケージからアプリケーションインスタンスとファクトリ関数をインポート
+# __init__.pyで定義された公開インターフェースを使用
+from app.app import app, create_app
 
 def create_app(config_name="dev"):
     """アプリケーションファクトリー関数"""

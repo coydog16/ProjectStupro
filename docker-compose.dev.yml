@@ -16,7 +16,7 @@ services:
       - "5000:5000" # バックエンド開発サーバー
     environment:
       - NODE_ENV=development
-      - FLASK_APP=app/backend/app/app.py
+      - FLASK_APP=app/backend/app.py
       - FLASK_DEBUG=1
     # VSCode DevContainer用の設定
     init: true
