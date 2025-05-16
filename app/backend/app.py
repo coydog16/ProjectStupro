@@ -12,39 +12,16 @@ __version__ = "0.1.0"
 # 必要なモジュールのインポート
 import sys
 from pathlib import Path
+
+# Pythonのパスを設定して、直下のappディレクトリを見つけられるようにする
+app_path = Path(__file__).parent / "app"
+if str(app_path) not in sys.path:
+    sys.path.insert(0, str(app_path))
+
+# すべてのインポートをここにまとめる
 from flask import Flask, jsonify
 from flask_cors import CORS
-
-# Pythonのパスを設定して、appサブパッケージを見つけられるようにする
-backend_dir = Path(__file__).parent.absolute()
-app_dir = backend_dir / "app"
-if str(app_dir) not in sys.path:
-    sys.path.insert(0, str(app_dir))
-
-
-# 設定モジュールをインポート
-# 開発環境用の設定をハードコード（VSCodeの解析のため）
-# 実際の設定はruntime時に動的に読み込まれます
-class DevConfig:
-    """開発環境設定クラス (VSCode静的解析用)"""
-
-    DEBUG = True
-    SECRET_KEY = "dev-secret-key"
-    SQLALCHEMY_DATABASE_URI = "sqlite:///dev.db"
-    CORS_ORIGINS = "*"
-
-
-# runtime実行時にはこちらが使用される
-try:
-    # 通常のインポート
-    from app.config import get_config  # type: ignore
-except ImportError:
-    print("Warning: Could not import app.config module")
-
-    # VSCodeエラー回避のためのフォールバック
-    def get_config(config_name=None):
-        """VSCode解析エラー回避用の設定関数"""
-        return DevConfig
+from config import get_config  # app_pathを追加したので直接importできるはず
 
 
 def create_app(config_name="dev"):
