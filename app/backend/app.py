@@ -11,15 +11,15 @@ __version__ = "0.1.0"
 
 # 必要なモジュールのインポート
 import sys
-import os
+from pathlib import Path
 from flask import Flask, jsonify
 from flask_cors import CORS
 
 # Pythonのパスを設定して、appサブパッケージを見つけられるようにする
-backend_dir = os.path.dirname(os.path.abspath(__file__))
-app_dir = os.path.join(backend_dir, "app")
-if app_dir not in sys.path:
-    sys.path.insert(0, app_dir)
+backend_dir = Path(__file__).parent.absolute()
+app_dir = backend_dir / "app"
+if str(app_dir) not in sys.path:
+    sys.path.insert(0, str(app_dir))
 
 
 # 設定モジュールをインポート
