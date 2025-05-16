@@ -25,7 +25,8 @@
         "[python]": {
           "editor.defaultFormatter": "ms-python.python",
           "editor.formatOnSave": true
-        }
+        },
+        "dev.containers.mountWaylandSocket": false
       }
     }
   }
