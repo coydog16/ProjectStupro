@@ -5,20 +5,27 @@ Flask Application - NavStupro Project
 基本的なFlaskアプリケーション設定と初期化
 
 このモジュールは、Flaskアプリケーションのメインエントリポイントです。
-app/app.pyにあるアプリケーションファクトリと実装を利用します。
 """
+# バージョン情報
+__version__ = '0.1.0'
+
 # 必要なモジュールのインポート
 import sys
 import os
+from flask import Flask, jsonify
+from flask_cors import CORS
 
-# パスを設定してappサブパッケージへのアクセスを保証する
+# Pythonのパスを設定して、appサブパッケージを見つけられるようにする
 backend_dir = os.path.dirname(os.path.abspath(__file__))
-app_module_dir = os.path.join(backend_dir, 'app')
-sys.path.insert(0, backend_dir)
+app_dir = os.path.join(backend_dir, 'app')
+if app_dir not in sys.path:
+    sys.path.insert(0, app_dir)
 
-# appサブパッケージからアプリケーションインスタンスとファクトリ関数をインポート
-# __init__.pyで定義された公開インターフェースを使用
-from app.app import app, create_app
+# 設定モジュールをインポート (パスを修正)
+try:
+    from app.config import get_config_by_name as get_config
+except ImportError:
+    from config import get_config_by_name as get_config
 
 def create_app(config_name="dev"):
     """アプリケーションファクトリー関数"""
@@ -30,14 +37,18 @@ def create_app(config_name="dev"):
     # CORSの設定
     CORS(app)
     
+    # ヘルスチェックエンドポイント（フロントエンドからの接続確認用）
+    @app.route('/api/health')
+    def health_check():
+        return jsonify({"status": "ok", "message": "API is running", "version": __version__})
+    
     # ルートエンドポイント
     @app.route('/')
     def index():
         return jsonify({"message": "Welcome to NavStupro API"})
     
-    # ブループリントの登録
-    # from app.routes.auth import auth_bp
-    # app.register_blueprint(auth_bp, url_prefix='/api/auth')
+    # ブループリントの登録 (コメントアウトしておく)
+    # register_blueprints(app)
     
     # エラーハンドラーの登録
     @app.errorhandler(404)
@@ -49,3 +60,16 @@ def create_app(config_name="dev"):
         return jsonify({"error": "Server error"}), 500
     
     return app
+
+# ブループリント登録関数 (後で有効化する)
+def register_blueprints(app):
+    """アプリケーションにブループリントを登録する関数"""
+    # ここではまずコメントアウトしておく
+    # あとでモジュールが完成したら追加してね
+    pass
+
+# アプリケーションインスタンスを作成
+app = create_app()
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', debug=True)

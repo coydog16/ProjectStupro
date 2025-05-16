@@ -70,6 +70,7 @@ function App() {
                 {apiStatus.status && (
                   <div className="mt-3 p-3 bg-green-50 border border-green-200 rounded-lg">
                     <p><strong>ステータス:</strong> {apiStatus.status}</p>
+                    {apiStatus.message && <p><strong>メッセージ:</strong> {apiStatus.message}</p>}
                     {apiStatus.version && <p><strong>バージョン:</strong> {apiStatus.version}</p>}
                   </div>
                 )}

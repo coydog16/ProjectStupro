@@ -7,6 +7,9 @@ import os
 import importlib.util
 import sys
 
+"""設定パッケージ"""
+from .dev import Config as DevConfig
+
 def get_config(config_name="dev"):
     """
     設定を取得する関数
@@ -46,3 +49,7 @@ def get_config(config_name="dev"):
     except Exception as e:
         print(f"Error loading configuration: {str(e)}")
         sys.exit(1)
+
+def get_config_by_name(config_name=None):
+    """設定を取得する関数"""
+    return DevConfig  # とりあえずDevConfigだけ返す
