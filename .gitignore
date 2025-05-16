@@ -10,7 +10,6 @@ app/backend/app/config/dev.py
 app/backend/app/config/prod.py
 !app/backend/app/config/*.example
 
-
 # dependencies
 /node_modules
 /.pnp
@@ -68,6 +67,7 @@ var/
 .vscode/
 /app/frontend/public/index.html
 /app/frontend/postcss.config.js
-/app/frontend/public/index.html
-/app/frontend/postcss.config.js
-/app/frontend/postcss.config.js
+
+# pid
+.frontend.pid
+.backend.pid
