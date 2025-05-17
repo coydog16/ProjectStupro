@@ -55,9 +55,6 @@ WORKDIR /workspace
 RUN mkdir -p /workspace/app/frontend/node_modules && \
     chown -R 1000:1000 /workspace /opt/venv /home/nav /workspace/app/frontend
 
-# start_dev_servers.shに実行権限を付与
-RUN chmod +x /workspace/start_dev_servers.sh
-
 USER nav
 
 CMD ["sh", "-c", "while sleep 1000; do :; done"]
