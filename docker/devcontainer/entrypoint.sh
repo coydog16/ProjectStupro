@@ -1,37 +1,18 @@
-#!/bin/sh
+#!/bin/bash
+set -e
 
-# ホストから渡されたUID、GIDを取得（デフォルト値は1000）
-USER_ID=${HOST_UID:-1000}
-GROUP_ID=${HOST_GID:-1000}
-
-echo "Starting container with UID:$USER_ID, GID:$GROUP_ID"
-
-# navユーザーのUID/GIDを変更（既存ファイル所有権も自動的に更新される）
-# -o オプションで重複するUIDを許可
-if [ "$USER_ID" != "$(id -u nav)" ]; then
-    echo "Changing nav user UID from $(id -u nav) to $USER_ID"
-    usermod -u $USER_ID -o nav
+# WSL2などのホスト側と権限を合わせるための処理
+if [ -n "$HOST_UID" ] && [ -n "$HOST_GID" ]; then
+    echo "🔄 Setting up user permissions with UID: $HOST_UID, GID: $HOST_GID"
+    if [ "$HOST_UID" != "1000" ] || [ "$HOST_GID" != "1000" ]; then
+        groupmod -g "$HOST_GID" nav
+        usermod -u "$HOST_UID" nav
+        
+        # 所有権を修正
+        find /workspace -user 1000 -exec chown -h $HOST_UID:$HOST_GID {} \; 2>/dev/null || true
+        chown -R $HOST_UID:$HOST_GID /home/nav
+    fi
 fi
 
-if [ "$GROUP_ID" != "$(id -g nav)" ]; then
-    echo "Changing nav group GID from $(id -g nav) to $GROUP_ID"
-    groupmod -g $GROUP_ID nav
-fi
-
-# ホームディレクトリの権限を確認（念のため）
-chown -R $USER_ID:$GROUP_ID /home/nav
-
-# 作業ディレクトリの権限も確認
-if [ -d "/workspace" ]; then
-    mkdir -p /workspace/app/frontend/node_modules
-    chown -R $USER_ID:$GROUP_ID /workspace
-fi
-
-# 仮想環境の権限も確認
-if [ -d "/opt/venv" ]; then
-    chown -R $USER_ID:$GROUP_ID /opt/venv
-fi
-
-# navユーザーとして渡されたコマンドを実行
-# $@ は全ての引数を意味する
-exec su-exec nav "$@"
+echo "🚀 Executing command: $@"
+exec "$@"
