@@ -12,44 +12,44 @@ echo -e "${YELLOW}開発サーバーを停止しています...${NC}"
 
 # プロジェクトルートを検出
 if [ -d "/workspace/app/backend" ]; then
-  PROJECT_ROOT="/workspace"
+    PROJECT_ROOT="/workspace"
 elif [ -d "./app/backend" ]; then
-  PROJECT_ROOT="."
+    PROJECT_ROOT="."
 else
-  echo -e "${YELLOW}エラー: ProjectStuproのルートディレクトリで実行されていないようです${NC}"
-  exit 1
+    echo -e "${YELLOW}エラー: ProjectStuproのルートディレクトリで実行されていないようです${NC}"
+    exit 1
 fi
 
-# PIDファイルの確認
+# PIDファイルのパスを定義
 FRONTEND_PID_FILE="$PROJECT_ROOT/.frontend.pid"
 BACKEND_PID_FILE="$PROJECT_ROOT/.backend.pid"
 
-# フロントエンドプロセスの停止
+# フロントエンドプロセスの停止処理
 if [ -f "$FRONTEND_PID_FILE" ]; then
-  FRONTEND_PID=$(cat "$FRONTEND_PID_FILE")
-  if ps -p $FRONTEND_PID > /dev/null; then
-    kill $FRONTEND_PID
-    echo "フロントエンド開発サーバーを停止しました (PID: $FRONTEND_PID)"
-  else
-    echo "フロントエンド開発サーバーは既に停止しています"
-  fi
-  rm -f "$FRONTEND_PID_FILE"
+    FRONTEND_PID=$(cat "$FRONTEND_PID_FILE")
+    if ps -p $FRONTEND_PID > /dev/null; then
+        kill $FRONTEND_PID
+        echo "フロントエンド開発サーバーを停止しました (PID: $FRONTEND_PID)"
+    else
+        echo "フロントエンド開発サーバーは既に停止しています"
+    fi
+    rm -f "$FRONTEND_PID_FILE"
 else
-  echo "フロントエンドPIDファイルが見つかりません"
+    echo "フロントエンドPIDファイルが見つかりません"
 fi
 
-# バックエンドプロセスの停止
+# バックエンドプロセスの停止処理
 if [ -f "$BACKEND_PID_FILE" ]; then
-  BACKEND_PID=$(cat "$BACKEND_PID_FILE")
-  if ps -p $BACKEND_PID > /dev/null; then
-    kill $BACKEND_PID
-    echo "バックエンド開発サーバーを停止しました (PID: $BACKEND_PID)"
-  else
-    echo "バックエンド開発サーバーは既に停止しています"
-  fi
-  rm -f "$BACKEND_PID_FILE"
+    BACKEND_PID=$(cat "$BACKEND_PID_FILE")
+    if ps -p $BACKEND_PID > /dev/null; then
+        kill $BACKEND_PID
+        echo "バックエンド開発サーバーを停止しました (PID: $BACKEND_PID)"
+    else
+        echo "バックエンド開発サーバーは既に停止しています"
+    fi
+    rm -f "$BACKEND_PID_FILE"
 else
-  echo "バックエンドPIDファイルが見つかりません"
+    echo "バックエンドPIDファイルが見つかりません"
 fi
 
 echo -e "${GREEN}すべての開発サーバーが停止しました${NC}"

@@ -1,56 +1,57 @@
 services:
-  # 開発用統合コンテナ
-  rootdev:
-    build:
-      context: ./docker/devcontainer
-      dockerfile: Dockerfile
-    volumes:
-      # プロジェクトのルートディレクトリをマウント（パーミッション問題を解決する設定付き）
-      - .:/workspace:delegated,z
-      # node_modulesをボリュームにマウント
-      - frontend_node_modules:/workspace/app/frontend/node_modules
-    ports:
-      - "3000:3000" # フロントエンド開発サーバー
-      - "5000:5000" # バックエンド開発サーバー
-    environment:
-      - NODE_ENV=development
-      - FLASK_APP=app/backend/app/app.py
-      - FLASK_DEBUG=1
-    # VSCode DevContainer用の設定
-    init: true
-    user: nav # ホストと同じUID 1000を使用
-    # コンテナが終了しないようにする
-    tty: true
-    stdin_open: true
-    # フロントエンドディレクトリの依存関係をインストールする
-    command: >
-      bash -c "cd /workspace/app/frontend &&  if [ ! -f package.json ]; then npm init -y; fi &&  npm install react react-dom && npm install -D typescript @types/node @types/react @types/react-dom  tailwindcss @tailwindcss/forms @tailwindcss/typography @tailwindcss/vite vite @vitejs/plugin-react  @typescript-eslint/eslint-plugin @typescript-eslint/parser eslint && npm run dev -- --host & exec bash"
+    # 開発用統合コンテナ
+    rootdev:
+        build:
+            context: ./docker/devcontainer
+            dockerfile: Dockerfile
+        volumes:
+            # プロジェクトのルートディレクトリをマウント
+            # （パーミッション問題を解決する設定付き）
+            - .:/workspace:delegated,z
+            # node_modulesをボリュームにマウント
+            - frontend_node_modules:/workspace/app/frontend/node_modules
+        ports:
+            - "3000:3000" # フロントエンド開発サーバー
+            - "5000:5000" # バックエンド開発サーバー
+        environment:
+            - NODE_ENV=development
+            - FLASK_APP=app/backend/app/app.py
+            - FLASK_DEBUG=1
+        # VSCode DevContainer用の設定
+        init: true
+        user: nav # ホストと同じUID 1000を使用
+        # コンテナが終了しないようにする
+        tty: true
+        stdin_open: true
+        # フロントエンド依存関係をインストール
+        command: >
+            bash -c "cd /workspace/app/frontend && npm install && exec bash"
 
-  # PostgreSQLデータベース
-  postgres:
-    build:
-      context: ./docker/postgres
-    environment:
-      - POSTGRES_USER=navStupro
-      - POSTGRES_PASSWORD=your_very_secure_password_here
-      - POSTGRES_DB=navstupro
-      - PGPASSWORD=your_very_secure_password_here
-    ports:
-      - "5432:5432"
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-      - ./db/pgsql/logs:/var/log
+    # PostgreSQLデータベース
+    postgres:
+        build:
+            context: ./docker/postgres
+        environment:
+            - POSTGRES_USER=navStupro
+            - POSTGRES_PASSWORD=your_very_secure_password_here
+            - POSTGRES_DB=navstupro
+            - PGPASSWORD=your_very_secure_password_here
+        ports:
+            - "5432:5432"
+        volumes:
+            - postgres_data:/var/lib/postgresql/data
+            - ./db/pgsql/logs:/var/log
 
-  # 開発用DB管理ツール
-  adminer:
-    image: adminer
-    restart: always
-    ports:
-      - "8080:8080"
-    depends_on:
-      - postgres
+    # 開発用DB管理ツール
+    adminer:
+        image: adminer
+        restart: always
+        ports:
+            - "8080:8080"
+        depends_on:
+            - postgres
 
 # 名前付きボリュームの定義
 volumes:
-  frontend_node_modules:
-  postgres_data:
+    frontend_node_modules:
+    postgres_data:

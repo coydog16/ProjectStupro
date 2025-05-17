@@ -45,11 +45,7 @@ RUN npm install -g \
     npm@^10.5.0 \
     vite@^5.4.0 \
     tailwindcss@^4.0.0 \
-    typescript@^5.4.0 \
-    @vitejs/plugin-react@^4.2.0 \
-    @tailwindcss/forms@^0.5.7 \
-    @tailwindcss/typography@^0.5.10 \
-    @tailwindcss/vite@latest@^4.1.7
+    typescript@^5.4.0
 
 WORKDIR /workspace
 RUN mkdir -p /workspace/app/frontend/node_modules && \
