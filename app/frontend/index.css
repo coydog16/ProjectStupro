@@ -1,0 +1,35 @@
+@import "tailwindcss";
+
+@theme {
+    --color-gray-50: oklch(0.98 0.003 260);
+    --color-gray-900: oklch(0.2 0.02 260);
+    --spacing: 0.25rem;
+    --a: 0deg;
+}
+
+body {
+    background-color: var(--color-gray-50);
+    color: var(--color-gray-900);
+}
+
+body.signup {
+    background-color: var(--color-gray-50);
+    transition: background-color 0.5s ease;
+}
+
+@keyframes spinGlow {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.container {
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    max-width: 80rem;
+}

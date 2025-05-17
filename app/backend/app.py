@@ -21,7 +21,7 @@ if str(src_path) not in sys.path:
 # すべてのインポートをここにまとめる
 from flask import Flask, jsonify
 from flask_cors import CORS
-from config import get_config  # src_pathを追加したので直接importできるはず
+from config import get_config  # type: ignore # src_pathを追加したので直接importできるはず
 
 
 def create_app(config_name="dev"):
