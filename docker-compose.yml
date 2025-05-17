@@ -1,5 +1,4 @@
 # filepath: /home/coydog16/flask/navStupro/docker-compose.yml
-version: '3.8'
 
 services:
   # マルチステージビルドを使用した統合開発環境

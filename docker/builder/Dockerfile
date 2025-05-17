@@ -125,10 +125,11 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
     htop=* \
     zsh=* \
     bat=* \
-    # VSCode拡張機能の依存関係
-    python3-debugpy=* \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
+
+# VSCode Python拡張機能の依存関係をpipでインストール
+RUN pip install --no-cache-dir debugpy
 
 # Oh My Zshのインストール(開発環境を快適に)
 RUN chsh -s /usr/bin/zsh nav && \
