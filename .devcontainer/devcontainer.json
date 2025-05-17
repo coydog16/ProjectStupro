@@ -1,7 +1,7 @@
 {
     "name": "ProjectStupro Development",
-    "dockerComposeFile": "../docker-compose.dev.yml",
-    "service": "rootdev",
+    "dockerComposeFile": "../docker-compose.yml",
+    "service": "devenv",
     "workspaceFolder": "/workspace",
     "forwardPorts": [3000, 5000, 8080],
     // ホストUID/GIDでコンテナを実行するため、明示的にnavユーザーは指定しない
@@ -52,7 +52,7 @@
                     "editor.insertSpaces": true
                 },
                 "dev.containers.mountWaylandSocket": false,
-                "postAttachCommand":"chmod +x /workspace/start_dev_servers.sh && ./start_dev_servers.sh"
+                "postAttachCommand":"chmod +x /workspace/scripts/start_dev_servers.sh && /workspace/scripts/start_dev_servers.sh"
             }
         }
     },
