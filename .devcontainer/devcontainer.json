@@ -4,7 +4,8 @@
     "service": "rootdev",
     "workspaceFolder": "/workspace",
     "forwardPorts": [3000, 5000, 8080],
-    "remoteUser": "nav",
+    // ホストUID/GIDでコンテナを実行するため、明示的にnavユーザーは指定しない
+    "updateRemoteUserUID": true,
     "postCreateCommand": "pip install black==23.3.0",
     "customizations": {
         "vscode": {

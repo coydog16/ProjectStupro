@@ -13,14 +13,15 @@ services:
         ports:
             - "3000:3000" # フロントエンド開発サーバー
             - "5000:5000" # バックエンド開発サーバー
+        # VSCode DevContainer用の設定
+        init: true
+        # ホストのUID/GIDを環境変数として渡す（エントリポイントで使用）
         environment:
             - NODE_ENV=development
             - FLASK_APP=app/backend/app/app.py
             - FLASK_DEBUG=1
-        # VSCode DevContainer用の設定
-        init: true
-        # user: "1000:1000" # UID/GIDで指定し、ユーザー名navの問題を回避
-        # user指定はdevcontainer.jsonのremoteUserに委ねる
+            - HOST_UID=${UID:-1000}
+            - HOST_GID=${GID:-1000}
         tty: true
         stdin_open: true
         # フロントエンド依存関係をインストール

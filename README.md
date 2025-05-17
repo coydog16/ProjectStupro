@@ -90,3 +90,36 @@ Flask + React + PostgreSQL を使った学習支援アプリケーション
 ## ライセンス
 
 このプロジェクトはMITライセンスの下で提供されています。
+
+## よくあるトラブルと解決法
+
+### 「unable to find user nav: no matching entries in passwd file」と表示される場合
+
+これは、Dockerイメージのキャッシュが原因で、navユーザーが正しく作成されていない場合に発生します。
+以下のコマンドでキャッシュをクリアし、再ビルドしてください。
+
+```bash
+docker compose -f docker-compose.dev.yml down --volumes --remove-orphans
+docker builder prune -af
+docker compose -f docker-compose.dev.yml build --no-cache
+```
+
+その後、VSCodeで「Rebuild and Reopen in Container」を選択してください。
+
+### 開発環境のセキュリティ対策
+
+navStupro開発環境は、セキュリティを考慮した設計になっています：
+
+1. **ホストのUID/GIDの自動マッチング**:
+   - コンテナはホストのユーザーIDを使用して実行されます
+   - 以下のように実行することでホストのUID/GIDを環境変数として渡せます
+   ```bash
+   UID=$(id -u) GID=$(id -g) docker compose -f docker-compose.dev.yml up
+   ```
+
+2. **最小権限の原則**:
+   - コンテナ内のユーザーは必要最小限の権限のみ持っています
+   - rootユーザーは使用せず、一般ユーザー(nav)で実行します
+
+3. **ボリュームマウントの権限管理**:
+   - node_modulesなどの特殊ディレクトリは名前付きボリュームで管理し、パフォーマンス向上と権限問題を回避しています

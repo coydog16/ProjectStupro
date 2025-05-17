@@ -1,5 +1,8 @@
 FROM node:24-alpine
 
+# デバッグ情報：最初の状態を確認
+RUN echo "イメージ内のユーザー一覧（初期状態）:" && cat /etc/passwd
+
 RUN apk add --no-cache \
     python3 \
     py3-pip \
@@ -24,12 +27,14 @@ RUN apk add --no-cache \
     xz-dev \
     brotli-dev \
     libzip-dev \
-    redis
+    redis \
+    # su-execはAlpineでのgosuのようなもの（権限エスカレーション用）
+    su-exec
 
-# navユーザーを新規作成（既に存在すればスキップ、UID/GID=1000でホストと揃える）
-RUN id -u nav 2>/dev/null || (getent passwd 1000 >/dev/null || adduser -D -u 1000 nav) && \
-    echo "nav ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/nav && \
-    chmod 0440 /etc/sudoers.d/nav
+# 開発ユーザーを作成（UIDを固定せず柔軟に）
+# 実行時に--user フラグでホストのUID:GIDを渡せるようにする
+# 最小権限の原則に従い、sudoは不要（必要なディレクトリには777権限を付与するため）
+RUN adduser -D nav
 
 RUN python3 -m venv /opt/venv
 ENV PATH="/opt/venv/bin:$PATH"
@@ -47,14 +52,18 @@ RUN npm install -g \
     tailwindcss@^4.0.0 \
     typescript@^5.4.0
 
-# navユーザーのホームディレクトリを明示的に作成し、chown前に存在を保証
-RUN id -u nav 2>/dev/null || (getent passwd 1000 >/dev/null || adduser -D -u 1000 nav) && \
-    mkdir -p /home/nav && chown -R 1000:1000 /home/nav
+# 作業ディレクトリなどの準備
+RUN mkdir -p /home/nav && \
+    mkdir -p /workspace/app/frontend/node_modules
+
+# エントリポイントスクリプトをコピーして実行権限を付与
+COPY docker/devcontainer/entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
 
 WORKDIR /workspace
-RUN mkdir -p /workspace/app/frontend/node_modules && \
-    chown -R 1000:1000 /workspace /opt/venv /home/nav /workspace/app/frontend
 
-USER nav
+# UIDをコンテナ起動時に動的に変更するためにentrypoint.shを使用
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 
+# デフォルトコマンド（これはentrypointに渡される）
 CMD ["sh", "-c", "while sleep 1000; do :; done"]
