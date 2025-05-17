@@ -13,15 +13,15 @@ __version__ = "0.1.0"
 import sys
 from pathlib import Path
 
-# Pythonのパスを設定して、直下のappディレクトリを見つけられるようにする
-app_path = Path(__file__).parent / "app"
-if str(app_path) not in sys.path:
-    sys.path.insert(0, str(app_path))
+# Pythonのパスを設定して、直下のsrcディレクトリを見つけられるようにする
+src_path = Path(__file__).parent / "src"
+if str(src_path) not in sys.path:
+    sys.path.insert(0, str(src_path))
 
 # すべてのインポートをここにまとめる
 from flask import Flask, jsonify
 from flask_cors import CORS
-from config import get_config  # app_pathを追加したので直接importできるはず
+from config import get_config  # src_pathを追加したので直接importできるはず
 
 
 def create_app(config_name="dev"):

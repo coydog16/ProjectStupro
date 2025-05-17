@@ -63,7 +63,7 @@ def main():
         sys.exit(1)
 
     # 環境変数の設定
-    os.environ["FLASK_APP"] = "app.py"
+    os.environ["FLASK_APP"] = "app.py"  # app.pyファイル自体の名前は変更なし
     if args.debug:
         os.environ["FLASK_DEBUG"] = "1"
 

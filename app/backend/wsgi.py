@@ -5,7 +5,7 @@ Flask Application Starter
 NavStupro Project用の起動スクリプト
 """
 # アプリケーションのルートファイルからcreate_app関数をインポート
-from app_main import create_app
+from app import create_app
 
 # Flaskのアプリケーションファクトリーを呼び出し
 application = create_app()
