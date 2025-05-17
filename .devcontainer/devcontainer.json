@@ -51,7 +51,7 @@
                     "editor.insertSpaces": true
                 },
                 "dev.containers.mountWaylandSocket": false,
-                "postAttachCommand": "./start_dev_servers.sh"
+                "postAttachCommand":"chmod +x /workspace/start_dev_servers.sh && ./start_dev_servers.sh"
             }
         }
     },
