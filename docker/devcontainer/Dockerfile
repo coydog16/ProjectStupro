@@ -27,7 +27,7 @@ RUN apk add --no-cache \
     redis
 
 # navユーザーを新規作成（既に存在すればスキップ、UID/GID=1000でホストと揃える）
-RUN id -u nav 2>/dev/null || adduser -D -u 1000 nav && \
+RUN id -u nav 2>/dev/null || (getent passwd 1000 >/dev/null || adduser -D -u 1000 nav) && \
     echo "nav ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/nav && \
     chmod 0440 /etc/sudoers.d/nav
 
@@ -47,9 +47,16 @@ RUN npm install -g \
     tailwindcss@^4.0.0 \
     typescript@^5.4.0
 
+# navユーザーのホームディレクトリを明示的に作成し、chown前に存在を保証
+RUN id -u nav 2>/dev/null || (getent passwd 1000 >/dev/null || adduser -D -u 1000 nav) && \
+    mkdir -p /home/nav && chown -R 1000:1000 /home/nav
+
 WORKDIR /workspace
 RUN mkdir -p /workspace/app/frontend/node_modules && \
-    chown -R nav:nav /workspace /opt/venv /home/nav /workspace/app/frontend
+    chown -R 1000:1000 /workspace /opt/venv /home/nav /workspace/app/frontend
+
+# start_dev_servers.shに実行権限を付与
+RUN chmod +x /workspace/start_dev_servers.sh
 
 USER nav
 

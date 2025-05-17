@@ -2,8 +2,8 @@ services:
     # 開発用統合コンテナ
     rootdev:
         build:
-            context: ./docker/devcontainer
-            dockerfile: Dockerfile
+            context: .
+            dockerfile: docker/devcontainer/Dockerfile
         volumes:
             # プロジェクトのルートディレクトリをマウント
             # （パーミッション問題を解決する設定付き）
@@ -19,8 +19,8 @@ services:
             - FLASK_DEBUG=1
         # VSCode DevContainer用の設定
         init: true
-        user: nav # ホストと同じUID 1000を使用
-        # コンテナが終了しないようにする
+        # user: "1000:1000" # UID/GIDで指定し、ユーザー名navの問題を回避
+        # user指定はdevcontainer.jsonのremoteUserに委ねる
         tty: true
         stdin_open: true
         # フロントエンド依存関係をインストール

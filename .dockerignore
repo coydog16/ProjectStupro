@@ -40,7 +40,7 @@ db/pgsql/logs/   # ログファイル
 **/yarn-error.log*
 
 # ビルド成果物 - 開発中に自動生成されるため
-**/dist/
+!**/dist/         # VSCode拡張やAIアシスタント用のdistは含める
 **/build/
 **/.next/           # Next.js
 **/.nuxt/           # Nuxt.js
