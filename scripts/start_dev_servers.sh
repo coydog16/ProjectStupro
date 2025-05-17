@@ -1,7 +1,13 @@
 #!/bin/bash
+# filepath: /home/coydog16/flask/navStupro/scripts/start_dev_servers.sh
 
 # ProjectStupro 開発サーバー起動スクリプト
 # 使用法: ./start_dev_servers.sh
+
+# スクリプトのディレクトリパスを取得
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+# プロジェクトのルートディレクトリを取得（scriptsの親ディレクトリ）
+PROJECT_ROOT="$(dirname "$SCRIPT_DIR")"
 
 # 色の定義
 GREEN='\033[0;32m'
@@ -58,20 +64,14 @@ echo -e "${GREEN}     ProjectStupro 開発サーバー起動     ${NC}"
 echo -e "${GREEN}========================================${NC}"
 
 # 必要なディレクトリの存在確認
-if [ ! -d "/workspace/app/backend" ] || [ ! -d "/workspace/app/frontend" ]; then
-    echo -e "${YELLOW}注意: このスクリプトはdevcontainer内で実行してください${NC}"
+if [ ! -d "${PROJECT_ROOT}/app/backend" ] || [ ! -d "${PROJECT_ROOT}/app/frontend" ]; then
+    echo -e "${YELLOW}エラー: ProjectStuproのルートディレクトリで実行されていないようです${NC}"
     echo -e "現在のディレクトリ: $(pwd)"
-
-    # プロジェクトルートを検出
-    if [ -d "./app/backend" ] && [ -d "./app/frontend" ]; then
-        PROJECT_ROOT="."
-    else
-        echo -e "${YELLOW}エラー: ProjectStuproのルートディレクトリで実行されていないようです${NC}"
-        exit 1
-    fi
-else
-    PROJECT_ROOT="/workspace"
+    echo -e "検出されたプロジェクトルート: ${PROJECT_ROOT}"
+    exit 1
 fi
+
+echo -e "${BLUE}プロジェクトルート: ${PROJECT_ROOT}${NC}"
 
 # 既存のサーバープロセスをクリーンアップ
 

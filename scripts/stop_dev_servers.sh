@@ -1,7 +1,13 @@
 #!/bin/bash
+# filepath: /home/coydog16/flask/navStupro/scripts/stop_dev_servers.sh
 
 # ProjectStupro開発サーバー停止スクリプト
 # 使用法: ./stop_dev_servers.sh
+
+# スクリプトのディレクトリパスを取得
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+# プロジェクトのルートディレクトリを取得（scriptsの親ディレクトリ）
+PROJECT_ROOT="$(dirname "$SCRIPT_DIR")"
 
 # 色の定義
 GREEN='\033[0;32m'
@@ -10,13 +16,10 @@ NC='\033[0m' # No Color
 
 echo -e "${YELLOW}開発サーバーを停止しています...${NC}"
 
-# プロジェクトルートを検出
-if [ -d "/workspace/app/backend" ]; then
-    PROJECT_ROOT="/workspace"
-elif [ -d "./app/backend" ]; then
-    PROJECT_ROOT="."
-else
-    echo -e "${YELLOW}エラー: ProjectStuproのルートディレクトリで実行されていないようです${NC}"
+# プロジェクトルートの確認
+if [ ! -d "${PROJECT_ROOT}/app/backend" ]; then
+    echo -e "${YELLOW}エラー: ProjectStuproのルートディレクトリが見つかりません${NC}"
+    echo -e "検出されたプロジェクトルート: ${PROJECT_ROOT}"
     exit 1
 fi
 
