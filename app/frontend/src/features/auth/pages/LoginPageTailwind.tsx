@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from "react";
+import LoginForm from "../components/LoginForm";
+import RegistrationForm from "../components/RegistrationForm";
+import GlassmorphicBackground from "../components/GlassmorphicBackground";
 
 // Tailwindを使用したグラスモーフィズム風ログインページ
 const LoginPageTailwind: React.FC = () => {
@@ -134,174 +137,30 @@ const LoginPageTailwind: React.FC = () => {
         ${isSignupMode ? "before:filter before:hue-rotate-[140deg]" : ""}
       `}
             >
-                {/* グラスモーフィズム効果のレイヤー */}
-                {/* グラスモーフィズム背景 - 条件付きレンダリングで背景を完全に切り替え */}
-                {isSignupMode ? (
-                    <span
-                        className="absolute inset-[5px] overflow-hidden rounded-[15px] z-[5]
-                        before:content-[''] before:absolute before:inset-[5px]
-                        before:bg-[url('/img/lightForest.jpg')] before:bg-fixed before:bg-cover before:bg-center before:blur-[10px]
-                        after:content-[''] after:absolute after:inset-[5px]
-                        after:bg-[url('/img/lightForest.jpg')] after:bg-fixed after:bg-cover after:bg-center after:blur-[15px]"
-                    ></span>
-                ) : (
-                    <span
-                        className="absolute inset-[5px] overflow-hidden rounded-[15px] z-[5]
-                        before:content-[''] before:absolute before:inset-[5px]
-                        before:bg-[url('/img/nightForest.jpg')] before:bg-fixed before:bg-cover before:bg-center before:blur-[10px]
-                        after:content-[''] after:absolute after:inset-[5px]
-                        after:bg-[url('/img/nightForest.jpg')] after:bg-fixed after:bg-cover after:bg-center after:blur-[15px]"
-                    ></span>
-                )}
-                <div className="absolute inset-[6px] bg-black/15 rounded-[14px] z-[10]"></div>
+                <GlassmorphicBackground
+                    isSignupMode={isSignupMode}
+                    animationClass={animationClass}
+                />
 
                 {/* ログインフォーム */}
-                <form
-                    id="signinForm"
+                <LoginForm
+                    formData={loginData}
+                    onChange={handleLoginInputChange}
                     onSubmit={handleLoginSubmit}
-                    className={`
-            absolute inset-0 flex justify-center items-center flex-col w-full gap-[15px] z-[30]
-            transition-all duration-500 ease-in-out transform ${
-                isSignupMode
-                    ? "opacity-0 pointer-events-none translate-x-[-100%]"
-                    : "opacity-100 pointer-events-auto translate-x-0"
-            }
-          `}
-                >
-                    <h2 className="relative text-white text-[1.5em] tracking-[0.1em] uppercase font-[500] mb-[10px]">
-                        Login
-                    </h2>
-
-                    <div className="relative w-[70%] flex justify-between">
-                        <input
-                            type="text"
-                            name="username"
-                            placeholder="Username"
-                            value={loginData.username}
-                            onChange={handleLoginInputChange}
-                            className="w-full outline-none border border-white/25 bg-black/25 py-[6px] px-[15px] rounded-[4px] text-[0.85em] text-white placeholder:text-white/50"
-                        />
-                    </div>
-
-                    <div className="relative w-[70%] flex justify-between">
-                        <input
-                            type="password"
-                            name="password"
-                            placeholder="Password"
-                            value={loginData.password}
-                            onChange={handleLoginInputChange}
-                            className="w-full outline-none border border-white/25 bg-black/25 py-[6px] px-[15px] rounded-[4px] text-[0.85em] text-white placeholder:text-white/50"
-                        />
-                    </div>
-
-                    <div className="relative w-[70%] flex justify-between">
-                        <a href="#" className="text-white text-[0.85em]">
-                            Forgot Password
-                        </a>
-                        <a
-                            href="#"
-                            onClick={(e) => {
-                                e.preventDefault();
-                                toggleSignupMode(true);
-                            }}
-                            className="text-white text-[0.85em] underline"
-                        >
-                            Signup
-                        </a>
-                    </div>
-
-                    <div className="relative w-[70%] flex justify-between">
-                        <input
-                            type="submit"
-                            value="Sign in"
-                            className="w-full outline-none border border-white/25 bg-[#2196f3] py-[6px] px-[15px] rounded-[4px] text-[0.85em] text-white placeholder:text-white/50 font-[500] cursor-pointer"
-                        />
-                    </div>
-                </form>
+                    onToggleMode={toggleSignupMode}
+                    isSignupMode={isSignupMode}
+                />
 
                 {/* 登録フォーム */}
-                <form
-                    id="signupForm"
-                    onSubmit={handleRegistrationSubmit}
-                    className={`
-            absolute inset-0 flex justify-center items-center flex-col w-full gap-[15px] z-[40]
-            transition-all duration-500 ease-in-out transform ${
-                isSignupMode
-                    ? "opacity-100 pointer-events-auto translate-x-0"
-                    : "opacity-0 pointer-events-none translate-x-[100%]"
-            }
-          `}
-                >
-                    <h2 className="relative text-white text-[1.5em] tracking-[0.1em] uppercase font-[500] mb-[10px]">
-                        Registration
-                    </h2>
-
-                    <div className="relative w-[70%] flex justify-between">
-                        <input
-                            type="text"
-                            name="username"
-                            placeholder="Username"
-                            value={registrationData.username}
-                            onChange={handleRegistrationInputChange}
-                            className="w-full outline-none border border-white/25 bg-black/25 py-[6px] px-[15px] rounded-[4px] text-[0.85em] text-white placeholder:text-white/50"
-                        />
-                    </div>
-
-                    <div className="relative w-[70%] flex justify-between">
-                        <input
-                            type="email"
-                            name="email"
-                            placeholder="Email Address"
-                            value={registrationData.email}
-                            onChange={handleRegistrationInputChange}
-                            className="w-full outline-none border border-white/25 bg-black/25 py-[6px] px-[15px] rounded-[4px] text-[0.85em] text-white placeholder:text-white/50"
-                        />
-                    </div>
-
-                    <div className="relative w-[70%] flex justify-between">
-                        <input
-                            type="password"
-                            name="password"
-                            placeholder="Create Password"
-                            value={registrationData.password}
-                            onChange={handleRegistrationInputChange}
-                            className="w-full outline-none border border-white/25 bg-black/25 py-[6px] px-[15px] rounded-[4px] text-[0.85em] text-white placeholder:text-white/50"
-                        />
-                    </div>
-
-                    <div className="relative w-[70%] flex justify-between">
-                        <input
-                            type="password"
-                            name="confirmPassword"
-                            placeholder="Confirm Password"
-                            value={registrationData.confirmPassword}
-                            onChange={handleRegistrationInputChange}
-                            className="w-full outline-none border border-white/25 bg-black/25 py-[6px] px-[15px] rounded-[4px] text-[0.85em] text-white placeholder:text-white/50"
-                        />
-                    </div>
-
-                    <div className="relative w-[70%] flex justify-between">
-                        <input
-                            type="submit"
-                            value="Register Account"
-                            className="w-full outline-none border border-white/25 bg-[#2196f3] py-[6px] px-[15px] rounded-[4px] text-[0.85em] text-white placeholder:text-white/50 font-[500] cursor-pointer"
-                        />
-                    </div>
-
-                    <div className="relative w-[70%] flex justify-center">
-                        <a
-                            href="#"
-                            onClick={(e) => {
-                                e.preventDefault();
-                                toggleSignupMode(false);
-                            }}
-                            className="text-white text-[0.85em]"
-                        >
-                            Already Have an Account?&nbsp;&nbsp;&nbsp;&nbsp;
-                            <b>Login</b>
-                        </a>
-                    </div>
-                </form>
+                <RegistrationForm
+                    registrationData={registrationData}
+                    handleRegistrationSubmit={handleRegistrationSubmit}
+                    handleRegistrationInputChange={
+                        handleRegistrationInputChange
+                    }
+                    toggleSignupMode={toggleSignupMode}
+                    isSignupMode={isSignupMode}
+                />
             </div>
         </div>
     );
