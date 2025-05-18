@@ -17,5 +17,4 @@ class User(db.Model):
     password_hash = db.Column(db.String(255), nullable=False)
     is_active = db.Column(db.Boolean, default=True)
     create_at = db.Column(db.DateTime, default=get_jst_now)
-
-
+    updated_at = db.Column(db.DateTime, default=get_jst_now)
