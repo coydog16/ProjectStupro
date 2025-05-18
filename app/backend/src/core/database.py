@@ -19,3 +19,7 @@ def init_db(app):
     db.init_app(app)
     migrate.init_app(app, db)
 
+    # モデルクラスをインポートして、マイグレーション時に検出されるように
+    # ※循環インポートを避けてここでモデルをインポートする
+
+    from src.models.user import User, UserProfile
