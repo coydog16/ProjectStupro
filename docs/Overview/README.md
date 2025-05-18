@@ -4,9 +4,9 @@ ProjectStupro（プロジェクトスタプロ）へようこそ！このドキ�
 
 ## 目次
 
-- [アーキテクチャ概要](./architecture.md) - プロジェクトの全体構成とモジュラーモノリスの採用理由
-- [モジュール概要](./modules.md) - 各モジュールの役割と設計思想
-- [開発ガイド](./developer_guide.md) - 開発環境のセットアップと開発ガイドライン
+-   [アーキテクチャ概要](./architecture.md) - プロジェクトの全体構成とモジュラーモノリスの採用理由
+-   [モジュール概要](./modules.md) - 各モジュールの役割と設計思想
+-   [開発ガイド](./developer_guide.md) - 開発環境のセットアップと開発ガイドライン
 
 ## プロジェクト概要
 
@@ -20,12 +20,12 @@ ProjectStupro は、社内 SNS として社員の学習進捗や知見を共有�
 
 ## 技術スタック
 
-- **バックエンド**: Flask (Python 3.11)
-- **フロントエンド**: React + TypeScript + Vite
-- **CSS**: Tailwind CSS v4
-- **データベース**: PostgreSQL
-- **開発環境**: Docker Compose
-- **開発ツール**: Black (Python コードフォーマッター)
+-   **バックエンド**: Flask (Python 3.11)
+-   **フロントエンド**: React + TypeScript + Vite
+-   **CSS**: Tailwind CSS v4
+-   **データベース**: PostgreSQL
+-   **開発環境**: Docker DevContainer（VScode コンテナ環境）
+-   **開発ツール**: Git
 
 ## 設計理念
 
