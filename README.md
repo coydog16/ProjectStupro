@@ -9,10 +9,19 @@
 -   **つぶやき機能** - 学習の進捗報告や日々の気づきを共有
 -   **ユーザープロフィール** - 社員のプロフィールや得意技術を表示
 -   **認証管理** - ユーザー認証と権限管理
+-   **SNS 機能** - より充実したソーシャルネットワーク機能
+-   **記事投稿機能** - 技術記事や学習記録の共有
+-   **ToDo リスト機能** - 学習タスク管理
 
-## 🏗️ アーキテクチャ概要
+他、開発者のアイデア次第で色んな機能を実装予定です！
+
+詳細：[プロジェクト概要](docs/Overview/ProjectOverview.md)
+
+## 🏗️ アーキテクチャ
 
 ProjectStupro は**垂直スライス型モジュラーモノリス**アーキテクチャを採用しています。機能ごとにモジュールを分割し、各モジュールは独立したコードベースを持ちます。
+
+詳細：[アーキテクチャ概要](docs/Overview/architecture.md)
 
 ### 技術スタック
 
@@ -51,18 +60,18 @@ app/
 
 -   Docker と Docker Compose （DockerDesktop）がインストールされていること。
 -   Git クライアントがインストールされていること。
--   Mac/Windowsの場合はLinux仮想環境が用意されていること。
+-   Mac/Windows の場合は Linux 仮想環境が用意されていること。
 
 ### 初回セットアップ
 
-1. **リポジトリをクローンする**
+#### 1. **リポジトリをクローンする**
 
     ```bash
     git clone https://github.com/yourusername/ProjectStupro.git
     cd ProjectStupro
     ```
 
-2. **環境設定ファイルを作成する**
+#### 2. **環境設定ファイルを作成する**
 
     ```bash
     # ルートの環境設定ファイルの準備
@@ -74,23 +83,24 @@ app/
 
     ※ 必要に応じて設定ファイルを編集してください
 
-3. **Docker コンテナを起動する**
+#### 3. **Docker コンテナを起動する**
 
     ```bash
     # 開発環境の起動
     docker compose up -d
     ```
 
-    > **Note**: コンテナはホストのUID/GIDを自動検出して、権限を自動調整します！特別な設定は必要ありません。
+    > **Note**: コンテナはホストの UID/GID を自動検出して、権限を自動調整します！特別な設定は必要ありません。
     >
     > 自動検出に問題がある場合のみ、明示的に環境変数を渡してください：
+    >
     > ```bash
     > HOST_UID=$(id -u) HOST_GID=$(id -g) docker compose up -d
     > ```
 
-4. **開発サーバーを起動する**
+#### 4. **開発サーバーを起動する**
 
-    Dockerコンテナが起動したら、開発サーバー（フロントエンドとバックエンド）を起動します。
+    Docker コンテナが起動したら、開発サーバー（フロントエンドとバックエンド）を起動します。
     スクリプトランチャーを使うのが便利です：
 
     ```bash
@@ -107,16 +117,47 @@ app/
 
     詳しくは[スクリプトランチャーガイド](docs/tips/script-launcher-guide.md)を参照してください。
 
-5. **マイグレーションを実行する**
+#### 4-2. **VSCode DevContainer で開発する (推奨)**
+
+    VSCode DevContainerを使うと、より快適に開発できます：
+
+    ```bash
+    # VSCodeでProjectStuproフォルダを開く
+    code .
+
+    # コマンドパレットを開く (Ctrl+Shift+P または F1)
+    # 「Dev Containers: Reopen in Container」を選択
+    # 日本語化している場合は、「コンテナで再度開く」
+    # 左下隅の「><」からクリックしても開けます
+    ```
+
+    > **Tip**: DevContainerを使うと、拡張機能や設定が自動的に構成され、すべての開発者が同じ環境で作業できます。
+    >
+    > 初回起動には数分かかることがあります。
+
+    DevContainerとNode Modulesの管理方法について詳しくは、[Node Modulesの管理とDevContainerの活用ガイド](docs/knowledge/20250519_node_modules_management_and_dev_container.md)を参照してください。
+
+#### 5. **マイグレーションを実行する**
 
     ```bash
     # コンテナ内でマイグレーションを実行
     docker compose exec backend flask db upgrade
     ```
 
-6. **アプリケーションにアクセスする**
+#### 6. **アプリケーションにアクセスする**
+
     - バックエンド API: http://localhost:5000
     - フロントエンド: http://localhost:3000
+
+## 💻 開発ワークフロー
+
+ProjectStupro の開発に参加する際は、以下の開発ワークフローガイドに従ってください：
+
+-   [開発ワークフロー ガイド](docs/knowledge/20250519_development_workflow_guide.md)
+
+コーディングスタイル、Git ブランチ戦略、コミットメッセージのルールなど、プロジェクトの標準的な開発プラクティスについて説明しています。
+
+色々とルールはありますが、ワークフローはそれらを厳格に定義するものではなく「一応こんな感じで決め事がある」ぐらいの認識で大丈夫です。
 
 ## 📚 詳細なドキュメント
 
@@ -124,8 +165,6 @@ app/
 
 ### プロジェクト概要
 
--   [プロジェクト概要](docs/Overview/README.md)
--   [アーキテクチャ概要](docs/Overview/architecture.md)
 -   [データベース設計](docs/Overview/database_design.md)
 -   [モジュール概要](docs/Overview/modules.md)
 -   [開発ガイド](docs/Overview/developer_guide.md)
@@ -133,31 +172,7 @@ app/
 ### 開発ツール
 
 -   [Sphinx ドキュメント生成ガイド](docs/knowledge/20250519_sphinx_documentation_guide.md)
-
-## 💻 開発ワークフロー
-
-### コーディングスタイル
-
--   **Python (Flask)**: PEP 8 に準拠
--   **TypeScript/React**: ESLint と Prettier の設定に従う
--   **コメント**: 複雑なロジックには必ずコメントを追加
-
-### Git ワークフロー
-
-1. **ブランチ命名規則**
-
-    ```
-    feature/[機能名]  # 新機能追加
-    fix/[バグ名]      # バグ修正
-    refactor/[対象]   # リファクタリング
-    docs/[対象]       # ドキュメント更新
-    ```
-
-2. **コミットメッセージ**
-    ```
-    [タイプ] 簡潔な説明
-    ```
-    タイプの例: `feat`, `fix`, `docs`, `style`, `refactor`, `test`, `chore`
+-   [開発ワークフロー ガイド](docs/knowledge/20250519_development_workflow_guide.md)
 
 ## 🛠️ スクリプト
 
@@ -204,24 +219,7 @@ docker compose down && docker compose up -d
 HOST_UID=$(id -u) HOST_GID=$(id -g) docker compose up -d
 ```
 
-詳しくは [Docker自動権限調整機能](docs/tips/docker-auto-permissions.md) を参照してください。
-
-### セキュリティ対策
-
-ProjectStupro 開発環境は、セキュリティを考慮した設計になっています：
-
-1. **ホストの UID/GID の自動マッチング**:
-
-    - コンテナはホストのユーザー ID を使用して実行されます
-    - 権限問題を防ぎ、ファイルの所有権を正しく保持します
-
-2. **最小権限の原則**:
-
-    - コンテナ内のユーザーは必要最小限の権限のみ持っています
-    - root ユーザーは使用せず、一般ユーザーで実行します
-
-3. **ボリュームマウントの権限管理**:
-    - node_modules などの特殊ディレクトリは名前付きボリュームで管理し、パフォーマンス向上と権限問題を回避
+詳しくは [Docker 自動権限調整機能](docs/tips/docker-auto-permissions.md) を参照してください。
 
 ## 👥 貢献者
 
