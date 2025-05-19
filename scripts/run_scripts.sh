@@ -20,6 +20,7 @@ echo -e "1. Docker環境をクリーンアップ (docker_clean.sh)"
 echo -e "2. コードをフォーマット (format_code.sh)"
 echo -e "3. 開発サーバーを起動 (start_dev_servers.sh)"
 echo -e "4. 開発サーバーを停止 (stop_dev_servers.sh)"
+echo -e "5. Sphinxドキュメントをビルド (build_sphinx_docs.sh)"
 echo -e "0. 終了"
 echo ""
 
@@ -43,6 +44,10 @@ case $choice in
     4)
         echo -e "${BLUE}開発サーバーを停止します...${NC}"
         $SCRIPT_DIR/stop_dev_servers.sh
+        ;;
+    5)
+        echo -e "${BLUE}Sphinxドキュメントのビルドを開始します...${NC}"
+        $SCRIPT_DIR/build_sphinx_docs.sh
         ;;
     0)
         echo -e "${GREEN}スクリプトランチャーを終了します。${NC}"
