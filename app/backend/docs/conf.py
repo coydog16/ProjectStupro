@@ -19,12 +19,8 @@ extensions = [
     'sphinx.ext.napoleon',  # Google/NumPyスタイルのdocstring対応
 ]
 
-# ロケール設定の問題を回避
-import os
-os.environ["LC_ALL"] = "C.UTF-8"
-os.environ["LANG"] = "C.UTF-8"
-
 # システムパスにソースコードのディレクトリを追加
+import os
 import sys
 sys.path.insert(0, os.path.abspath('..'))
 

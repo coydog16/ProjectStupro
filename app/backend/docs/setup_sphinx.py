@@ -3,13 +3,6 @@ import subprocess
 import sys
 import pexpect
 
-# 環境変数を設定
-os.environ["LC_ALL"] = "C.UTF-8"
-os.environ["LANG"] = "C.UTF-8"
-os.environ["TZ"] = "Asia/Tokyo"
-
-print("ロケール設定を C.UTF-8 に設定しました")
-
 # Sphinxの設定情報
 project_name = "navStupro"
 author_name = "nav"
@@ -24,26 +17,26 @@ print(f"リリースバージョン: {release_version or '(空)'}")
 try:
     # sphinx-quickstartプロセスを開始（タイムアウトを長めに設定）
     child = pexpect.spawn('sphinx-quickstart', timeout=60)
-    
+
     # 標準出力にも表示するとデバッグしやすい
     child.logfile = sys.stdout.buffer
-    
+
     # 各プロンプトに自動回答（正規表現を緩めに設定）
     child.expect(['eparate source', 'eparate source and build'])
     child.sendline('n')  # ソースとビルドディレクトリを分けない
-    
+
     child.expect(['roject name', 'Project name'])
     child.sendline(project_name)
-    
+
     child.expect(['uthor name', 'Author name'])
     child.sendline(author_name)
-    
+
     child.expect(['elease', 'Project release'])
     child.sendline(release_version)
-    
+
     child.expect(['anguage', 'Project language'])
     child.sendline('ja')  # 日本語を選択
-    
+
     # プロセスが終了するのを待つ
     child.expect(pexpect.EOF)
     print("Sphinx初期化が完了しました！")
