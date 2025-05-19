@@ -10,57 +10,64 @@ ProjectStupro では便利なスクリプトランチャーが用意されてお
 
 1. プロジェクトのルートディレクトリで次のコマンドを実行します：
 
-   ```bash
-   ./run_script.sh
-   ```
+```bash
+./run_script.sh
+```
 
 2. メニューが表示されたら、実行したいスクリプトの番号を入力して Enter キーを押します：
 
-   ```
-   ========================================
-       NavStupro スクリプトランチャー
-   ========================================
-   実行可能なスクリプト:
-   1. Docker環境をクリーンアップ (docker_clean.sh)
-   2. コードをフォーマット (format_code.sh)
-   3. 開発サーバーを起動 (start_dev_servers.sh)
-   4. 開発サーバーを停止 (stop_dev_servers.sh)
-   5. Sphinxドキュメントをビルド (build_sphinx_docs.sh)
-   0. 終了
+```
+========================================
+      NavStupro スクリプトランチャー
+========================================
+実行可能なスクリプト:
+1. Docker環境をクリーンアップ (docker_clean.sh)
+2. コードをフォーマット (format_code.sh)
+3. 開発サーバーを起動 (start_dev_servers.sh)
+4. 開発サーバーを停止 (stop_dev_servers.sh)
+5. Sphinxドキュメントをビルド (build_sphinx_docs.sh)
+0. 終了
 
-   実行したいスクリプト番号を入力してください:
-   ```
+実行したいスクリプト番号を入力してください:
+```
 
 ## 利用可能なスクリプト
 
-### 1. Docker環境をクリーンアップ
+### 1. Docker 環境をクリーンアップ
+
 Docker 環境をクリーンアップします。古いコンテナ、イメージ、ボリュームなどを削除します。
 
 ### 2. コードをフォーマット
+
 プロジェクトのコードを自動的にフォーマットします。Python コードには Black、TypeScript/JavaScript には Prettier が使用されます。
 
 ### 3. 開発サーバーを起動
+
 フロントエンドとバックエンドの開発サーバーを起動します。開発環境でコードの変更を即座に反映させることができます。
 
-**注意**: このスクリプトを実行する前に、Dockerコンテナが起動していることを確認してください（`docker compose up -d`）。このスクリプト自体はDockerコンテナを起動しません。
+**注意**: このスクリプトを実行する前に、Docker コンテナが起動していることを確認してください（`docker compose up -d`）。このスクリプト自体は Docker コンテナを起動しません。
 
 ### 4. 開発サーバーを停止
+
 実行中の開発サーバーを停止します。
 
-### 5. Sphinxドキュメントをビルド
+### 5. Sphinx ドキュメントをビルド
+
 プロジェクトのドキュメントを Sphinx を使用してビルドします。HTML、PDF、ePub 形式での出力が可能です。
 
 ## エイリアスの設定（おすすめ）
 
 頻繁に使用する場合は、シェルのエイリアスを設定しておくと便利です：
 
-### Bashの場合
+### Bash の場合
+
 ```bash
 echo 'alias pslauncher="cd /path/to/ProjectStupro && ./run_script.sh"' >> ~/.bashrc
 source ~/.bashrc
 ```
 
-### Zshの場合
+### Zsh の場合
+
 ```zsh
 echo 'alias pslauncher="cd /path/to/ProjectStupro && ./run_script.sh"' >> ~/.zshrc
 source ~/.zshrc
