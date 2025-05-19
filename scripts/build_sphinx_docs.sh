@@ -73,16 +73,16 @@ case $format_choice in
         ;;
     4)
         echo -e "${BLUE}すべてのフォーマットでドキュメントをビルドします...${NC}"
-        
+
         echo -e "${YELLOW}HTMLビルド中...${NC}"
         python setup_make.py html
-        
+
         echo -e "${YELLOW}PDFビルド中...${NC}"
         python setup_make.py latexpdf
-        
+
         echo -e "${YELLOW}ePubビルド中...${NC}"
         python setup_make.py epub
-        
+
         echo -e "${GREEN}すべてのフォーマットのビルドが完了しました！${NC}"
         echo -e "結果は ${DOCS_DIR}/_build/ ディレクトリ内にあります"
         ;;

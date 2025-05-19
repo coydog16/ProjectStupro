@@ -51,6 +51,8 @@
 <li class="toctree-l4"><a class="reference internal" href="#src.models.user.User.avatar_image_id"><code class="docutils literal notranslate"><span class="pre">User.avatar_image_id</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#src.models.user.User.created_at"><code class="docutils literal notranslate"><span class="pre">User.created_at</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#src.models.user.User.email"><code class="docutils literal notranslate"><span class="pre">User.email</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.models.user.User.find_by_email"><code class="docutils literal notranslate"><span class="pre">User.find_by_email()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.models.user.User.find_by_username"><code class="docutils literal notranslate"><span class="pre">User.find_by_username()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#src.models.user.User.first_name"><code class="docutils literal notranslate"><span class="pre">User.first_name</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#src.models.user.User.full_name"><code class="docutils literal notranslate"><span class="pre">User.full_name</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#src.models.user.User.has_role"><code class="docutils literal notranslate"><span class="pre">User.has_role()</span></code></a></li>
@@ -104,6 +106,8 @@
 <h1>モデル<a class="headerlink" href="#id1" title="Link to this heading"></a></h1>
 <section id="module-src.models.user">
 <span id="id2"></span><h2>ユーザーモデル<a class="headerlink" href="#module-src.models.user" title="Link to this heading"></a></h2>
+<p>ユーザーモデルおよび関連機能を提供するモジュール。
+認証、権限管理などのユーザー関連処理を実装します。</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="src.models.user.User">
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.models.user.</span></span><span class="sig-name descname"><span class="pre">User</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/models/user.html#User"><span class="viewcode-link"><span class="pre">[ソース]</span></span></a><a class="headerlink" href="#src.models.user.User" title="Link to this definition"></a></dt>
@@ -129,6 +133,48 @@
 <span class="sig-name descname"><span class="pre">email</span></span><a class="headerlink" href="#src.models.user.User.email" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="src.models.user.User.find_by_email">
+<em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">find_by_email</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">session</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">email</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/models/user.html#User.find_by_email"><span class="viewcode-link"><span class="pre">[ソース]</span></span></a><a class="headerlink" href="#src.models.user.User.find_by_email" title="Link to this definition"></a></dt>
+<dd><p>メールアドレスからユーザーを検索する。</p>
+<p>最新のSQLAlchemy構文（session.execute + select）を使用。</p>
+<dl class="field-list simple">
+<dt class="field-odd">パラメータ<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>session</strong> -- データベースセッション</p></li>
+<li><p><strong>email</strong> (<em>str</em>) -- 検索するメールアドレス</p></li>
+</ul>
+</dd>
+<dt class="field-even">戻り値<span class="colon">:</span></dt>
+<dd class="field-even"><p>見つかったユーザーオブジェクト、または None</p>
+</dd>
+<dt class="field-odd">戻り値の型<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#src.models.user.User" title="src.models.user.User">User</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.models.user.User.find_by_username">
+<em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">find_by_username</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">session</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">username</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/models/user.html#User.find_by_username"><span class="viewcode-link"><span class="pre">[ソース]</span></span></a><a class="headerlink" href="#src.models.user.User.find_by_username" title="Link to this definition"></a></dt>
+<dd><p>ユーザー名からユーザーを検索する。</p>
+<p>最新のSQLAlchemy構文（session.execute + select）を使用。</p>
+<dl class="field-list simple">
+<dt class="field-odd">パラメータ<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>session</strong> -- データベースセッション</p></li>
+<li><p><strong>username</strong> (<em>str</em>) -- 検索するユーザー名</p></li>
+</ul>
+</dd>
+<dt class="field-even">戻り値<span class="colon">:</span></dt>
+<dd class="field-even"><p>見つかったユーザーオブジェクト、または None</p>
+</dd>
+<dt class="field-odd">戻り値の型<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#src.models.user.User" title="src.models.user.User">User</a></p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py attribute">
 <dt class="sig sig-object py" id="src.models.user.User.first_name">
 <span class="sig-name descname"><span class="pre">first_name</span></span><a class="headerlink" href="#src.models.user.User.first_name" title="Link to this definition"></a></dt>
@@ -140,12 +186,32 @@
 <dd><p>ユーザーのフルネームを取得する。</p>
 <p>名と姓が両方設定されている場合はそれらを結合し、
 そうでない場合はユーザー名を返します。</p>
+<dl class="field-list simple">
+<dt class="field-odd">戻り値<span class="colon">:</span></dt>
+<dd class="field-odd"><p>フルネームまたはユーザー名</p>
+</dd>
+<dt class="field-even">戻り値の型<span class="colon">:</span></dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="src.models.user.User.has_role">
 <span class="sig-name descname"><span class="pre">has_role</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">role_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/models/user.html#User.has_role"><span class="viewcode-link"><span class="pre">[ソース]</span></span></a><a class="headerlink" href="#src.models.user.User.has_role" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>指定されたロール名を持っているか確認する。</p>
+<dl class="field-list simple">
+<dt class="field-odd">パラメータ<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>role_name</strong> (<em>str</em>) -- 確認するロール名</p>
+</dd>
+<dt class="field-even">戻り値<span class="colon">:</span></dt>
+<dd class="field-even"><p>指定されたロールを持っている場合はTrue</p>
+</dd>
+<dt class="field-odd">戻り値の型<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="src.models.user.User.id">
@@ -160,7 +226,28 @@
 <dl class="py property">
 <dt class="sig sig-object py" id="src.models.user.User.is_admin">
 <em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_admin</span></span><a class="headerlink" href="#src.models.user.User.is_admin" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>ユーザーが管理者権限を持っているかどうかを確認する。</p>
+<p>このプロパティは単にユーザーのロールが'admin'かどうかをチェックします。
+引数は不要で、プロパティとして直接アクセスできます。</p>
+<dl class="field-list simple">
+<dt class="field-odd">戻り値<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ユーザーが管理者の場合はTrue、そうでない場合はFalse</p>
+</dd>
+<dt class="field-even">戻り値の型<span class="colon">:</span></dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+<p class="rubric">サンプル</p>
+<p>user = User.find_by_username(db.session, &quot;yamada&quot;)
+if user.is_admin:</p>
+<blockquote>
+<div><p># 管理者向け処理</p>
+</div></blockquote>
+<dl class="simple">
+<dt>else:</dt><dd><p># 一般ユーザー向け処理</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="src.models.user.User.last_name">
@@ -211,8 +298,16 @@ customized per-model by overriding <code class="xref py py-attr docutils literal
 <dl class="py method">
 <dt class="sig sig-object py" id="src.models.user.User.to_dict">
 <span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/models/user.html#User.to_dict"><span class="viewcode-link"><span class="pre">[ソース]</span></span></a><a class="headerlink" href="#src.models.user.User.to_dict" title="Link to this definition"></a></dt>
-<dd><p>ユーザーオブジェクトをJSON互換の辞書に変換する。
-APIレスポンスなどで使用するためのシリアライズ処理。</p>
+<dd><p>ユーザーオブジェクトをJSON互換の辞書に変換する。</p>
+<p>APIレスポンスなどで使用するためのシリアライズ処理。</p>
+<dl class="field-list simple">
+<dt class="field-odd">戻り値<span class="colon">:</span></dt>
+<dd class="field-odd"><p>JSONに変換可能なユーザー情報の辞書</p>
+</dd>
+<dt class="field-even">戻り値の型<span class="colon">:</span></dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py attribute">
@@ -228,14 +323,35 @@ APIレスポンスなどで使用するためのシリアライズ処理。</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="src.models.user.User.verify_password">
 <span class="sig-name descname"><span class="pre">verify_password</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">password</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/models/user.html#User.verify_password"><span class="viewcode-link"><span class="pre">[ソース]</span></span></a><a class="headerlink" href="#src.models.user.User.verify_password" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>提供されたパスワードが保存されたハッシュと一致するか検証する。</p>
+<dl class="field-list simple">
+<dt class="field-odd">パラメータ<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>password</strong> (<em>str</em>) -- 検証するパスワード</p>
+</dd>
+<dt class="field-even">戻り値<span class="colon">:</span></dt>
+<dd class="field-even"><p>パスワードが一致する場合はTrue</p>
+</dd>
+<dt class="field-odd">戻り値の型<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
 
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="src.models.user.get_jst_now">
 <span class="sig-prename descclassname"><span class="pre">src.models.user.</span></span><span class="sig-name descname"><span class="pre">get_jst_now</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/models/user.html#get_jst_now"><span class="viewcode-link"><span class="pre">[ソース]</span></span></a><a class="headerlink" href="#src.models.user.get_jst_now" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>現在の日本時間を返します。</p>
+<dl class="field-list simple">
+<dt class="field-odd">戻り値<span class="colon">:</span></dt>
+<dd class="field-odd"><p>日本時間の現在時刻</p>
+</dd>
+<dt class="field-even">戻り値の型<span class="colon">:</span></dt>
+<dd class="field-even"><p>datetime</p>
+</dd>
+</dl>
+</dd></dl>
 
 </section>
 </section>
