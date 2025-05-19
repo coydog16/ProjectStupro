@@ -3,6 +3,11 @@ import pytz
 from werkzeug.security import generate_password_hash, check_password_hash
 from src.core.database import db
 
+# グローバルな環境変数を設定する（コード内で実行）
+import os
+os.environ["LC_ALL"] = "C.UTF-8"
+os.environ["LANG"] = "C.UTF-8"
+
 JST = pytz.timezone('Asia/Tokyo')
 
 def get_jst_now():
@@ -78,9 +83,64 @@ class User(db.Model):
             'updated_at': self.updated_at.isoformat() if self.updated_at else None
         }
 
+    # 最新のSQLAlchemy推奨アプローチを使用した静的メソッド
+    @staticmethod
+    def find_by_username(session, username):
+        """
+        ユーザー名からユーザーを検索する。
+
+        新しいSQLAlchemy構文（session.execute + select）を使用。
+
+        Args:
+            session: データベースセッション
+            username (str): 検索するユーザー名
+
+        Returns:
+            User: 見つかったユーザーオブジェクト、または None
+        """
+        from sqlalchemy import select
+        stmt = select(User).where(User.username == username)
+        result = session.execute(stmt).scalars().first()
+        return result
+
+    @staticmethod
+    def find_by_email(session, email):
+        """
+        メールアドレスからユーザーを検索する。
+
+        新しいSQLAlchemy構文（session.execute + select）を使用。
+
+        Args:
+            session: データベースセッション
+            email (str): 検索するメールアドレス
+
+        Returns:
+            User: 見つかったユーザーオブジェクト、または None
+        """
+        from sqlalchemy import select
+        stmt = select(User).where(User.email == email)
+        result = session.execute(stmt).scalars().first()
+        return result
+
     def has_role(self, role_name):
         return self.role == role_name
 
     @property
     def is_admin(self):
+        """
+        ユーザーが管理者権限を持っているかどうかを確認する。
+
+        このプロパティは単にユーザーのロールが'admin'かどうかをチェックします。
+        引数は不要で、プロパティとして直接アクセスできます。
+
+        Returns:
+            bool: ユーザーが管理者の場合はTrue、そうでない場合はFalse
+
+        Example:
+            user = User.find_by_username(db.session, "yamada")
+            if user.is_admin:
+                # 管理者向け処理
+            else:
+                # 一般ユーザー向け処理
+        """
         return self.role == 'admin'
