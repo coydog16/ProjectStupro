@@ -71,7 +71,11 @@ RUN pip install --no-cache-dir \
     isort \
     flake8 \
     mypy \
-    pytest
+    pytest \
+    sphinx \
+    sphinx-rtd-theme \
+    sphinx-autodoc-typehints \
+    sphinx-autobuild
 
 # バックエンド依存関係のインストール (requirements.txtがある場合)
 WORKDIR /tmp/backend
