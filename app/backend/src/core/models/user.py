@@ -45,15 +45,17 @@ class User(db.Model):
     )
 
     # リレーションシップ
-    profile = db.relationship(
-        'UserProfile',
-        backref='user',
-        uselist=False,
-        lazy='joined'
-    )
+    # 一時的にコメントアウト(マイグレーション用)
+    # profile = db.relationship(
+    #     'UserProfile',
+    #     backref='user',
+    #     uselist=False,
+    #     lazy='joined'
+    # )
 
-    avatar_image_id = db.Column(db.Integer, db.ForeignKey('images.id'))
-    avatar_image = db.relationship('Image', backref='users')
+    # 一時的にコメントアウト(マイグレーション用)
+    # avatar_image_id = db.Column(db.Integer, db.ForeignKey('images.id'))
+    # avatar_image = db.relationship('Image', backref='users')
 
     @property
     def password(self):

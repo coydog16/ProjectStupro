@@ -4,7 +4,7 @@
 このファイルではすべてのFlaskブループリントを集約し、
 アプリケーションへの登録を容易にします。
 """
-from src.modules.auth import auth_bp
+from src.modules.auth.routes import auth_bp
 
 # すべての使用可能なブループリントのリスト
 BLUEPRINTS = [

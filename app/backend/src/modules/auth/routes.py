@@ -8,7 +8,7 @@ from flask_jwt_extended import jwt_required, get_jwt_identity, create_access_tok
 
 from src.core.services.auth_service import AuthService  # 認証サービス
 from src.core.models.user import User  # Userモデルをインポート
-from src.core.schemas.user import UserSchema
+from src.core.schemas.user_schema import UserSchema
 
 # 認証関連のブループリント作成
 auth_bp = Blueprint('auth', __name__, url_prefix='/api/auth')
