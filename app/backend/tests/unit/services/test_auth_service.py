@@ -25,7 +25,7 @@ def mock_user():
 
 class TestAuthService:
     """AuthServiceのテストクラス"""
-    
+
     def test_auth_user_success(self, mock_user):
         """正しい認証情報でユーザー認証が成功するかテスト"""
         with patch('src.core.services.auth_service.User') as MockUser:
@@ -35,11 +35,11 @@ class TestAuthService:
             mock_filter = MagicMock()
             mock_query.filter.return_value = mock_filter
             mock_filter.first.return_value = mock_user
-            
+
             with patch('src.core.services.auth_service.verify_password', return_value=True):
                 # テスト実行
                 result = AuthService.auth_user("test_user", "correct_password")
-                
+
                 # 検証
                 assert result == mock_user
                 mock_query.filter.assert_called_once()
@@ -53,11 +53,11 @@ class TestAuthService:
             mock_filter = MagicMock()
             mock_query.filter.return_value = mock_filter
             mock_filter.first.return_value = mock_user
-            
+
             with patch('src.core.services.auth_service.verify_password', return_value=False):
                 # テスト実行
                 result = AuthService.auth_user("test_user", "wrong_password")
-                
+
                 # 検証
                 assert result is None
 
@@ -70,10 +70,10 @@ class TestAuthService:
             mock_filter = MagicMock()
             mock_query.filter.return_value = mock_filter
             mock_filter.first.return_value = None
-            
+
             # テスト実行
             result = AuthService.auth_user("nonexistent_user", "any_password")
-            
+
             # 検証
             assert result is None
 

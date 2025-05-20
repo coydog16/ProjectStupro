@@ -21,8 +21,8 @@ if str(src_path) not in sys.path:
 # すべてのインポートをここにまとめる
 from flask import Flask, jsonify
 from flask_cors import CORS
-from config import get_config  # type: ignore # src_pathを追加したので直接importできるはず
-from src.core.database import init_db  # データベース初期化関数をインポート
+from config import get_config  # type: ignore #
+from src.core.database import init_db  # データベース初期化関数
 
 
 def create_app(config_name="dev"):
@@ -34,7 +34,7 @@ def create_app(config_name="dev"):
 
     # CORSの設定
     CORS(app)
-    
+
     # データベースの初期化
     init_db(app)
 
@@ -71,7 +71,7 @@ def register_blueprints(app):
     try:
         # モジュール群からすべてのブループリントをインポート
         from src.modules import BLUEPRINTS
-        
+
         # すべてのブループリントを登録
         for blueprint in BLUEPRINTS:
             app.register_blueprint(blueprint)

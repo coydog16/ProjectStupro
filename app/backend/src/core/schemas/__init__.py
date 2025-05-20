@@ -5,7 +5,7 @@
 """
 
 # ユーザー関連のスキーマをエクスポート
-from .user import UserCreate, UserLogin, UserResponse
+from .user_schema import UserCreate, UserLogin, UserResponse
 
 # 公開するスキーマの一覧
 __all__ = [

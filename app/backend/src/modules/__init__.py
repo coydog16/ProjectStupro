@@ -15,7 +15,7 @@ BLUEPRINTS = [
 
 def register_all_blueprints(app):
     """すべてのブループリントをFlaskアプリケーションに登録する
-    
+
     Args:
         app: Flaskアプリケーションインスタンス
     """

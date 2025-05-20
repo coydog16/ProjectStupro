@@ -18,10 +18,10 @@ def app_context():
         "TESTING": True,
         "JWT_SECRET_KEY": "test-secret-key"
     })
-    
+
     # JWTマネージャーの初期化
     JWTManager(app)
-    
+
     # アプリケーションコンテキスト
     with app.app_context():
         yield

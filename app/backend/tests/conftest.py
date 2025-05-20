@@ -14,46 +14,46 @@ from app import create_app
 def app():
     """テスト用のFlaskアプリケーションを作成"""
     app = create_app("test")
-    
+
     # テスト用の設定
     app.config.update({
         "TESTING": True,
         "SQLALCHEMY_DATABASE_URI": "sqlite:///:memory:",
         "JWT_SECRET_KEY": "test-secret-key"
     })
-    
+
     # JWTマネージャーの初期化
     JWTManager(app)
-    
+
     # データベースの初期化
     from src.core.database import init_db
     init_db(app)
-    
+
     # コンテキスト内でアプリを渡す
     with app.app_context():
         # 必要なテーブルのみを作成（外部キーの参照を回避）
         from sqlalchemy import MetaData, Table
         import inspect
         from src.core.models.user import User
-        
+
         metadata = MetaData()
-        
+
         # モデルからテーブルを抽出
         for attr in inspect.getmembers(User):
             if attr[0] == '__table__':
                 table = attr[1]
-                
+
                 # 外部キーを持つカラムをコピーせずにテーブルを再作成
                 new_table = Table(
                     table.name,
                     metadata,
                     *(c.copy() for c in table.columns if not c.foreign_keys)
                 )
-                
+
                 new_table.create(db.engine)
-        
+
         yield app
-        
+
         # テスト後のクリーンアップ
         metadata.drop_all(bind=db.engine)
         db.session.remove()
