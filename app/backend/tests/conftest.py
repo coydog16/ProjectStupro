@@ -34,7 +34,7 @@ def app():
         # 必要なテーブルのみを作成（外部キーの参照を回避）
         from sqlalchemy import MetaData, Table
         import inspect
-        from src.core.models.user import User
+        from src.core.models.user_models import User
 
         metadata = MetaData()
 

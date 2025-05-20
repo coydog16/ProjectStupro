@@ -75,7 +75,8 @@ RUN pip install --no-cache-dir \
     sphinx \
     sphinx-rtd-theme \
     sphinx-autodoc-typehints \
-    sphinx-autobuild
+    sphinx-autobuild \
+    pexpect
 
 # バックエンド依存関係のインストール (requirements.txtがある場合)
 WORKDIR /tmp/backend

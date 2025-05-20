@@ -1,4 +1,3 @@
-
 from datetime import datetime, timedelta
 from typing import Optional
 
@@ -6,7 +5,7 @@ from sqlalchemy import or_
 from flask_jwt_extended import create_access_token, create_refresh_token
 
 # 必要なモデルとスキーマをインポート
-from src.core.models.user import User
+from src.core.models.user_models import User
 from src.core.security import get_password_hash, verify_password
 
 class AuthService:

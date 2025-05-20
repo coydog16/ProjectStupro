@@ -7,7 +7,7 @@ from flask import Blueprint, request, jsonify, current_app
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 from sqlalchemy.exc import IntegrityError
 from src.core.database import db
-from src.core.models.user import User
+from src.core.models.user_models import User
 from src.core.schemas.user_schema import UserCreate, UserLogin, UserResponse
 from src.core.services.auth_service import AuthService
 
