@@ -5,9 +5,9 @@
 from datetime import datetime
 import pytz
 from sqlalchemy import select
-from werkzeug.security import generate_password_hash, check_password_hash
 
 from src.core.database import db
+from src.core.security import get_password_hash, verify_password
 
 
 # タイムゾーン定数
@@ -71,7 +71,7 @@ class User(db.Model):
         Args:
             password (str): 生のパスワード
         """
-        self.password_hash = generate_password_hash(password)
+        self.password_hash = get_password_hash(password)
 
     def verify_password(self, password):
         """提供されたパスワードが保存されたハッシュと一致するか検証する。
@@ -82,7 +82,7 @@ class User(db.Model):
         Returns:
             bool: パスワードが一致する場合はTrue
         """
-        return check_password_hash(self.password_hash, password)
+        return verify_password(self.password_hash, password)
 
     def __repr__(self):
         """デバッグ情報のためのオブジェクト表現。"""
