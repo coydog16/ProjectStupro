@@ -22,4 +22,4 @@ def init_db(app):
     # モデルクラスをインポートして、マイグレーション時に検出されるように
     # ※循環インポートを避けてここでモデルをインポートする
 
-    from src.models.user import User, UserProfile
+    from src.core.models.user import User

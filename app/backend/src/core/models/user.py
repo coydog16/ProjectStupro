@@ -31,8 +31,8 @@ class User(db.Model):
     username = db.Column(db.String(50), unique=True, nullable=False)
     email = db.Column(db.String(50), unique=True, nullable=False)
     password_hash = db.Column(db.String(255), nullable=False)
-    first_name = db.Column(db.String(50))
-    last_name = db.Column(db.String(50))
+    first_name = db.Column(db.String(50), nullable=False)
+    last_name = db.Column(db.String(50), nullable=False)
     is_active = db.Column(db.Boolean, default=True)
     role = db.Column(db.String(20), default='user')
 
