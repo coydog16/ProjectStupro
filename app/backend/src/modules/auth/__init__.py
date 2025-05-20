@@ -7,3 +7,5 @@
 - パスワードリセット
 - トークンリフレッシュ
 """
+
+from .routes import auth_bp
