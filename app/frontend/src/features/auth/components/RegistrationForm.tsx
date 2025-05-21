@@ -1,10 +1,11 @@
 import React from "react";
 import { FormInput, SubmitButton, FormTitle } from "./FormComponents";
-
 interface RegistrationFormProps {
     registrationData: {
         username: string;
         email: string;
+        first_name: string;
+        last_name: string;
         password: string;
         confirmPassword: string;
     };
@@ -37,7 +38,6 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
     `}
         >
             <FormTitle title="Registration" />
-
             <FormInput
                 name="username"
                 placeholder="Username"
@@ -52,7 +52,22 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
                 value={registrationData.email}
                 onChange={handleRegistrationInputChange}
             />
-
+            <div className="flex gap-4 w-[70%]">
+                <FormInput
+                    type="text"
+                    name="last_name"
+                    placeholder="Last Name"
+                    value={registrationData.last_name}
+                    onChange={handleRegistrationInputChange}
+                />
+                <FormInput
+                    type="text"
+                    name="first_name"
+                    placeholder="First Name"
+                    value={registrationData.first_name}
+                    onChange={handleRegistrationInputChange}
+                />
+            </div>
             <FormInput
                 type="password"
                 name="password"
@@ -70,7 +85,6 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
             />
 
             <SubmitButton value="Register Account" />
-
             <div className="relative w-[70%] flex justify-center">
                 <a
                     href="#"
