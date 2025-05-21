@@ -6,7 +6,7 @@ from src.core.database import db
 from src.core.models.user_models import User
 from src.core.security import get_password_hash
 import sys
-import os
+from pathlib import Path
 
 def seed_users():
     users = [
@@ -73,8 +73,9 @@ def seed_users():
 
 if __name__ == "__main__":
     # プロジェクトルートから実行してもパスが通るように調整
-    sys.path.append(os.path.join(os.path.dirname(__file__), '../'))
-    sys.path.append(os.path.join(os.path.dirname(__file__), '../../'))
+    current_dir = Path(__file__).resolve().parent
+    sys.path.append(str(current_dir.parent))
+    sys.path.append(str(current_dir.parent.parent))
     from src.core.database import db
     from app import app
     with app.app_context():
