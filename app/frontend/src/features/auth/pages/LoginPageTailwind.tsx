@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import LoginForm from "../components/LoginForm";
 import RegistrationForm from "../components/RegistrationForm";
 import GlassmorphicBackground from "../components/GlassmorphicBackground";
+import apiClient from "../../../api/axios";
 
 // Tailwindを使用したグラスモーフィズム風ログインページ
 const LoginPageTailwind: React.FC = () => {
@@ -36,17 +37,32 @@ const LoginPageTailwind: React.FC = () => {
         confirmPassword: "",
     });
 
-    // フォーム送信ハンドラ
-    const handleLoginSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        console.log("Login submitted:", loginData);
-        // ここで認証APIを呼び出す
-    };
+    // ログインエラーメッセージ
+    const [loginError, setLoginError] = useState<string | null>(null);
+    // ログイン成功メッセージ
+    const [loginSuccess, setLoginSuccess] = useState<string | null>(null);
+    // アクセストークン
+    const [accessToken, setAccessToken] = useState<string | null>(null);
 
-    const handleRegistrationSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    // フォーム送信ハンドラ
+    const handleLoginSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log("Registration submitted:", registrationData);
-        // ここでユーザー登録APIを呼び出す
+        setLoginError(null);
+        setLoginSuccess(null);
+        try {
+            const res = await apiClient.post("/auth/login", {
+                username: loginData.username,
+                password: loginData.password,
+            });
+            const token = res.data.access_token;
+            setAccessToken(token);
+            setLoginSuccess("ログイン成功！");
+            localStorage.setItem("access_token", token);
+        } catch (err: any) {
+            setLoginError(
+                err.response?.data?.error || "ログインに失敗しました"
+            );
+        }
     };
 
     // 入力変更ハンドラ - ログインフォーム
@@ -56,6 +72,36 @@ const LoginPageTailwind: React.FC = () => {
             ...loginData,
             [name]: value,
         });
+    };
+
+    // 登録フォーム送信ハンドラ
+    const handleRegistrationSubmit = async (
+        e: React.FormEvent<HTMLFormElement>
+    ) => {
+        e.preventDefault();
+        const token = accessToken || localStorage.getItem("access_token");
+        if (!token) {
+            alert("管理者でログインしてから新規登録してください");
+            return;
+        }
+        try {
+            await apiClient.post(
+                "/auth/register",
+                {
+                    username: registrationData.username,
+                    email: registrationData.email,
+                    password: registrationData.password,
+                    first_name: "管理者登録用",
+                    last_name: "テスト",
+                },
+                {
+                    headers: { Authorization: `Bearer ${token}` },
+                }
+            );
+            alert("ユーザー登録に成功しました！");
+        } catch (err: any) {
+            alert(err.response?.data?.error || "登録に失敗しました");
+        }
     };
 
     // 入力変更ハンドラ - 登録フォーム
@@ -150,6 +196,18 @@ const LoginPageTailwind: React.FC = () => {
                     onToggleMode={toggleSignupMode}
                     isSignupMode={isSignupMode}
                 />
+                {/* ログインエラーメッセージ */}
+                {loginError && (
+                    <div className="absolute top-2 left-1/2 -translate-x-1/2 text-red-500 text-sm z-[1100]">
+                        {loginError}
+                    </div>
+                )}
+                {/* ログイン成功メッセージ */}
+                {loginSuccess && (
+                    <div className="absolute top-2 left-1/2 -translate-x-1/2 text-green-600 text-sm z-[1100]">
+                        {loginSuccess}
+                    </div>
+                )}
 
                 {/* 登録フォーム */}
                 <RegistrationForm

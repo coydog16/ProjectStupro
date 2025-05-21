@@ -4,7 +4,7 @@
  */
 
 // バックエンドのベースURL
-export const API_BASE_URL = 'http://localhost:5000';
+export const API_BASE_URL = '/api';
 
 // APIリクエスト時のデフォルト設定
 export const API_CONFIG = {

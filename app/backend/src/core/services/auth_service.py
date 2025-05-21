@@ -47,13 +47,13 @@ class AuthService:
 
         # トークン生成
         access_token = create_access_token(
-            identity=user.id,
-            additional_claims=additional_claims,
-            expires_delta=access_expires
+            identity=str(user.id),
+            additional_claims=additional_claims,  # dict型のまま渡す
+            expires_delta=access_expires  # timedelta型のまま渡す
         )
 
         refresh_token = create_refresh_token(
-            identity=user.id,
+            identity=str(user.id),
             additional_claims=additional_claims,
             expires_delta=refresh_expires
         )

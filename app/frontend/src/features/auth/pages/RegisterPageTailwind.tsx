@@ -24,17 +24,34 @@ const RegisterPageTailwind: React.FC = () => {
         e.preventDefault();
         setMessage(null);
         setError(null);
+        // localStorageからトークンを取得
+        const token = localStorage.getItem("access_token");
+        if (!token) {
+            setError("管理者でログインしてから新規登録してください");
+            return;
+        }
+        const data = {
+            username: form.username,
+            email: form.email,
+            password: form.password,
+            first_name: form.firstName,
+            last_name: form.lastName,
+        };
+        console.log("送信データ", data);
         try {
-            await apiClient.post("/api/auth/register", {
-                username: form.username,
-                email: form.email,
-                password: form.password,
-                first_name: form.firstName,
-                last_name: form.lastName,
+            await apiClient.post("/auth/register", data, {
+                headers: { Authorization: `Bearer ${token}` },
             });
             setMessage("ユーザー登録に成功しました！");
         } catch (err: any) {
-            setError(err.response?.data?.error || "登録に失敗しました");
+            const apiError =
+                err.response?.data?.error ||
+                err.response?.data?.msg ||
+                err.response?.data?.detail ||
+                (Array.isArray(err.response?.data) &&
+                    err.response?.data[0]?.msg) ||
+                "登録に失敗しました";
+            setError(apiError);
         }
     };
 

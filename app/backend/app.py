@@ -24,6 +24,7 @@ from flask import Flask, jsonify
 from flask_cors import CORS
 from config import get_config  # type: ignore #
 from src.core.database import init_db  # データベース初期化関数
+from flask_jwt_extended import JWTManager
 
 
 def create_app(config_name="dev"):
@@ -38,6 +39,16 @@ def create_app(config_name="dev"):
 
     # データベースの初期化
     init_db(app)
+
+    # JWT設定のデフォルト値を明示的に追加
+    app.config.setdefault('JWT_TOKEN_LOCATION', ['headers'])
+    app.config.setdefault('JWT_COOKIE_SECURE', False)
+    app.config.setdefault('JWT_COOKIE_CSRF_PROTECT', False)
+    app.config.setdefault('JWT_HEADER_NAME', 'Authorization')
+    app.config.setdefault('JWT_HEADER_TYPE', 'Bearer')
+
+    # JWTManagerの初期化
+    JWTManager(app)
 
     # ヘルスチェックエンドポイント（フロントエンドからの接続確認用）
     @app.route("/api/health")
