@@ -34,7 +34,7 @@ def create_app(config_name="dev"):
     app.config.from_object(get_config(config_name))
 
     # CORSの設定
-    CORS(app)
+    CORS(app, resources={r"/api/*": {"origins": ["http://localhost:3000", "http://localhost:5173", "*"], "supports_credentials": True}})
 
     # データベースの初期化
     init_db(app)
