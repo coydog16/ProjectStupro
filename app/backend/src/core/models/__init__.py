@@ -6,7 +6,7 @@
 
 # 循環インポートを避けるために、実際の使用時にインポートする形に
 # 明示的なインポートとエクスポート
-from .user import User
+from .user_models import User
 
 # サブモジュールのインポートを簡素化
 __all__ = [
