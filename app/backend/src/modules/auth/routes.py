@@ -36,7 +36,7 @@ def login():
 
     # トークン生成
     token_data = AuthService.create_token(user)
-    user_info = UserResponse.from_orm(user).model_dump()
+    user_info = UserResponse.model_validate(user).model_dump()
     response = {
         "message": "ログイン成功",
         "user": user_info,
@@ -85,7 +85,7 @@ def register():
         )
         db.session.add(new_user)
         db.session.commit()
-        user_info = UserResponse.from_orm(new_user).model_dump()
+        user_info = UserResponse.model_validate(new_user).model_dump()
         return user_info, 201
     except IntegrityError:
         db.session.rollback()
@@ -115,5 +115,5 @@ def get_user_info():
     user = User.query.get(current_user_id)
     if not user:
         return jsonify({"error": "ユーザーが見つかりません"}), 404
-    user_info = UserResponse.from_orm(user).model_dump()
+    user_info = UserResponse.model_validate(user).model_dump()
     return jsonify({"user": user_info}), 200
