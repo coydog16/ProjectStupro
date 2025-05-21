@@ -23,7 +23,7 @@ services:
       - NODE_ENV=development
       - FLASK_APP=app/backend/app/app.py
       - FLASK_DEBUG=1
-      - DATABASE_URL=postgresql://navStupro:navStupro@db:5432/navstupro
+      - DATABASE_URL=${DATABASE_URL}
       - PYTHONPATH=/workspace/app/backend
     tty: true
     stdin_open: true
@@ -55,9 +55,9 @@ services:
     image: dpage/pgadmin4
     restart: always
     environment:
-      PGADMIN_DEFAULT_EMAIL: admin@example.com
-      PGADMIN_DEFAULT_PASSWORD: adminpassword
-      PGADMIN_CONFIG_SERVER_MODE: 'False'
+      - PGADMIN_DEFAULT_EMAIL=${PGADMIN_DEFAULT_EMAIL}
+      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_DEFAULT_PASSWORD}
+      - PGADMIN_CONFIG_SERVER_MODE='False'
     ports:
       - "8080:80"
     volumes:
