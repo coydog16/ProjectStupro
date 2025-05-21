@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Toaster, toast } from "react-hot-toast";
 import LoginForm from "../components/LoginForm";
 import RegistrationForm from "../components/RegistrationForm";
 import GlassmorphicBackground from "../components/GlassmorphicBackground";
@@ -33,22 +34,18 @@ const LoginPageTailwind: React.FC = () => {
     const [registrationData, setRegistrationData] = useState({
         username: "",
         email: "",
+        first_name: "",
+        last_name: "",
         password: "",
         confirmPassword: "",
     });
 
-    // ログインエラーメッセージ
-    const [loginError, setLoginError] = useState<string | null>(null);
-    // ログイン成功メッセージ
-    const [loginSuccess, setLoginSuccess] = useState<string | null>(null);
     // アクセストークン
     const [accessToken, setAccessToken] = useState<string | null>(null);
 
     // フォーム送信ハンドラ
     const handleLoginSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        setLoginError(null);
-        setLoginSuccess(null);
         try {
             const res = await apiClient.post("/auth/login", {
                 username: loginData.username,
@@ -56,12 +53,10 @@ const LoginPageTailwind: React.FC = () => {
             });
             const token = res.data.access_token;
             setAccessToken(token);
-            setLoginSuccess("ログイン成功！");
+            toast.success("Login successful!");
             localStorage.setItem("access_token", token);
         } catch (err: any) {
-            setLoginError(
-                err.response?.data?.error || "ログインに失敗しました"
-            );
+            toast.error(err.response?.data?.error || "Login failed");
         }
     };
 
@@ -81,7 +76,9 @@ const LoginPageTailwind: React.FC = () => {
         e.preventDefault();
         const token = accessToken || localStorage.getItem("access_token");
         if (!token) {
-            alert("管理者でログインしてから新規登録してください");
+            toast.error(
+                "Please log in as admin before registering a new user."
+            );
             return;
         }
         try {
@@ -98,9 +95,11 @@ const LoginPageTailwind: React.FC = () => {
                     headers: { Authorization: `Bearer ${token}` },
                 }
             );
-            alert("ユーザー登録に成功しました！");
+            toast.success("User registration successful!");
         } catch (err: any) {
-            alert(err.response?.data?.error || "登録に失敗しました");
+            toast.error(
+                err.response?.data?.error || "User registration failed"
+            );
         }
     };
 
@@ -196,18 +195,7 @@ const LoginPageTailwind: React.FC = () => {
                     onToggleMode={toggleSignupMode}
                     isSignupMode={isSignupMode}
                 />
-                {/* ログインエラーメッセージ */}
-                {loginError && (
-                    <div className="absolute top-2 left-1/2 -translate-x-1/2 text-red-500 text-sm z-[1100]">
-                        {loginError}
-                    </div>
-                )}
-                {/* ログイン成功メッセージ */}
-                {loginSuccess && (
-                    <div className="absolute top-2 left-1/2 -translate-x-1/2 text-green-600 text-sm z-[1100]">
-                        {loginSuccess}
-                    </div>
-                )}
+                <Toaster position="top-center" />
 
                 {/* 登録フォーム */}
                 <RegistrationForm
