@@ -33,3 +33,25 @@ body.signup {
     padding-right: 1rem;
     max-width: 80rem;
 }
+
+/* グラスモーフィズム共通クラス（トーストや背景で再利用） */
+.glassmorphic {
+    background: rgba(255, 255, 255, 0.18);
+    border: 1.5px solid rgba(255, 255, 255, 0.25);
+    box-shadow: 0 4px 32px 0 rgba(31, 38, 135, 0.37),
+        0 1.5px 4px 0 rgba(0, 0, 0, 0.08);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: 16px;
+}
+
+/* グラスモーフィズム共通クラス（背景・トーストで再利用） */
+.glassmorphic-bg {
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 14px;
+    box-shadow: 0 4px 32px 0 rgba(31, 38, 135, 0.37),
+        0 1.5px 4px 0 rgba(0, 0, 0, 0.08);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1.5px solid rgba(255, 255, 255, 0.25);
+}

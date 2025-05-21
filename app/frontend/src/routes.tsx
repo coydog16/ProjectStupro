@@ -1,6 +1,5 @@
 import { RouteObject } from "react-router-dom";
-import LoginPageTailwind from "./features/auth/pages/LoginPageTailwind";
-import RegisterPageTailwind from "./features/auth/pages/RegisterPageTailwind";
+import LoginPage from "./features/auth/pages/LoginPage";
 
 // ルート定義
 const routes: RouteObject[] = [
@@ -10,11 +9,7 @@ const routes: RouteObject[] = [
     },
     {
         path: "/login",
-        element: <LoginPageTailwind />,
-    },
-    {
-        path: "/register",
-        element: <RegisterPageTailwind />,
+        element: <LoginPage />,
     },
 ];
 

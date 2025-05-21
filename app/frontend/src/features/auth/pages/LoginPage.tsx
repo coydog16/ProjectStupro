@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { Toaster, toast } from "react-hot-toast";
 import LoginForm from "../components/LoginForm";
 import RegistrationForm from "../components/RegistrationForm";
 import GlassmorphicBackground from "../components/GlassmorphicBackground";
 import apiClient from "../../../api/axios";
+import GlassmorphicToaster, {
+    glassmorphicToast,
+} from "../components/GlassmorphicToaster";
 
 // Tailwindを使用したグラスモーフィズム風ログインページ
-const LoginPageTailwind: React.FC = () => {
+const LoginPage: React.FC = () => {
     // サインアップモード管理
     const [isSignupMode, setIsSignupMode] = useState<boolean>(false);
 
@@ -53,10 +55,10 @@ const LoginPageTailwind: React.FC = () => {
             });
             const token = res.data.access_token;
             setAccessToken(token);
-            toast.success("Login successful!");
+            glassmorphicToast("Login successful!");
             localStorage.setItem("access_token", token);
         } catch (err: any) {
-            toast.error(err.response?.data?.error || "Login failed");
+            glassmorphicToast(err.response?.data?.error || "Login failed");
         }
     };
 
@@ -76,7 +78,7 @@ const LoginPageTailwind: React.FC = () => {
         e.preventDefault();
         const token = accessToken || localStorage.getItem("access_token");
         if (!token) {
-            toast.error(
+            glassmorphicToast(
                 "Please log in as admin before registering a new user."
             );
             return;
@@ -95,9 +97,9 @@ const LoginPageTailwind: React.FC = () => {
                     headers: { Authorization: `Bearer ${token}` },
                 }
             );
-            toast.success("User registration successful!");
+            glassmorphicToast("User registration successful!");
         } catch (err: any) {
-            toast.error(
+            glassmorphicToast(
                 err.response?.data?.error || "User registration failed"
             );
         }
@@ -195,7 +197,7 @@ const LoginPageTailwind: React.FC = () => {
                     onToggleMode={toggleSignupMode}
                     isSignupMode={isSignupMode}
                 />
-                <Toaster position="top-center" />
+                <GlassmorphicToaster />
 
                 {/* 登録フォーム */}
                 <RegistrationForm
@@ -212,4 +214,4 @@ const LoginPageTailwind: React.FC = () => {
     );
 };
 
-export default LoginPageTailwind;
+export default LoginPage;
