@@ -11,6 +11,7 @@ __version__ = "0.1.0"
 
 # 必要なモジュールのインポート
 import sys
+from dotenv import load_dotenv; load_dotenv()
 from pathlib import Path
 
 # Pythonのパスを設定して、直下のsrcディレクトリを見つけられるようにする

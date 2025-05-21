@@ -32,6 +32,8 @@ services:
       - db
     networks:
       - navstupro
+    env_file:
+      - .env
 
   # データベース - PostgreSQL
   db:
@@ -57,7 +59,7 @@ services:
     environment:
       - PGADMIN_DEFAULT_EMAIL=${PGADMIN_DEFAULT_EMAIL}
       - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_DEFAULT_PASSWORD}
-      - PGADMIN_CONFIG_SERVER_MODE='False'
+      - PGADMIN_CONFIG_SERVER_MODE=True
     ports:
       - "8080:80"
     volumes:
