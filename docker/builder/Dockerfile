@@ -65,6 +65,9 @@ RUN npm install -g \
     prettier \
     typescript
 
+# pipをアップグレード（バージョン指定なしで最新へ）
+RUN python -m pip install --upgrade pip
+
 # Pythonの開発ツール
 RUN pip install --no-cache-dir \
     black \
