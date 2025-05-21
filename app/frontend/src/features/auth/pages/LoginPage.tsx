@@ -55,10 +55,12 @@ const LoginPage: React.FC = () => {
             });
             const token = res.data.access_token;
             setAccessToken(token);
-            glassmorphicToast("Login successful!");
+            glassmorphicToast("Login successful!", { variant: "success" });
             localStorage.setItem("access_token", token);
         } catch (err: any) {
-            glassmorphicToast(err.response?.data?.error || "Login failed");
+            glassmorphicToast(err.response?.data?.error || "Login failed", {
+                variant: "error",
+            });
         }
     };
 
@@ -79,7 +81,8 @@ const LoginPage: React.FC = () => {
         const token = accessToken || localStorage.getItem("access_token");
         if (!token) {
             glassmorphicToast(
-                "Please log in as admin before registering a new user."
+                "Please log in as admin before registering a new user.",
+                { variant: "error" }
             );
             return;
         }
@@ -90,18 +93,39 @@ const LoginPage: React.FC = () => {
                     username: registrationData.username,
                     email: registrationData.email,
                     password: registrationData.password,
-                    first_name: "管理者登録用",
-                    last_name: "テスト",
+                    first_name: registrationData.first_name,
+                    last_name: registrationData.last_name,
                 },
                 {
                     headers: { Authorization: `Bearer ${token}` },
                 }
             );
-            glassmorphicToast("User registration successful!");
+            glassmorphicToast("User registration successful!", {
+                variant: "success",
+            });
         } catch (err: any) {
-            glassmorphicToast(
-                err.response?.data?.error || "User registration failed"
-            );
+            // バリデーションエラー詳細も表示
+            if (err.response?.data?.details) {
+                const details = err.response.data.details;
+                if (details.missing_fields) {
+                    glassmorphicToast(
+                        `Required fields: ${details.missing_fields.join(", ")}`,
+                        { variant: "error" }
+                    );
+                }
+                Object.entries(details).forEach(([field, msg]) => {
+                    if (field !== "missing_fields") {
+                        glassmorphicToast(`${field}: ${msg}`, {
+                            variant: "error",
+                        });
+                    }
+                });
+            } else {
+                glassmorphicToast(
+                    err.response?.data?.error || "User registration failed",
+                    { variant: "error" }
+                );
+            }
         }
     };
 

@@ -4,15 +4,24 @@ import { Toaster, toast, Toast } from "react-hot-toast";
 // グラスモーフィズム風カスタムトースト本体
 export function glassmorphicToast(
     message: string | ((t: Toast) => React.ReactNode),
-    opts?: Parameters<typeof toast.custom>[1]
+    opts?: Parameters<typeof toast.custom>[1] & {
+        variant?: "success" | "error";
+    }
 ) {
     // duration: 3000ms（3秒）をデフォルトに
     const mergedOpts = { duration: 3000, ...opts };
     return toast.custom((t) => {
-        // アニメーション用クラスを状態で切り替え
-        const animClass = t.visible
-            ? "glassmorphic-fadeup-in"
-            : "glassmorphic-fadeup-out";
+        // variant: 'success' | 'error' | undefined で色分岐
+        const variant = (opts as any)?.variant;
+        let bgClass = "bg-black/30";
+        let background: string = "rgba(0,0,0,0.3)";
+        if (variant === "success") {
+            bgClass = "bg-green-500/60";
+            background = "rgba(34,197,94,0.55)"; // より鮮やかな緑
+        } else if (variant === "error") {
+            bgClass = "bg-red-500/60";
+            background = "rgba(239,68,68,0.55)"; // より鮮やかな赤
+        }
         return (
             <>
                 {/* CSS-in-JSでkeyframesを定義 */}
@@ -34,7 +43,7 @@ export function glassmorphicToast(
                         }
                     `}</style>
                 <div
-                    className={`relative flex-1 w-full max-w-md mx-auto rounded-[14px] z-50 bg-black/30 shadow-[0_4px_24px_0_rgba(0,0,0,0.22),0_1.5px_4px_0_rgba(0,0,0,0.13)] backdrop-blur-md pointer-events-auto`}
+                    className={`relative flex-1 w-full max-w-md mx-auto rounded-[14px] z-50 ${bgClass} shadow-[0_4px_24px_0_rgba(0,0,0,0.22),0_1.5px_4px_0_rgba(0,0,0,0.13)] backdrop-blur-md pointer-events-auto glassmorphic-fadeup-in`}
                     style={{
                         minWidth: 240,
                         maxWidth: "90vw",
@@ -51,6 +60,7 @@ export function glassmorphicToast(
                         letterSpacing: 0.5,
                         backdropFilter: "blur(5px)",
                         WebkitBackdropFilter: "blur(5px)",
+                        background,
                     }}
                 >
                     {/* before: 上部グラデ・ハイライト */}
