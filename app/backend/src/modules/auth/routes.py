@@ -48,10 +48,16 @@ def login():
 
 
 @auth_bp.route('/register', methods=['POST'])
+@jwt_required()
 def register():
     """新規ユーザー登録
-    ユーザー情報を受け取り、新しいユーザーを作成する
+    管理者のみが新規ユーザーを登録できる
     """
+    current_user_id = get_jwt_identity()
+    user = User.query.get(current_user_id)
+    if not user or not getattr(user, 'is_admin', False):
+        return jsonify({"error": "管理者のみ登録可能です"}), 403
+
     data = request.get_json()
     if not data:
         return jsonify({"error": "無効なリクエストデータ"}), 400
