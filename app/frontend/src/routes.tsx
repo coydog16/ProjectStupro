@@ -1,12 +1,13 @@
 import { RouteObject } from "react-router-dom";
 import LoginPage from "./features/auth/pages/LoginPage";
 import FeedPage from "./features/feed/pages/FeedPage";
+import DevHome from "./features/dev/DevHome";
 
 // ルート定義
 const routes: RouteObject[] = [
     {
         path: "/",
-        element: <div>nav</div>,
+        element: <DevHome />,
     },
     {
         path: "/login",
