@@ -1,4 +1,6 @@
 import { useState, useEffect } from "react";
+import DevMainInfo from "./components/DevMainInfo";
+import DevRouteInfo from "./components/DevRouteInfo";
 
 const DevHome = () => {
     const [count, setCount] = useState(0);
@@ -38,97 +40,21 @@ const DevHome = () => {
     };
 
     return (
-        <div className="relative min-h-screen flex items-center justify-center bg-[url('/img/nightForest.jpg')] bg-cover bg-center overflow-hidden">
-            <div className="relative z-10 w-full max-w-md mx-auto p-6 rounded-[18px] shadow-xl bg-black/30 backdrop-blur-lg border border-white/20">
-                <header className="mb-8 text-center">
-                    <h1 className="text-3xl font-bold text-white mb-2 drop-shadow font-sans tracking-tight">
-                        NavStupro Project
-                    </h1>
-                    <p className="text-base text-white/80 font-sans">
-                        ようこそ！フロントエンド開発環境へ
-                    </p>
-                </header>
-                <div className="flex flex-col gap-6 items-center w-full">
-                    <div className="flex justify-center w-full">
-                        <div className="w-[70%]">
-                            <button
-                                onClick={() => setCount((count) => count + 1)}
-                                className="px-4 py-2 bg-blue-400/30 text-white font-semibold rounded-lg shadow hover:bg-blue-500/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200 transition-colors backdrop-blur-md border border-white/30 font-sans w-full"
-                                style={{
-                                    minWidth: "120px",
-                                    maxWidth: "320px",
-                                    boxShadow:
-                                        "0 4px 24px 0 rgba(59,130,246,0.18), 0 1.5px 4px 0 rgba(59,130,246,0.13)",
-                                }}
-                            >
-                                カウント: {count}
-                            </button>
-                        </div>
+        <div className="relative min-h-screen flex items-center justify-center bg-[url('/img/DarkLake.jpg')] bg-cover bg-center overflow-hidden">
+            <div className="relative z-10 w-full max-w-4xl mx-auto p-6 rounded-[18px] shadow-xl bg-black/30 backdrop-blur-lg">
+                <div className="flex flex-col md:flex-row gap-8 w-full">
+                    <div className="flex-1 min-w-0">
+                        <DevMainInfo
+                            count={count}
+                            setCount={setCount}
+                            apiStatus={apiStatus}
+                            loading={loading}
+                            checkApiHealth={checkApiHealth}
+                        />
                     </div>
-                    <div className="flex justify-center w-full">
-                        <div className="w-[70%]">
-                            <h2 className="text-lg font-bold text-white mb-2 text-center font-sans">
-                                開発環境情報
-                            </h2>
-                            <ul className="list-disc pl-5 space-y-1 text-white/80 text-sm text-left font-sans">
-                                <li>React + TypeScript</li>
-                                <li>Tailwind CSS v4</li>
-                                <li>Vite - 高速な開発体験</li>
-                            </ul>
-                        </div>
+                    <div className="flex-1 min-w-0">
+                        <DevRouteInfo />
                     </div>
-                    <div className="flex justify-center w-full">
-                        <div className="w-[70%]">
-                            <h2 className="text-lg font-bold text-white mb-2 text-center font-sans">
-                                API接続チェック
-                            </h2>
-                            <div className="flex flex-col items-center">
-                                <button
-                                    onClick={checkApiHealth}
-                                    disabled={loading}
-                                    className="px-4 py-2 bg-green-400/30 text-white font-semibold rounded-lg shadow hover:bg-green-500/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-200 transition-colors disabled:opacity-50 backdrop-blur-md text-center font-sans w-full"
-                                    style={{
-                                        minWidth: "120px",
-                                        maxWidth: "320px",
-                                        boxShadow:
-                                            "0 4px 24px 0 rgba(34,197,94,0.18), 0 1.5px 4px 0 rgba(34,197,94,0.13)",
-                                    }}
-                                >
-                                    {loading
-                                        ? "チェック中..."
-                                        : "API接続チェック"}
-                                </button>
-                                {apiStatus.status && (
-                                    <div className="mt-3 p-3 text-white text-sm text-left font-sans w-full">
-                                        <p>
-                                            <strong>ステータス:</strong>{" "}
-                                            {apiStatus.status}
-                                        </p>
-                                        {apiStatus.message && (
-                                            <p>
-                                                <strong>メッセージ:</strong>{" "}
-                                                {apiStatus.message}
-                                            </p>
-                                        )}
-                                        {apiStatus.version && (
-                                            <p>
-                                                <strong>バージョン:</strong>{" "}
-                                                {apiStatus.version}
-                                            </p>
-                                        )}
-                                    </div>
-                                )}
-                                {apiStatus.error && (
-                                    <div className="mt-3 p-3 text-white rounded-lg text-sm text-left font-sans w-full">
-                                        {apiStatus.error}
-                                    </div>
-                                )}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div className="text-white/70 text-xs mt-6 text-center font-sans">
-                    <p>フロントエンド環境が正常に動作しています！</p>
                 </div>
             </div>
         </div>
