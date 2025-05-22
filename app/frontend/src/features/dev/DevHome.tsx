@@ -53,7 +53,13 @@ const DevHome = () => {
                         <div className="w-[70%]">
                             <button
                                 onClick={() => setCount((count) => count + 1)}
-                                className="px-4 py-2 bg-indigo-600/60 text-white font-semibold rounded-lg shadow hover:bg-indigo-700/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-300 transition-colors backdrop-blur-md border border-white/30 font-sans w-full"
+                                className="px-4 py-2 bg-blue-400/30 text-white font-semibold rounded-lg shadow hover:bg-blue-500/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200 transition-colors backdrop-blur-md border border-white/30 font-sans w-full"
+                                style={{
+                                    minWidth: "120px",
+                                    maxWidth: "320px",
+                                    boxShadow:
+                                        "0 4px 24px 0 rgba(59,130,246,0.18), 0 1.5px 4px 0 rgba(59,130,246,0.13)",
+                                }}
                             >
                                 カウント: {count}
                             </button>
