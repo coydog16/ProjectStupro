@@ -28,7 +28,7 @@ const DevMainInfo: React.FC<DevMainInfoProps> = ({
                     NavStupro Project
                 </h1>
                 <p className="text-base text-white/80 font-sans">
-                    ようこそ！フロントエンド開発環境へ
+                    Welcome to the front-end dev environment!
                 </p>
             </header>
             <div className="flex flex-col gap-6 items-center w-full">
@@ -44,19 +44,19 @@ const DevMainInfo: React.FC<DevMainInfoProps> = ({
                                     "0 4px 24px 0 rgba(99,102,241,0.18), 0 1.5px 4px 0 rgba(99,102,241,0.13)",
                             }}
                         >
-                            カウント: {count}
+                            Count: {count}
                         </button>
                     </div>
                 </div>
                 <div className="flex justify-center w-full">
                     <div className="w-[70%]">
                         <h2 className="text-lg font-bold text-white mb-2 text-center font-sans">
-                            開発環境情報
+                            dev env info
                         </h2>
                         <ul className="list-disc pl-5 space-y-1 text-white/80 text-sm text-left font-sans">
                             <li>React + TypeScript</li>
                             <li>Tailwind CSS v4</li>
-                            <li>Vite - 高速な開発体験</li>
+                            <li>Vite</li>
                         </ul>
                     </div>
                 </div>
@@ -69,9 +69,6 @@ const DevMainInfo: React.FC<DevMainInfoProps> = ({
                         />
                     </div>
                 </div>
-            </div>
-            <div className="text-white/70 text-xs mt-6 text-center font-sans">
-                <p>フロントエンド環境が正常に動作しています！</p>
             </div>
         </>
     );

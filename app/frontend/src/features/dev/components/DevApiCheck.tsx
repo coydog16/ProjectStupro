@@ -19,7 +19,7 @@ const DevApiCheck: React.FC<DevApiCheckProps> = ({
     return (
         <div className="w-full">
             <h2 className="text-lg font-bold text-white mb-2 text-center font-sans">
-                API接続チェック
+                API Connection Check
             </h2>
             <div className="flex flex-col items-center">
                 <button
@@ -33,21 +33,21 @@ const DevApiCheck: React.FC<DevApiCheckProps> = ({
                             "0 4px 24px 0 rgba(34,197,94,0.18), 0 1.5px 4px 0 rgba(34,197,94,0.13)",
                     }}
                 >
-                    {loading ? "チェック中..." : "API接続チェック"}
+                    {loading ? "Checking..." : "Check API Connection"}
                 </button>
                 {apiStatus.status && (
                     <div className="mt-3 p-3 text-white text-sm text-left font-sans w-full">
                         <p>
-                            <strong>ステータス:</strong> {apiStatus.status}
+                            <strong>Status:</strong> {apiStatus.status}
                         </p>
                         {apiStatus.message && (
                             <p>
-                                <strong>メッセージ:</strong> {apiStatus.message}
+                                <strong>Message:</strong> {apiStatus.message}
                             </p>
                         )}
                         {apiStatus.version && (
                             <p>
-                                <strong>バージョン:</strong> {apiStatus.version}
+                                <strong>Version:</strong> {apiStatus.version}
                             </p>
                         )}
                     </div>
@@ -55,6 +55,12 @@ const DevApiCheck: React.FC<DevApiCheckProps> = ({
                 {apiStatus.error && (
                     <div className="mt-3 p-3 text-white rounded-lg text-sm text-left font-sans w-full">
                         {apiStatus.error}
+                    </div>
+                )}
+                {/* APIエラーがない場合のみメッセージ表示 */}
+                {!apiStatus.error && (
+                    <div className="text-white/70 text-xs mt-6 text-center font-sans">
+                        <p>The frontend environment is running normally!</p>
                     </div>
                 )}
             </div>
