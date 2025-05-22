@@ -68,18 +68,9 @@ RUN npm install -g \
 # pipをアップグレード（バージョン指定なしで最新へ）
 RUN python -m pip install --upgrade pip
 
-# Pythonの開発ツール
-RUN pip install --no-cache-dir \
-    black \
-    isort \
-    flake8 \
-    mypy \
-    pytest \
-    sphinx \
-    sphinx-rtd-theme \
-    sphinx-autodoc-typehints \
-    sphinx-autobuild \
-    pexpect
+# Pythonの開発ツール（requirements-dev.txtで一元管理）
+COPY ./app/backend/requirements-dev.txt /tmp/backend/requirements-dev.txt
+RUN pip install --no-cache-dir -r /tmp/backend/requirements-dev.txt
 
 # バックエンド依存関係のインストール (requirements.txtがある場合)
 WORKDIR /tmp/backend
