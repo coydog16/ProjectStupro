@@ -1,5 +1,6 @@
 import { RouteObject } from "react-router-dom";
 import LoginPage from "./features/auth/pages/LoginPage";
+import FeedPage from "./features/feed/pages/FeedPage";
 
 // ルート定義
 const routes: RouteObject[] = [
@@ -13,6 +14,7 @@ const routes: RouteObject[] = [
     },
     {
         path: "/feed",
+        element: <FeedPage />,
     },
 ];
 
