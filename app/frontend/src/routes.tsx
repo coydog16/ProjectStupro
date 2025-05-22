@@ -11,6 +11,9 @@ const routes: RouteObject[] = [
         path: "/login",
         element: <LoginPage />,
     },
+    {
+        path: "/feed",
+    },
 ];
 
 export default routes;
