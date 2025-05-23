@@ -3,7 +3,7 @@
 管理者1名＋一般ユーザー5名を作成します
 """
 from src.core.database import db
-from src.core.models.user_models import User
+from src.core.models.user_model import User
 from src.core.security import get_password_hash
 import sys
 from pathlib import Path

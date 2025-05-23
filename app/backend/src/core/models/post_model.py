@@ -34,7 +34,7 @@ class Post(db.Model):
     task_completed = db.Column(db.Boolean, default=False)
     task_completed_at = db.Column(db.DateTime)
     is_deleted = db.Column(db.Boolean, default=False)
-    post_type = db.Column(db.String(20), default='normal')  # 'normal', 'article', 'task' など
+    post_type = db.Column(db.String(20), default='feed')  # 'feed', 'article', 'task' など
     created_at = db.Column(db.DateTime, default=get_jst_now)
     updated_at = db.Column(db.DateTime, default=get_jst_now, onupdate=get_jst_now)
 

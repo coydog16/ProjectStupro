@@ -18,6 +18,7 @@ def get_jst_now():
 
 class User(db.Model):
     """ユーザーモデル - 認証・権限管理を担当"""
+    __tablename__ = 'users'
     # 基本属性
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(50), unique=True, nullable=False)
