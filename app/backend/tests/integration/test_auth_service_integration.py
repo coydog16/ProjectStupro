@@ -7,7 +7,7 @@ import pytest
 from datetime import datetime, timedelta
 from unittest.mock import patch, MagicMock
 from src.core.services.auth_service import AuthService
-from src.core.models.user_models import User
+from src.core.models.user_model import User
 
 
 @pytest.fixture
