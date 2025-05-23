@@ -45,18 +45,21 @@ def create_posts(users):
             is_task = post_type == 'task'
             is_article = post_type == 'article'
             now = datetime.now(tz=JST)
+            # 作成日を5〜20日前、期限日を作成日+1〜5日後に
+            created_at = now - timedelta(days=randint(5, 20))
+            task_due_date = created_at + timedelta(days=randint(1, 5)) if is_task else None
             post = Post(
                 user_id=user.id,
                 content=fake.text(max_nb_chars=200) if not is_article else fake.text(max_nb_chars=800),
                 is_pinned=fake.boolean(chance_of_getting_true=10),
                 pin_date=now if fake.boolean(chance_of_getting_true=10) else None,
                 is_task=is_task,
-                task_due_date=now + timedelta(days=randint(1, 30)) if is_task else None,
+                task_due_date=task_due_date,
                 task_completed=fake.boolean(chance_of_getting_true=30) if is_task else False,
                 task_completed_at=now + timedelta(days=randint(1, 30)) if is_task and fake.boolean(chance_of_getting_true=30) else None,
                 is_deleted=False,
                 post_type=post_type,
-                created_at=now - timedelta(days=randint(0, 30)),
+                created_at=created_at,
                 updated_at=now,
             )
             db.session.add(post)
@@ -71,5 +74,6 @@ def main():
 
 if __name__ == '__main__':
     from src.core.database import db
-    with db.session.begin():
+    from app import app  # Flaskアプリをimport
+    with app.app_context():  # アプリケーションコンテキストでラップ
         main()

@@ -10,11 +10,12 @@ interface UserInfoProps {
 
 const UserInfo: React.FC<UserInfoProps> = ({ user, tasks }) => (
     <div className="w-full relative" style={{ minHeight: "180px" }}>
-        {/* グラデーション背景（ダークモード強調・彩度控えめ） */}
-        <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-gray-900 via-gray-950 to-gray-800" />
-        {/* ユーザー情報 */}
+        {/* ユーザー情報エリア */}
         <div className="relative z-10 flex flex-row items-center pt-6 pl-8">
-            <div className="w-20 h-20 rounded-full border-4 border-gray-900 bg-gray-800 flex items-center justify-center overflow-hidden shadow-lg">
+            <div
+                className="w-20 h-20 rounded-full flex items-center justify-center overflow-hidden shadow-lg"
+                style={{ background: "#556a8b" }}
+            >
                 {user?.avatar_image_id ? (
                     <img
                         src={`/api/images/${user.avatar_image_id}`}
@@ -22,19 +23,37 @@ const UserInfo: React.FC<UserInfoProps> = ({ user, tasks }) => (
                         className="w-full h-full object-cover"
                     />
                 ) : (
-                    <span className="text-3xl text-gray-400 font-bold">
+                    <span
+                        className="text-3xl font-bold"
+                        style={{ color: "#fffde7" }}
+                    >
                         {user?.full_name?.[0] || user?.username?.[0] || "?"}
                     </span>
                 )}
             </div>
-            <div className="ml-4 text-left">
-                <div className="text-xl font-bold text-gray-200">
+            <div className="ml-4 text-left relative">
+                {/* 名前の背景にうっすら黒い放射状グラデーション */}
+                <div
+                    className="absolute left-0 top-1/2 -translate-y-1/2 w-full h-10 pointer-events-none"
+                    style={{
+                        background:
+                            "radial-gradient(circle at 50% 50%, rgba(0,0,0,0.18) 0%, rgba(0,0,0,0.08) 60%, rgba(0,0,0,0) 100%)",
+                        zIndex: 0,
+                        filter: "blur(1.5px)",
+                    }}
+                />
+                <div
+                    className="text-xl font-bold relative z-10"
+                    style={{ color: "#fffde7" }}
+                >
                     {getDisplayName(user)}
                 </div>
-                <div className="text-gray-500 text-sm">@{user?.username}</div>
+                <div className="text-gray-200 text-sm relative z-10">
+                    @{user?.username}
+                </div>
             </div>
         </div>
-        {/* タスクリスト */}
+        {/* タスクリストエリア */}
         <div className="relative z-10 mt-4 w-full flex justify-center">
             <TaskList tasks={tasks} />
         </div>
