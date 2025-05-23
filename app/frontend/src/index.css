@@ -2,21 +2,25 @@
 
 /* テーマのカスタマイズ - Tailwind CSS v4のCSS-first設定 */
 @theme {
-  --color-gray-50: oklch(0.98 0.003 260);
-  --color-gray-900: oklch(0.2 0.02 260);
-  --spacing: 0.25rem;
+    --color-gray-50: oklch(0.98 0.003 260);
+    --color-gray-900: oklch(0.2 0.02 260);
+    --spacing: 0.25rem;
 }
 
 /* カスタムスタイル */
 body {
-  background-color: var(--color-gray-50);
-  color: var(--color-gray-900);
+    background-color: var(--color-gray-50);
+    color: var(--color-gray-900);
 }
 
 .container {
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: 1rem;
-  padding-right: 1rem;
-  max-width: 80rem;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    max-width: 80rem;
+}
+
+* {
+    font-family: "Noto Sans JP", sans-serif;
 }

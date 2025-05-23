@@ -25,6 +25,8 @@ def get_feed_handler():
             'id': user.id,
             'username': user.username,
             'full_name': user.full_name,
+            'first_name': user.first_name,
+            'last_name': user.last_name,
             'avatar_image_id': getattr(user, 'avatar_image_id', None)
         } if user else None
         result.append(post_dict)
