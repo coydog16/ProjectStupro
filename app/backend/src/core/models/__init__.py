@@ -10,5 +10,5 @@ from .user_model import User
 
 # サブモジュールのインポートを簡素化
 __all__ = [
-    'User',
+    "User",
 ]

@@ -1,6 +1,6 @@
-import DevHome from "./features/dev/DevHome";
-import LoginPage from "./features/auth/pages/LoginPage";
-import FeedPage from "./features/feed/pages/FeedPage";
+import DevHome from './features/dev/DevHome';
+import LoginPage from './features/auth/pages/LoginPage';
+import FeedPage from './features/feed/pages/FeedPage';
 
 interface LabeledRoute {
     path: string;
@@ -11,19 +11,19 @@ interface LabeledRoute {
 // ルート定義
 const routes: LabeledRoute[] = [
     {
-        path: "/",
+        path: '/',
         element: <DevHome />,
-        label: "DevHome",
+        label: 'DevHome',
     },
     {
-        path: "/login",
+        path: '/login',
         element: <LoginPage />,
-        label: "LoginPage",
+        label: 'LoginPage',
     },
     {
-        path: "/feed",
+        path: '/feed',
         element: <FeedPage />,
-        label: "FeedPage",
+        label: 'FeedPage',
     },
 ];
 

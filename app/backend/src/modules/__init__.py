@@ -4,6 +4,7 @@
 このファイルではすべてのFlaskブループリントを集約し、
 アプリケーションへの登録を容易にします。
 """
+
 from src.modules.auth.routes import auth_bp
 from src.modules.feed.routes import feed_bp  # feed_bpのインポートを追加
 

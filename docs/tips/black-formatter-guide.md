@@ -7,8 +7,8 @@ Black は、Python コードを自動で整形してくれるフォーマッタ�
 1. [Black とは](#blackとは)
 2. [設定方法](#設定方法)
 3. [使い方](#使い方)
-   - [VSCode での使用方法](#vscodeでの使用方法)
-   - [コマンドラインでの使用方法](#コマンドラインでの使用方法)
+    - [VSCode での使用方法](#vscodeでの使用方法)
+    - [コマンドラインでの使用方法](#コマンドラインでの使用方法)
 4. [プロジェクト全体のフォーマット](#プロジェクト全体のフォーマット)
 5. [カスタム設定](#カスタム設定)
 6. [トラブルシューティング](#トラブルシューティング)
@@ -40,17 +40,17 @@ VSCode で Black を使用する方法はいくつかあります：
 
 1. **自動フォーマット**：
 
-   - ファイルを保存すると自動的にフォーマットが適用されます（設定済み）
+    - ファイルを保存すると自動的にフォーマットが適用されます（設定済み）
 
 2. **手動フォーマット**：
 
-   - キーボードショートカット: `Shift+Alt+F`（Windows/Linux）または `Shift+Option+F`（Mac）
-   - 右クリックメニューから「ドキュメントのフォーマット」を選択
-   - コマンドパレット（`Ctrl+Shift+P`）から「Format Document」を実行
+    - キーボードショートカット: `Shift+Alt+F`（Windows/Linux）または `Shift+Option+F`（Mac）
+    - 右クリックメニューから「ドキュメントのフォーマット」を選択
+    - コマンドパレット（`Ctrl+Shift+P`）から「Format Document」を実行
 
 3. **フォーマッターの選択**：
-   - ステータスバーの右下に表示される「Select Formatter」から Black を選択できます
-   - すでに「Black Formatter」が選択されている場合は、そのまま使用できます
+    - ステータスバーの右下に表示される「Select Formatter」から Black を選択できます
+    - すでに「Black Formatter」が選択されている場合は、そのまま使用できます
 
 ### コマンドラインでの使用方法
 
@@ -119,38 +119,38 @@ exclude = '''                   # 除外対象ファイル
 
 1. **Black がインストールされていない**
 
-   ```bash
-   pip install black==23.3.0
-   ```
+    ```bash
+    pip install black==23.3.0
+    ```
 
 2. **VSCode が自動フォーマットしない**
 
-   - 以下の設定が `.vscode/settings.json` にあることを確認：
+    - 以下の設定が `.vscode/settings.json` にあることを確認：
 
-   ```json
-   {
-     "editor.formatOnSave": true,
-     "[python]": {
-       "editor.defaultFormatter": "ms-python.black-formatter",
-       "editor.formatOnSave": true
-     }
-   }
-   ```
+    ```json
+    {
+        "editor.formatOnSave": true,
+        "[python]": {
+            "editor.defaultFormatter": "ms-python.black-formatter",
+            "editor.formatOnSave": true
+        }
+    }
+    ```
 
-   - Black 拡張機能がインストールされていることを確認
+    - Black 拡張機能がインストールされていることを確認
 
 3. **フォーマットエラーが発生する**
 
-   - 構文エラーのあるコードは Black でフォーマットできません
-   - まずは Python コードの構文エラーを修正してください
+    - 構文エラーのあるコードは Black でフォーマットできません
+    - まずは Python コードの構文エラーを修正してください
 
 4. **特定のコードブロックをフォーマットから除外したい**
-   - 以下のコメントを使用して Black によるフォーマットを無効にできます：
-   ```python
-   # fmt: off
-   特別にフォーマットしたくないコード
-   # fmt: on
-   ```
+    - 以下のコメントを使用して Black によるフォーマットを無効にできます：
+    ```python
+    # fmt: off
+    特別にフォーマットしたくないコード
+    # fmt: on
+    ```
 
 ---
 

@@ -1,5 +1,5 @@
-import React from "react";
-import { FormInput, SubmitButton, FormTitle } from "./FormComponents";
+import React from 'react';
+import { FormInput, SubmitButton, FormTitle } from './FormComponents';
 interface RegistrationFormProps {
     registrationData: {
         username: string;
@@ -10,9 +10,7 @@ interface RegistrationFormProps {
         confirmPassword: string;
     };
     handleRegistrationSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
-    handleRegistrationInputChange: (
-        e: React.ChangeEvent<HTMLInputElement>
-    ) => void;
+    handleRegistrationInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     toggleSignupMode: (isSignup: boolean) => void;
     isSignupMode: boolean;
 }
@@ -32,8 +30,8 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
       absolute inset-0 flex justify-center items-center flex-col w-full gap-[15px] z-[40]
       transition-all duration-500 ease-in-out transform ${
           isSignupMode
-              ? "opacity-100 pointer-events-auto translate-x-0"
-              : "opacity-0 pointer-events-none translate-x-[100%]"
+              ? 'opacity-100 pointer-events-auto translate-x-0'
+              : 'opacity-0 pointer-events-none translate-x-[100%]'
       }
     `}
         >

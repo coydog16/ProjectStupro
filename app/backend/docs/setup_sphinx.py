@@ -16,26 +16,26 @@ print(f"リリースバージョン: {release_version or '(空)'}")
 # pexpectを使って対話的なプロセスを自動化
 try:
     # sphinx-quickstartプロセスを開始（タイムアウトを長めに設定）
-    child = pexpect.spawn('sphinx-quickstart', timeout=60)
+    child = pexpect.spawn("sphinx-quickstart", timeout=60)
 
     # 標準出力にも表示するとデバッグしやすい
     child.logfile = sys.stdout.buffer
 
     # 各プロンプトに自動回答（正規表現を緩めに設定）
-    child.expect(['eparate source', 'eparate source and build'])
-    child.sendline('n')  # ソースとビルドディレクトリを分けない
+    child.expect(["eparate source", "eparate source and build"])
+    child.sendline("n")  # ソースとビルドディレクトリを分けない
 
-    child.expect(['roject name', 'Project name'])
+    child.expect(["roject name", "Project name"])
     child.sendline(project_name)
 
-    child.expect(['uthor name', 'Author name'])
+    child.expect(["uthor name", "Author name"])
     child.sendline(author_name)
 
-    child.expect(['elease', 'Project release'])
+    child.expect(["elease", "Project release"])
     child.sendline(release_version)
 
-    child.expect(['anguage', 'Project language'])
-    child.sendline('ja')  # 日本語を選択
+    child.expect(["anguage", "Project language"])
+    child.sendline("ja")  # 日本語を選択
 
     # プロセスが終了するのを待つ
     child.expect(pexpect.EOF)

@@ -1,4 +1,4 @@
-import React, { InputHTMLAttributes } from "react";
+import React, { InputHTMLAttributes } from 'react';
 
 // 共通の入力フィールドコンポーネント
 interface FormInputProps extends InputHTMLAttributes<HTMLInputElement> {
@@ -13,7 +13,7 @@ export const FormInput: React.FC<FormInputProps> = ({
     placeholder,
     value,
     onChange,
-    type = "text",
+    type = 'text',
     ...props
 }) => {
     return (
@@ -55,8 +55,6 @@ interface FormTitleProps {
 
 export const FormTitle: React.FC<FormTitleProps> = ({ title }) => {
     return (
-        <h2 className="relative text-white text-[1.5em] tracking-[0.1em] uppercase font-[500] mb-[10px]">
-            {title}
-        </h2>
+        <h2 className="relative text-white text-[1.5em] tracking-[0.1em] uppercase font-[500] mb-[10px]">{title}</h2>
     );
 };

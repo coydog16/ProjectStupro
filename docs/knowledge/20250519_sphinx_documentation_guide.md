@@ -24,10 +24,10 @@ RUN pip install --no-cache-dir \
 
 追加したパッケージ：
 
--   `sphinx`: ドキュメント生成ツール本体
--   `sphinx-rtd-theme`: Read the Docs 風のテーマ（見やすく整理されたスタイル）
--   `sphinx-autodoc-typehints`: Python 型ヒントを自動的にドキュメントに反映させるプラグイン
--   `sphinx-autobuild`: ドキュメントの変更をリアルタイムでプレビューするツール
+- `sphinx`: ドキュメント生成ツール本体
+- `sphinx-rtd-theme`: Read the Docs 風のテーマ（見やすく整理されたスタイル）
+- `sphinx-autodoc-typehints`: Python 型ヒントを自動的にドキュメントに反映させるプラグイン
+- `sphinx-autobuild`: ドキュメントの変更をリアルタイムでプレビューするツール
 
 ## セットアップスクリプト
 
@@ -46,10 +46,10 @@ python setup_sphinx.py
 
 このスクリプトは以下の処理を行います：
 
--   プロジェクト名、著者名の設定
--   ソースディレクトリとビルドディレクトリを分けない設定
--   日本語を選択
--   `pexpect` を使用して対話的なプロセスを自動化
+- プロジェクト名、著者名の設定
+- ソースディレクトリとビルドディレクトリを分けない設定
+- 日本語を選択
+- `pexpect` を使用して対話的なプロセスを自動化
 
 このスクリプトは初期設定の記録として保持していますが、**新規メンバーも含め、現在は使用しません**。
 
@@ -128,7 +128,7 @@ sphinx-autobuild . _build/html --host 0.0.0.0 --port 8000
 
 ## 参考リンク
 
--   [Sphinx 公式ドキュメント](https://www.sphinx-doc.org/ja/master/)
--   [reStructuredText 入門](https://www.sphinx-doc.org/ja/master/usage/restructuredtext/basics.html)
--   [sphinx-autodoc-typehints](https://github.com/tox-dev/sphinx-autodoc-typehints)
--   [sphinx-rtd-theme](https://sphinx-rtd-theme.readthedocs.io/en/stable/)
+- [Sphinx 公式ドキュメント](https://www.sphinx-doc.org/ja/master/)
+- [reStructuredText 入門](https://www.sphinx-doc.org/ja/master/usage/restructuredtext/basics.html)
+- [sphinx-autodoc-typehints](https://github.com/tox-dev/sphinx-autodoc-typehints)
+- [sphinx-rtd-theme](https://sphinx-rtd-theme.readthedocs.io/en/stable/)

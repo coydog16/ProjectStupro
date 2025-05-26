@@ -3,6 +3,7 @@ AuthServiceのテスト
 
 ユーザー認証、トークン生成、ユーザー登録機能のテスト
 """
+
 import pytest
 from datetime import datetime, timedelta
 from unittest.mock import patch, MagicMock
@@ -28,7 +29,7 @@ class TestAuthService:
 
     def test_auth_user_success(self, mock_user):
         """正しい認証情報でユーザー認証が成功するかテスト"""
-        with patch('src.core.services.auth_service.User') as MockUser:
+        with patch("src.core.services.auth_service.User") as MockUser:
             # モックのセットアップ
             mock_query = MagicMock()
             MockUser.query = mock_query
@@ -36,7 +37,7 @@ class TestAuthService:
             mock_query.filter.return_value = mock_filter
             mock_filter.first.return_value = mock_user
 
-            with patch('src.core.services.auth_service.verify_password', return_value=True):
+            with patch("src.core.services.auth_service.verify_password", return_value=True):
                 # テスト実行
                 result = AuthService.auth_user("test_user", "correct_password")
 
@@ -46,7 +47,7 @@ class TestAuthService:
 
     def test_auth_user_invalid_credentials(self, mock_user):
         """不正な認証情報でユーザー認証が失敗するかテスト"""
-        with patch('src.core.services.auth_service.User') as MockUser:
+        with patch("src.core.services.auth_service.User") as MockUser:
             # モックのセットアップ
             mock_query = MagicMock()
             MockUser.query = mock_query
@@ -54,7 +55,7 @@ class TestAuthService:
             mock_query.filter.return_value = mock_filter
             mock_filter.first.return_value = mock_user
 
-            with patch('src.core.services.auth_service.verify_password', return_value=False):
+            with patch("src.core.services.auth_service.verify_password", return_value=False):
                 # テスト実行
                 result = AuthService.auth_user("test_user", "wrong_password")
 
@@ -63,7 +64,7 @@ class TestAuthService:
 
     def test_auth_user_user_not_found(self):
         """存在しないユーザーで認証が失敗するかテスト"""
-        with patch('src.core.services.auth_service.User') as MockUser:
+        with patch("src.core.services.auth_service.User") as MockUser:
             # モックのセットアップ
             mock_query = MagicMock()
             MockUser.query = mock_query
@@ -79,9 +80,11 @@ class TestAuthService:
 
     def test_create_token(self, mock_user):
         """トークン生成機能のテスト"""
-        with patch('src.core.services.auth_service.create_access_token') as mock_access_token, \
-             patch('src.core.services.auth_service.create_refresh_token') as mock_refresh_token, \
-             patch('src.core.services.auth_service.datetime') as mock_datetime:
+        with (
+            patch("src.core.services.auth_service.create_access_token") as mock_access_token,
+            patch("src.core.services.auth_service.create_refresh_token") as mock_refresh_token,
+            patch("src.core.services.auth_service.datetime") as mock_datetime,
+        ):
 
             # モックの設定
             mock_access_token.return_value = "fake_access_token"
@@ -103,9 +106,14 @@ class TestAuthService:
 
     def test_register_user(self):
         """ユーザー登録機能のテスト"""
-        with patch('src.core.services.auth_service.get_password_hash', return_value="hashed_pw"), \
-             patch('src.core.services.auth_service.User') as MockUser, \
-             patch('src.core.database.db') as mock_db:
+        with (
+            patch(
+                "src.core.services.auth_service.get_password_hash",
+                return_value="hashed_pw",
+            ),
+            patch("src.core.services.auth_service.User") as MockUser,
+            patch("src.core.database.db") as mock_db,
+        ):
 
             # モックの設定
             new_user_instance = MockUser.return_value
@@ -116,7 +124,7 @@ class TestAuthService:
                 password="password123",
                 username="new_user",
                 first_name="New",
-                last_name="User"
+                last_name="User",
             )
 
             # 検証
@@ -126,7 +134,7 @@ class TestAuthService:
                 username="new_user",
                 password_hash="hashed_pw",
                 first_name="New",
-                last_name="User"
+                last_name="User",
             )
             mock_db.session.add.assert_called_once_with(new_user_instance)
             mock_db.session.commit.assert_called_once()

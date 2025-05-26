@@ -1,14 +1,11 @@
-import React from "react";
+import React from 'react';
 
 interface GlassmorphicBackgroundProps {
     isSignupMode: boolean;
     animationClass: string;
 }
 
-const GlassmorphicBackground: React.FC<GlassmorphicBackgroundProps> = ({
-    isSignupMode,
-    animationClass,
-}) => {
+const GlassmorphicBackground: React.FC<GlassmorphicBackgroundProps> = ({ isSignupMode, animationClass }) => {
     return (
         <>
             {/* グラスモーフィズム背景 - 条件付きレンダリングで背景を完全に切り替え */}

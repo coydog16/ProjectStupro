@@ -6,12 +6,12 @@
 
 ## 📱 主な機能
 
--   **つぶやき機能** - 学習の進捗報告や日々の気づきを共有
--   **ユーザープロフィール** - 社員のプロフィールや得意技術を表示
--   **認証管理** - ユーザー認証と権限管理
--   **SNS 機能** - より充実したソーシャルネットワーク機能
--   **記事投稿機能** - 技術記事や学習記録の共有
--   **ToDo リスト機能** - 学習タスク管理
+- **つぶやき機能** - 学習の進捗報告や日々の気づきを共有
+- **ユーザープロフィール** - 社員のプロフィールや得意技術を表示
+- **認証管理** - ユーザー認証と権限管理
+- **SNS 機能** - より充実したソーシャルネットワーク機能
+- **記事投稿機能** - 技術記事や学習記録の共有
+- **ToDo リスト機能** - 学習タスク管理
 
 他、開発者のアイデア次第で色んな機能を実装予定です！
 
@@ -25,11 +25,11 @@ ProjectStupro は**垂直スライス型モジュラーモノリス**アーキ�
 
 ### 技術スタック
 
--   **バックエンド**: Flask 2.2.3 (Python 3.11)
--   **フロントエンド**: React + TypeScript + Vite
--   **CSS**: Tailwind CSS v4
--   **データベース**: PostgreSQL
--   **開発環境**: Docker Compose
+- **バックエンド**: Flask 2.2.3 (Python 3.11)
+- **フロントエンド**: React + TypeScript + Vite
+- **CSS**: Tailwind CSS v4
+- **データベース**: PostgreSQL
+- **開発環境**: Docker Compose
 
 ### プロジェクト構成
 
@@ -58,9 +58,9 @@ app/
 
 ### 前提条件
 
--   Docker と Docker Compose （DockerDesktop）がインストールされていること。
--   Git クライアントがインストールされていること。
--   Mac/Windows の場合は Linux 仮想環境が用意されていること。
+- Docker と Docker Compose （DockerDesktop）がインストールされていること。
+- Git クライアントがインストールされていること。
+- Mac/Windows の場合は Linux 仮想環境が用意されていること。
 
 ### 初回セットアップ
 
@@ -146,14 +146,14 @@ docker compose exec backend flask db upgrade
 
 #### 6. **アプリケーションにアクセスする**
 
--   バックエンド API: http://localhost:5000
--   フロントエンド: http://localhost:3000
+- バックエンド API: http://localhost:5000
+- フロントエンド: http://localhost:3000
 
 ## 💻 開発ワークフロー
 
 ProjectStupro の開発に参加する際は、以下の開発ワークフローガイドに従ってください：
 
--   [開発ワークフロー ガイド](docs/knowledge/20250519_development_workflow_guide.md)
+- [開発ワークフロー ガイド](docs/knowledge/20250519_development_workflow_guide.md)
 
 コーディングスタイル、Git ブランチ戦略、コミットメッセージのルールなど、プロジェクトの標準的な開発プラクティスについて説明しています。
 
@@ -165,15 +165,15 @@ ProjectStupro の開発に参加する際は、以下の開発ワークフロー
 
 ### その他ドキュメント
 
--   [データベース設計](docs/Overview/database_design.md)
--   [モジュール概要](docs/Overview/modules.md)
--   [開発ガイド](docs/Overview/developer_guide.md)
+- [データベース設計](docs/Overview/database_design.md)
+- [モジュール概要](docs/Overview/modules.md)
+- [開発ガイド](docs/Overview/developer_guide.md)
 
 ### 開発ツール
 
--   [Sphinx ドキュメント生成ガイド](docs/knowledge/20250519_sphinx_documentation_guide.md)
--   [Black フォーマッターガイド](docs/tips/black-formatter-guide.md)
--   [スクリプトランチャーガイド](docs/tips/script-launcher-guide.md)
+- [Sphinx ドキュメント生成ガイド](docs/knowledge/20250519_sphinx_documentation_guide.md)
+- [Black フォーマッターガイド](docs/tips/black-formatter-guide.md)
+- [スクリプトランチャーガイド](docs/tips/script-launcher-guide.md)
 
 ## 🛠️ スクリプト
 
@@ -224,7 +224,7 @@ HOST_UID=$(id -u) HOST_GID=$(id -g) docker compose up -d
 
 ## 👥 貢献者
 
--   開発チーム
+- 開発チーム
 
 ## 📄 ライセンス
 

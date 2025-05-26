@@ -1,8 +1,8 @@
-import React from "react";
-import { FeedPost } from "../types";
-import { getDisplayName } from "./utils";
+import React from 'react';
+import { FeedPost } from '../types';
+import { getDisplayName } from './utils';
 
-export type FeedFilterType = "all" | "self";
+export type FeedFilterType = 'all' | 'self';
 
 // 全投稿を返すフィルタ関数
 export function filterAllFeed(posts: FeedPost[]): FeedPost[] {
@@ -23,26 +23,18 @@ interface FeedListProps {
 
 const FeedList: React.FC<FeedListProps> = ({ posts, filterType, userId }) => {
     // 投稿リストをフィルタリング
-    const filteredPosts =
-        filterType === "self"
-            ? filterSelfFeed(posts, userId)
-            : filterAllFeed(posts);
+    const filteredPosts = filterType === 'self' ? filterSelfFeed(posts, userId) : filterAllFeed(posts);
 
     if (filteredPosts.length === 0) {
         return (
             <p className="text-gray-500 text-center py-8">
-                {filterType === "self"
-                    ? "自分の投稿はありません"
-                    : "投稿はありません"}
+                {filterType === 'self' ? '自分の投稿はありません' : '投稿はありません'}
             </p>
         );
     }
 
     return (
-        <div
-            className="w-full flex flex-col items-center"
-            style={{ background: "#232225", color: "#e0e0e0" }}
-        >
+        <div className="w-full flex flex-col items-center" style={{ background: '#232225', color: '#e0e0e0' }}>
             {filteredPosts.map((post) => (
                 <div
                     key={post.id}
@@ -60,13 +52,11 @@ const FeedList: React.FC<FeedListProps> = ({ posts, filterType, userId }) => {
                             <div
                                 className="w-12 h-12 rounded-full flex items-center justify-center text-xl font-bold"
                                 style={{
-                                    background: "#556a8b",
-                                    color: "#fffde7",
+                                    background: '#556a8b',
+                                    color: '#fffde7',
                                 }}
                             >
-                                {post.user?.full_name?.[0] ||
-                                    post.user?.username?.[0] ||
-                                    "?"}
+                                {post.user?.full_name?.[0] || post.user?.username?.[0] || '?'}
                             </div>
                         )}
                     </div>

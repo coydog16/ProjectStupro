@@ -1,6 +1,7 @@
 """
 データベース接続モジュール
 """
+
 # ここにデータベース接続設定を追加します
 
 from flask_sqlalchemy import SQLAlchemy
@@ -11,6 +12,7 @@ db = SQLAlchemy()
 
 # Migrateインスタンスを作成
 migrate = Migrate()
+
 
 def init_db(app):
     """

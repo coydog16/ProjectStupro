@@ -3,6 +3,7 @@ AuthServiceモック統合テスト
 
 データベースを使用せずにAuthServiceをテストします
 """
+
 import pytest
 from datetime import datetime, timedelta
 from unittest.mock import patch, MagicMock
@@ -33,8 +34,10 @@ class TestAuthServiceMockIntegration:
     def test_auth_user_with_mock(self, mocked_user):
         """モックを使用した認証テスト"""
         # ModelのMockは直接クラスをモックするだけにします（Userオブジェクトの代わりにただのモック）
-        with patch('src.core.services.auth_service.User') as MockUser, \
-             patch('src.core.services.auth_service.verify_password') as mock_verify:
+        with (
+            patch("src.core.services.auth_service.User") as MockUser,
+            patch("src.core.services.auth_service.verify_password") as mock_verify,
+        ):
 
             # モックの設定
             mock_query = MagicMock()
@@ -58,9 +61,17 @@ class TestAuthServiceMockIntegration:
     def test_create_token_with_mock(self, mocked_user):
         """モックを使用したトークン生成テスト"""
         # フラスクJWTの関数を直接モックする
-        with patch('src.core.services.auth_service.create_access_token', return_value="mock_access_token"), \
-             patch('src.core.services.auth_service.create_refresh_token', return_value="mock_refresh_token"), \
-             patch('src.core.services.auth_service.datetime') as mock_datetime:
+        with (
+            patch(
+                "src.core.services.auth_service.create_access_token",
+                return_value="mock_access_token",
+            ),
+            patch(
+                "src.core.services.auth_service.create_refresh_token",
+                return_value="mock_refresh_token",
+            ),
+            patch("src.core.services.auth_service.datetime") as mock_datetime,
+        ):
 
             # 日時のモック設定
             mock_now = datetime(2023, 1, 1, 12, 0, 0)
@@ -76,9 +87,14 @@ class TestAuthServiceMockIntegration:
 
     def test_register_user_with_mock(self):
         """モックを使用したユーザー登録テスト"""
-        with patch('src.core.services.auth_service.User') as MockUser, \
-             patch('src.core.services.auth_service.get_password_hash', return_value="mock_hashed_pw"), \
-             patch('src.core.database.db') as mock_db:
+        with (
+            patch("src.core.services.auth_service.User") as MockUser,
+            patch(
+                "src.core.services.auth_service.get_password_hash",
+                return_value="mock_hashed_pw",
+            ),
+            patch("src.core.database.db") as mock_db,
+        ):
 
             # モックの設定
             mock_new_user = MagicMock()
@@ -90,7 +106,7 @@ class TestAuthServiceMockIntegration:
                 password="new_password",
                 username="new_mock_user",
                 first_name="New",
-                last_name="Mock"
+                last_name="Mock",
             )
 
             # 検証
@@ -100,7 +116,7 @@ class TestAuthServiceMockIntegration:
                 username="new_mock_user",
                 password_hash="mock_hashed_pw",
                 first_name="New",
-                last_name="Mock"
+                last_name="Mock",
             )
             mock_db.session.add.assert_called_once_with(mock_new_user)
             mock_db.session.commit.assert_called_once()

@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 interface LoginFormProps {
     formData: {
@@ -11,13 +11,7 @@ interface LoginFormProps {
     isSignupMode: boolean;
 }
 
-const LoginForm: React.FC<LoginFormProps> = ({
-    formData,
-    onChange,
-    onSubmit,
-    onToggleMode,
-    isSignupMode,
-}) => {
+const LoginForm: React.FC<LoginFormProps> = ({ formData, onChange, onSubmit, onToggleMode, isSignupMode }) => {
     return (
         <form
             id="signinForm"
@@ -26,14 +20,12 @@ const LoginForm: React.FC<LoginFormProps> = ({
         absolute inset-0 flex justify-center items-center flex-col w-full gap-[15px] z-[30]
         transition-all duration-500 ease-in-out transform ${
             isSignupMode
-                ? "opacity-0 pointer-events-none translate-x-[-100%]"
-                : "opacity-100 pointer-events-auto translate-x-0"
+                ? 'opacity-0 pointer-events-none translate-x-[-100%]'
+                : 'opacity-100 pointer-events-auto translate-x-0'
         }
       `}
         >
-            <h2 className="relative text-white text-[1.5em] tracking-[0.1em] uppercase font-[500] mb-[10px]">
-                Login
-            </h2>
+            <h2 className="relative text-white text-[1.5em] tracking-[0.1em] uppercase font-[500] mb-[10px]">Login</h2>
 
             <div className="relative w-[70%] flex justify-between">
                 <input

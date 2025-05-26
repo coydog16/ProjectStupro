@@ -11,7 +11,9 @@ __version__ = "0.1.0"
 
 # 必要なモジュールのインポート
 import sys
-from dotenv import load_dotenv; load_dotenv()
+from dotenv import load_dotenv
+
+load_dotenv()
 from pathlib import Path
 
 # Pythonのパスを設定して、直下のsrcディレクトリを見つけられるようにする
@@ -35,17 +37,25 @@ def create_app(config_name="dev"):
     app.config.from_object(get_config(config_name))
 
     # CORSの設定
-    CORS(app, resources={r"/api/*": {"origins": ["http://localhost:3000", "http://localhost:5173", "*"], "supports_credentials": True}})
+    CORS(
+        app,
+        resources={
+            r"/api/*": {
+                "origins": ["http://localhost:3000", "http://localhost:5173", "*"],
+                "supports_credentials": True,
+            }
+        },
+    )
 
     # データベースの初期化
     init_db(app)
 
     # JWT設定のデフォルト値を明示的に追加
-    app.config.setdefault('JWT_TOKEN_LOCATION', ['headers'])
-    app.config.setdefault('JWT_COOKIE_SECURE', False)
-    app.config.setdefault('JWT_COOKIE_CSRF_PROTECT', False)
-    app.config.setdefault('JWT_HEADER_NAME', 'Authorization')
-    app.config.setdefault('JWT_HEADER_TYPE', 'Bearer')
+    app.config.setdefault("JWT_TOKEN_LOCATION", ["headers"])
+    app.config.setdefault("JWT_COOKIE_SECURE", False)
+    app.config.setdefault("JWT_COOKIE_CSRF_PROTECT", False)
+    app.config.setdefault("JWT_HEADER_NAME", "Authorization")
+    app.config.setdefault("JWT_HEADER_TYPE", "Bearer")
 
     # JWTManagerの初期化
     JWTManager(app)
@@ -53,9 +63,7 @@ def create_app(config_name="dev"):
     # ヘルスチェックエンドポイント（フロントエンドからの接続確認用）
     @app.route("/api/health")
     def health_check():
-        return jsonify(
-            {"status": "ok", "message": "API is running", "version": __version__}
-        )
+        return jsonify({"status": "ok", "message": "API is running", "version": __version__})
 
     # ルートエンドポイント
     @app.route("/")
@@ -87,7 +95,9 @@ def register_blueprints(app):
         # すべてのブループリントを登録
         for blueprint in BLUEPRINTS:
             app.register_blueprint(blueprint)
-            app.logger.info(f"ブループリント {blueprint.name} を登録しました。URLプレフィックス: {blueprint.url_prefix}")
+            app.logger.info(
+                f"ブループリント {blueprint.name} を登録しました。URLプレフィックス: {blueprint.url_prefix}"
+            )
     except ImportError as e:
         app.logger.error(f"ブループリントの登録中にエラーが発生しました: {str(e)}")
         raise

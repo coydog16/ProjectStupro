@@ -36,9 +36,7 @@ def is_port_in_use(port: int) -> bool:
             return True  # 既に使用中
 
 
-def find_available_port(
-    start_port: int = 5000, max_attempts: int = 10
-) -> Optional[int]:
+def find_available_port(start_port: int = 5000, max_attempts: int = 10) -> Optional[int]:
     """
     利用可能なポートを見つけます。指定されたポートから順番にチェックします。
 
@@ -54,9 +52,7 @@ def find_available_port(
         if not is_port_in_use(port):
             return port
 
-    logger.warning(
-        f"利用可能なポートが見つかりません (試行範囲: {start_port}-{start_port + max_attempts - 1})"
-    )
+    logger.warning(f"利用可能なポートが見つかりません (試行範囲: {start_port}-{start_port + max_attempts - 1})")
     return None
 
 
@@ -188,9 +184,7 @@ def get_process_using_port(port: int) -> Dict[str, Any]:
     return {}
 
 
-def format_port_usage_info(
-    port: int, json_output: bool = False
-) -> Union[str, Dict[str, Any]]:
+def format_port_usage_info(port: int, json_output: bool = False) -> Union[str, Dict[str, Any]]:
     """
     特定のポートの使用状況を人間が読みやすい形式で出力します。
 
@@ -227,9 +221,7 @@ def format_port_usage_info(
             return f"ポート {port} は利用可能です"
 
 
-def scan_ports(
-    start_port: int = 5000, count: int = 5, json_output: bool = False
-) -> Union[str, Dict[str, Any]]:
+def scan_ports(start_port: int = 5000, count: int = 5, json_output: bool = False) -> Union[str, Dict[str, Any]]:
     """
     複数のポートの使用状況をスキャンします。
 
@@ -250,9 +242,7 @@ def scan_ports(
     if json_output:
         return {
             "ports": port_infos,
-            "timestamp": subprocess.check_output(
-                ["date"], universal_newlines=True
-            ).strip(),
+            "timestamp": subprocess.check_output(["date"], universal_newlines=True).strip(),
         }
     else:
         output = []
@@ -298,7 +288,11 @@ if __name__ == "__main__":
     process_parser.add_argument("pid", type=int, help="プロセスID")
 
     # 共通オプション
-    parser.add_argument("--json", action="store_true", help="JSON形式で出力（シェルスクリプトとの連携用）")
+    parser.add_argument(
+        "--json",
+        action="store_true",
+        help="JSON形式で出力（シェルスクリプトとの連携用）",
+    )
 
     args = parser.parse_args()
 

@@ -5,15 +5,13 @@
 
 var stopwords = [];
 
-
 /* Non-minified version is copied as a separate JS file, if available */
 
 /**
  * Dummy stemmer for languages without stemming rules.
  */
-var Stemmer = function() {
-  this.stemWord = function(w) {
-    return w;
-  }
-}
-
+var Stemmer = function () {
+    this.stemWord = function (w) {
+        return w;
+    };
+};

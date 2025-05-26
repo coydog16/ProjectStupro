@@ -1,4 +1,4 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 /* テーマのカスタマイズ - Tailwind CSS v4のCSS-first設定 */
 @theme {
@@ -22,5 +22,5 @@ body {
 }
 
 * {
-    font-family: "Noto Sans JP", sans-serif;
+    font-family: 'Noto Sans JP', sans-serif;
 }

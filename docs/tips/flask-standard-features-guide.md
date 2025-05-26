@@ -96,12 +96,12 @@ def hello(name):
 ```html
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>こんにちは</title>
-  </head>
-  <body>
-    <h1>こんにちは、{{ name }}さん！</h1>
-  </body>
+    <head>
+        <title>こんにちは</title>
+    </head>
+    <body>
+        <h1>こんにちは、{{ name }}さん！</h1>
+    </body>
 </html>
 ```
 

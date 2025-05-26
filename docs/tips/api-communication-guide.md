@@ -28,27 +28,25 @@ NavStupro プロジェクトでは、React（フロントエンド）と Flask�
 ```typescript
 // APIヘルスチェック関数
 const checkApiHealth = async () => {
-  setLoading(true);
-  try {
-    // vite.configのプロキシ設定を使ってバックエンドにアクセス
-    const response = await fetch("/api/health");
-    if (response.ok) {
-      const data = await response.json();
-      setApiStatus(data);
-    } else {
-      setApiStatus({
-        error: `エラー: ${response.status} ${response.statusText}`,
-      });
+    setLoading(true);
+    try {
+        // vite.configのプロキシ設定を使ってバックエンドにアクセス
+        const response = await fetch('/api/health');
+        if (response.ok) {
+            const data = await response.json();
+            setApiStatus(data);
+        } else {
+            setApiStatus({
+                error: `エラー: ${response.status} ${response.statusText}`,
+            });
+        }
+    } catch (error) {
+        setApiStatus({
+            error: `接続エラー: ${error instanceof Error ? error.message : String(error)}`,
+        });
+    } finally {
+        setLoading(false);
     }
-  } catch (error) {
-    setApiStatus({
-      error: `接続エラー: ${
-        error instanceof Error ? error.message : String(error)
-      }`,
-    });
-  } finally {
-    setLoading(false);
-  }
 };
 ```
 
@@ -60,14 +58,14 @@ const checkApiHealth = async () => {
 
 ```typescript
 // バックエンドのベースURL
-export const API_BASE_URL = "http://localhost:5000";
+export const API_BASE_URL = 'http://localhost:5000';
 
 // APIリクエスト時のデフォルト設定
 export const API_CONFIG = {
-  headers: {
-    "Content-Type": "application/json",
-    Accept: "application/json",
-  },
+    headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+    },
 };
 
 // APIリクエストのタイムアウト設定（ミリ秒）
@@ -154,22 +152,22 @@ __all__ = ["app", "create_app", "__version__"]
 
 1. **開発の迅速さ**:
 
-   - Vite の開発サーバーはホットリロード機能を備えており、コード変更時に自動的にブラウザを更新します
-   - Nginx を経由すると、追加の設定変更やコンテナ再起動が必要になる場合があります
+    - Vite の開発サーバーはホットリロード機能を備えており、コード変更時に自動的にブラウザを更新します
+    - Nginx を経由すると、追加の設定変更やコンテナ再起動が必要になる場合があります
 
 2. **簡素な設定**:
 
-   - Vite のプロキシ設定は`vite.config.ts`ファイル内で簡単に行えます
-   - 追加のコンテナやサービスが不要なため、開発環境がシンプルになります
+    - Vite のプロキシ設定は`vite.config.ts`ファイル内で簡単に行えます
+    - 追加のコンテナやサービスが不要なため、開発環境がシンプルになります
 
 3. **直接的なフィードバック**:
 
-   - フロントエンド開発時のエラーが Vite のコンソールに直接表示されます
-   - 中間レイヤーがないため、問題の診断が容易になります
+    - フロントエンド開発時のエラーが Vite のコンソールに直接表示されます
+    - 中間レイヤーがないため、問題の診断が容易になります
 
 4. **リソース効率**:
-   - 開発環境では、不要なサービスを最小限に抑えることでリソース使用を最適化できます
-   - 特に個人の開発マシンではこの点が重要です
+    - 開発環境では、不要なサービスを最小限に抑えることでリソース使用を最適化できます
+    - 特に個人の開発マシンではこの点が重要です
 
 本番環境では Nginx のようなプロキシサーバーが必要ですが、開発環境では Vite の内蔵プロキシ機能で十分です。
 
@@ -224,21 +222,21 @@ location / {
 
 1. **フロントエンド初期化（localhost:3000）**:
 
-   - `App.tsx`で React アプリケーションが起動
-   - `useEffect`フックで`checkApiHealth`関数が呼び出される
+    - `App.tsx`で React アプリケーションが起動
+    - `useEffect`フックで`checkApiHealth`関数が呼び出される
 
 2. **API 通信**:
 
-   - `fetch('/api/health')`でヘルスチェック API にリクエスト
-   - Vite のプロキシ設定により、リクエストが自動的にバックエンドに転送
+    - `fetch('/api/health')`でヘルスチェック API にリクエスト
+    - Vite のプロキシ設定により、リクエストが自動的にバックエンドに転送
 
 3. **バックエンド応答（localhost:5000）**:
 
-   - `app.py`の`health_check`関数が API リクエストを処理
-   - JSON レスポンスをフロントエンドに返す（ステータス、メッセージ、バージョン情報）
+    - `app.py`の`health_check`関数が API リクエストを処理
+    - JSON レスポンスをフロントエンドに返す（ステータス、メッセージ、バージョン情報）
 
 4. **フロントエンド表示**:
-   - 受け取ったレスポンスを`apiStatus`ステートに保存
-   - UI コンポーネントで接続状態を表示
+    - 受け取ったレスポンスを`apiStatus`ステートに保存
+    - UI コンポーネントで接続状態を表示
 
 このように、フロントエンドとバックエンドが連携して動作し、localhost:3000 でアプリケーションが表示されます。

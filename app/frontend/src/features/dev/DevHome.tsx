@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
-import DevMainInfo from "./components/DevMainInfo";
-import DevRouteInfo from "./components/DevRouteInfo";
+import { useState, useEffect } from 'react';
+import DevMainInfo from './components/DevMainInfo';
+import DevRouteInfo from './components/DevRouteInfo';
 
 const DevHome = () => {
     const [count, setCount] = useState(0);
@@ -19,7 +19,7 @@ const DevHome = () => {
     const checkApiHealth = async () => {
         setLoading(true);
         try {
-            const response = await fetch("/api/health");
+            const response = await fetch('/api/health');
             if (response.ok) {
                 const data = await response.json();
                 setApiStatus(data);
@@ -30,9 +30,7 @@ const DevHome = () => {
             }
         } catch (error) {
             setApiStatus({
-                error: `接続エラー: ${
-                    error instanceof Error ? error.message : String(error)
-                }`,
+                error: `接続エラー: ${error instanceof Error ? error.message : String(error)}`,
             });
         } finally {
             setLoading(false);

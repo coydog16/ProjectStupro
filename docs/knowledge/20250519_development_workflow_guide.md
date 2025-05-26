@@ -6,15 +6,15 @@
 
 ### コーディングスタイル
 
--   **Python (Flask)**: PEP 8 に準拠
+- **Python (Flask)**: PEP 8 に準拠
 
-    -   自動フォーマッターとして[Black](https://black.readthedocs.io/en/stable/)を使用
-    -   docstring には[Google 形式](https://google.github.io/styleguide/pyguide.html#38-comments-and-docstrings)を使用
+    - 自動フォーマッターとして[Black](https://black.readthedocs.io/en/stable/)を使用
+    - docstring には[Google 形式](https://google.github.io/styleguide/pyguide.html#38-comments-and-docstrings)を使用
 
--   **TypeScript/React**: ESLint と Prettier の設定に従う
-    -   `.eslintrc.js`（コード品質チェックツール）と`.prettierrc`（コード整形ツール）の設定に基づく
-    -   コンポーネントは関数コンポーネントと型付き Props を使用
-    -   カスタムフックは`use`プレフィックスを使用
+- **TypeScript/React**: ESLint と Prettier の設定に従う
+    - `.eslintrc.js`（コード品質チェックツール）と`.prettierrc`（コード整形ツール）の設定に基づく
+    - コンポーネントは関数コンポーネントと型付き Props を使用
+    - カスタムフックは`use`プレフィックスを使用
 
 ### Git ワークフロー
 
@@ -39,13 +39,13 @@ test/[対象]       # テスト追加/修正
 
 **タイプの例**:
 
--   `feat`: 新機能
--   `fix`: バグ修正
--   `docs`: ドキュメントのみの変更
--   `style`: コードの意味に影響しない変更（空白、フォーマット、セミコロンの欠落など）
--   `refactor`: バグを修正したり機能を追加したりしないコード変更
--   `test`: 不足しているテストの追加または既存のテストの修正
--   `chore`: ビルドプロセスやドキュメント生成などの変更
+- `feat`: 新機能
+- `fix`: バグ修正
+- `docs`: ドキュメントのみの変更
+- `style`: コードの意味に影響しない変更（空白、フォーマット、セミコロンの欠落など）
+- `refactor`: バグを修正したり機能を追加したりしないコード変更
+- `test`: 不足しているテストの追加または既存のテストの修正
+- `chore`: ビルドプロセスやドキュメント生成などの変更
 
 **使用例**:
 
@@ -70,18 +70,18 @@ refactor: ユーザー認証ロジックをリファクタリング
 
 ### テスト
 
--   **ユニットテスト**: 個々の関数やクラスの機能をテスト
-    -   Python では`pytest`を使用
-    -   TypeScript では`Jest`を使用
--   **統合テスト**: モジュール間の連携をテスト
--   **E2E テスト**: ユーザーの視点からのエンドツーエンドのテスト
-    -   フロントエンドでは`Cypress`を使用
+- **ユニットテスト**: 個々の関数やクラスの機能をテスト
+    - Python では`pytest`を使用
+    - TypeScript では`Jest`を使用
+- **統合テスト**: モジュール間の連携をテスト
+- **E2E テスト**: ユーザーの視点からのエンドツーエンドのテスト
+    - フロントエンドでは`Cypress`を使用
 
 ### CI/CD パイプライン
 
--   GitHub アクションによる自動テスト
--   自動リンティングとフォーマットチェック
--   テスト結果のレポート
+- GitHub アクションによる自動テスト
+- 自動リンティングとフォーマットチェック
+- テスト結果のレポート
 
 ## 開発環境のセットアップ
 

@@ -6,22 +6,22 @@
 
 ## 技術スタック
 
--   フロントエンド：React（TypeScript, Vite, Tailwind CSS）
--   バックエンド：Python（Flask, SQLAlchemy, Flask-Migrate, PostgreSQL）
--   インフラ：Docker Compose
+- フロントエンド：React（TypeScript, Vite, Tailwind CSS）
+- バックエンド：Python（Flask, SQLAlchemy, Flask-Migrate, PostgreSQL）
+- インフラ：Docker Compose
 
 ## アーキテクチャ思想
 
--   垂直スライス型モジュラーモノリス
--   フロント・バック完全分離の SPA 構成
--   API ファースト設計
--   開発・本番環境の分離と Docker による再現性担保
--   型安全・バリデーション重視
+- 垂直スライス型モジュラーモノリス
+- フロント・バック完全分離の SPA 構成
+- API ファースト設計
+- 開発・本番環境の分離と Docker による再現性担保
+- 型安全・バリデーション重視
 
 ## 技術選定理由
 
--   モダンな開発体験・保守性・拡張性を重視
--   チーム開発・CI/CD・テスト容易性
+- モダンな開発体験・保守性・拡張性を重視
+- チーム開発・CI/CD・テスト容易性
 
 ---
 

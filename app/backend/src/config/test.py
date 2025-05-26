@@ -3,6 +3,7 @@
 import os
 from datetime import timedelta
 
+
 class Config:
     # 基本設定
     ENV = "testing"
