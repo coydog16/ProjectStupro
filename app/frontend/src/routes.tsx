@@ -21,7 +21,7 @@ const routes: LabeledRoute[] = [
         label: 'LoginPage',
     },
     {
-        path: '/feed',
+        path: '/feed/',
         element: <FeedPage />,
         label: 'FeedPage',
     },

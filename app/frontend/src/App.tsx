@@ -2,6 +2,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import routes from './routes';
 import './App.css';
+import FeedPage from './features/feed/pages/FeedPage';
 
 function App() {
     return (
@@ -10,6 +11,7 @@ function App() {
                 {routes.map((route, index) => (
                     <Route key={index} path={route.path} element={route.element} />
                 ))}
+                <Route path="/feed/:username" element={<FeedPage />} />
             </Routes>
         </Router>
     );

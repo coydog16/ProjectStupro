@@ -20,11 +20,10 @@ export function useLoginForm() {
                 username: loginData.username,
                 password: loginData.password,
             });
-            const token = res.data.access_token;
-            setAccessToken(token);
+            const user = res.data.user;
             glassmorphicToast('Login successful!', { variant: 'success' });
-            localStorage.setItem('access_token', token);
-            navigate('/feed');
+            localStorage.setItem('access_token', res.data.access_token);
+            navigate(`/feed/${user.username}`); // または `/feed/${user.username}`
         } catch (err: any) {
             glassmorphicToast(err.response?.data?.error || 'Login failed', {
                 variant: 'error',

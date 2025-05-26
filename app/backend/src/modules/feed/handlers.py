@@ -54,7 +54,21 @@ def create_post_handler():
     )
     db.session.add(post)
     db.session.commit()
-    return jsonify(PostResponse.from_orm(post).dict()), 201
+    # user情報を付与して返す
+    user = User.query.get(user_id)
+    post_dict = post.to_dict()
+    post_dict["user"] = (
+        {
+            "id": user.id,
+            "username": user.username,
+            "full_name": user.full_name,
+            "first_name": user.first_name,
+            "last_name": user.last_name,
+            "avatar_image_id": getattr(user, "avatar_image_id", None),
+        }
+        if user else None
+    )
+    return jsonify(post_dict), 201
 
 
 # 投稿編集
