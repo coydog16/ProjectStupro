@@ -98,7 +98,7 @@ def update_post_handler(post_id):
         return jsonify({"error": "Permission denied"}), 403
     data = request.get_json()
     schema = PostUpdate(**data)
-    for field, value in schema.dict(exclude_unset=True).items():
+    for field, value in schema.model_dump(exclude_unset=True).items():
         setattr(post, field, value)
     db.session.commit()
     # Pydantic v2対応: from_ormの代わりにmodel_validateを使用
