@@ -18,9 +18,25 @@ from .handlers import (
 auth_bp = Blueprint("auth", __name__, url_prefix="/api/auth")
 
 
-# ルーティングのみ定義
+# ログイン
+@auth_bp.route("/login", methods=["POST"])
+def login():
+    return login_handler()
 
-auth_bp.route("/login", methods=["POST"])(login_handler)
-auth_bp.route("/register", methods=["POST"])(register_handler)
-auth_bp.route("/refresh", methods=["POST"])(refresh_token_handler)
-auth_bp.route("/me", methods=["GET"])(get_user_info_handler)
+
+# ユーザー登録
+@auth_bp.route("/register", methods=["POST"])
+def register():
+    return register_handler()
+
+
+# トークンリフレッシュ
+@auth_bp.route("/refresh", methods=["POST"])
+def refresh():
+    return refresh_token_handler()
+
+
+# ユーザー情報取得
+@auth_bp.route("/me", methods=["GET"])
+def get_me():
+    return get_user_info_handler()

@@ -27,10 +27,18 @@ def get_feed_handler(username=None):
 
 
 # 新規投稿
-feed_bp.route("/", methods=["POST"])(create_post_handler)
+@feed_bp.route("/", methods=["POST"])
+def create_post():
+    return create_post_handler()
+
 
 # 投稿編集
-feed_bp.route("/<int:post_id>", methods=["PUT"])(update_post_handler)
+@feed_bp.route("/<int:post_id>", methods=["PUT"])
+def update_post(post_id):
+    return update_post_handler(post_id)
+
 
 # 投稿削除
-feed_bp.route("/<int:post_id>", methods=["DELETE"])(delete_post_handler)
+@feed_bp.route("/<int:post_id>", methods=["DELETE"])
+def delete_post(post_id):
+    return delete_post_handler(post_id)
