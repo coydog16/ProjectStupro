@@ -5,8 +5,8 @@
 アプリケーションへの登録を容易にします。
 """
 
-from src.modules.auth.routes import auth_bp
-from src.modules.feed.routes import feed_bp  # feed_bpのインポートを追加
+from src.modules.auth.auth_routes import auth_bp
+from src.modules.feed.feed_routes import feed_bp  # feed_bpのインポートを修正
 
 # すべての使用可能なブループリントのリスト
 BLUEPRINTS = [
