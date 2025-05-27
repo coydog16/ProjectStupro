@@ -8,4 +8,4 @@
 - トークンリフレッシュ
 """
 
-from .routes import auth_bp
+from .auth_routes import auth_bp
