@@ -8,18 +8,30 @@ from flask import request, jsonify
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from src.core.models.post_model import Post
 from src.core.models.user_model import User
-from src.core.schemas.post_schema import PostResponse, PostCreate, PostUpdate
+from src.core.schemas.post_schema import (
+    PostResponse, PostCreate, PostUpdate
+)
 from src.core.database import db
 
 
 # 投稿一覧取得
 @jwt_required(optional=True)
-def get_feed_handler():
-    posts = (
-        Post.query.filter(Post.is_deleted == False, Post.post_type.in_(["feed", "task"]))
-        .order_by(Post.created_at.desc())
-        .all()
+def get_feed_handler(username=None):
+    """
+    投稿一覧を取得。
+    - username指定時: 指定ユーザーの投稿のみ返す
+    - 指定なし: 全ユーザーの投稿を返す
+    """
+    query = Post.query.filter(
+        Post.is_deleted == False,
+        Post.post_type.in_(["feed", "task"])
     )
+    if username:
+        user = User.query.filter_by(username=username).first()
+        if not user:
+            return jsonify({"error": "ユーザーが見つかりません"}), 404
+        query = query.filter(Post.user_id == user.id)
+    posts = query.order_by(Post.created_at.desc()).all()
     result = []
     for post in posts:
         user = User.query.get(post.user_id)
@@ -33,8 +45,7 @@ def get_feed_handler():
                 "last_name": user.last_name,
                 "avatar_image_id": getattr(user, "avatar_image_id", None),
             }
-            if user
-            else None
+            if user else None
         )
         result.append(post_dict)
     return jsonify(result), 200
@@ -43,6 +54,9 @@ def get_feed_handler():
 # 新規投稿
 @jwt_required()
 def create_post_handler():
+    """
+    新規投稿を作成。
+    """
     data = request.get_json()
     user_id = get_jwt_identity()
     schema = PostCreate(**data)
@@ -74,6 +88,10 @@ def create_post_handler():
 # 投稿編集
 @jwt_required()
 def update_post_handler(post_id):
+    """
+    投稿を編集。
+    - 自分の投稿のみ編集可能
+    """
     post = Post.query.get_or_404(post_id)
     user_id = get_jwt_identity()
     if post.user_id != user_id:
@@ -83,12 +101,17 @@ def update_post_handler(post_id):
     for field, value in schema.dict(exclude_unset=True).items():
         setattr(post, field, value)
     db.session.commit()
-    return jsonify(PostResponse.from_orm(post).dict()), 200
+    # Pydantic v2対応: from_ormの代わりにmodel_validateを使用
+    return jsonify(PostResponse.model_validate(post).model_dump()), 200
 
 
 # 投稿削除
 @jwt_required()
 def delete_post_handler(post_id):
+    """
+    投稿を論理削除。
+    - 自分の投稿のみ削除可能
+    """
     post = Post.query.get_or_404(post_id)
     user_id = get_jwt_identity()
     if post.user_id != user_id:
