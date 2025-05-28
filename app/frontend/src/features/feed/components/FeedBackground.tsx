@@ -1,5 +1,3 @@
-import React from 'react';
-
 interface FeedBackgroundProps {
     children: React.ReactNode;
     className?: string;

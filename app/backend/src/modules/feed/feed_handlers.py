@@ -114,8 +114,12 @@ def delete_post_handler(post_id):
     """
     post = Post.query.get_or_404(post_id)
     user_id = get_jwt_identity()
-    if post.user_id != user_id:
-        return jsonify({"error": "Permission denied"}), 403
+    # 型を揃えて比較（int型に統一）
+    try:
+        if int(post.user_id) != int(user_id):
+            return jsonify({"error": "Permission denied"}), 403
+    except Exception:
+        return jsonify({"error": "Invalid user_id type"}), 403
     post.is_deleted = True
     db.session.commit()
     return jsonify({"message": "Post deleted"}), 200

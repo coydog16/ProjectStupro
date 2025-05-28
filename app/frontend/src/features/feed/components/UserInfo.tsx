@@ -1,4 +1,3 @@
-import React from 'react';
 import { FeedUser, FeedPost } from '../types';
 import { getDisplayName } from '../components/utils';
 import TaskList from './TaskList';

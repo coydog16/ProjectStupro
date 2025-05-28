@@ -1,4 +1,3 @@
-import React from 'react';
 import { FeedPost } from '../types';
 
 interface TaskListProps {
@@ -31,10 +30,8 @@ const TaskList: React.FC<TaskListProps> = ({ tasks }) => (
                     const percent = calcProgressPercent(task.created_at ?? undefined, task.task_due_date ?? undefined);
                     // 進捗率に応じて色を変化
                     let meterColor = '#38bdf8'; // 青
-                    if (percent > 90)
-                        meterColor = '#ef4444'; // 赤
-                    else if (percent > 70)
-                        meterColor = '#f59e42'; // オレンジ
+                    if (percent > 90) meterColor = '#ef4444'; // 赤
+                    else if (percent > 70) meterColor = '#f59e42'; // オレンジ
                     else if (percent > 40) meterColor = '#facc15'; // 黄
                     return (
                         <li

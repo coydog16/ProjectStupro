@@ -19,3 +19,12 @@ export const createPost = async (content: string) => {
         throw new Error('投稿に失敗しました');
     }
 };
+
+export const deletePostApi = async (postId: number) => {
+    try{
+        const res = await apiClient.delete(`/feed/${postId}`);
+        return res.data;
+    } catch(error) {
+        throw new Error('投稿の削除に失敗しました');
+    }
+};

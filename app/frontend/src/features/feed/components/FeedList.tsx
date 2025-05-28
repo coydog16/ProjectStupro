@@ -1,6 +1,6 @@
-import React from 'react';
 import { FeedPost } from '../types';
 import { getDisplayName } from './utils';
+import FeedMenu from './FeedMenu';
 
 export type FeedFilterType = 'all' | 'self';
 
@@ -19,9 +19,18 @@ interface FeedListProps {
     posts: FeedPost[];
     filterType: FeedFilterType;
     userId?: number;
+    handleEdit: (post: FeedPost) => void;
+    handleDelete: (post: FeedPost) => void;
 }
 
-const FeedList: React.FC<FeedListProps> = ({ posts, filterType, userId }) => {
+const getMyUserId = () => {
+    const id = localStorage.getItem('user_id');
+    return id ? Number(id) : undefined;
+};
+
+const FeedList: React.FC<FeedListProps> = ({ posts, filterType, userId: _userId, handleEdit, handleDelete }) => {
+    // ログイン中の自分のIDを常に参照
+    const userId = getMyUserId();
     // 投稿リストをフィルタリング
     const filteredPosts = filterType === 'self' ? filterSelfFeed(posts, userId) : filterAllFeed(posts);
 
@@ -38,7 +47,7 @@ const FeedList: React.FC<FeedListProps> = ({ posts, filterType, userId }) => {
             {filteredPosts.map((post) => (
                 <div
                     key={post.id}
-                    className="w-full max-w-xl border-b border-gray-700/60 flex flex-row gap-6 py-7 px-4 hover:bg-gray-800/60 transition group"
+                    className="relative w-full max-w-xl border-b border-gray-700/60 flex flex-row gap-6 py-7 px-4 hover:bg-gray-800/60 transition group"
                 >
                     {/* アバター */}
                     <div className="flex-shrink-0">
@@ -87,6 +96,12 @@ const FeedList: React.FC<FeedListProps> = ({ posts, filterType, userId }) => {
                             {post.content}
                         </div>
                     </div>
+                    {/* 自分の投稿だけFeedMenuを表示 */}
+                    {String(post.user_id) === String(userId) && (
+                        <div className="absolute top-2 right-2">
+                            <FeedMenu onEdit={() => handleEdit(post)} onDelete={() => handleDelete(post)} />
+                        </div>
+                    )}
                 </div>
             ))}
         </div>

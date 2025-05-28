@@ -23,6 +23,9 @@ export function useLoginForm() {
             const user = res.data.user;
             glassmorphicToast('Login successful!', { variant: 'success' });
             localStorage.setItem('access_token', res.data.access_token);
+            if (user && user.id) {
+                localStorage.setItem('user_id', String(user.id));
+            }
             navigate(`/feed/${user.username}`); // または `/feed/${user.username}`
         } catch (err: any) {
             glassmorphicToast(err.response?.data?.error || 'Login failed', {

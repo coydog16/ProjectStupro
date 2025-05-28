@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback, useMemo } from 'react';
-import { useParams } from 'react-router-dom';
-import { fetchFeed, createPost } from '../../../api/feed';
+import { useParams, useNavigate } from 'react-router-dom';
+import { fetchFeed, createPost, deletePostApi } from '../../../api/feed';
 import FeedList from '../components/FeedList';
 import SwitchNav from '../components/SwitchNav';
 import UserInfo from '../components/UserInfo';
@@ -17,6 +17,7 @@ import { FeedPost } from '../types';
  */
 const FeedPage: React.FC = () => {
     const { username } = useParams();
+    const navigate = useNavigate();
     const [posts, setPosts] = useState<FeedPost[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
@@ -76,13 +77,27 @@ const FeedPage: React.FC = () => {
         }
     };
 
-    // エラー表示
+    // 削除APIを呼んで、成功したらsetPostsでリストから除外
+    const handleDelete = async (post: FeedPost) => {
+        try {
+            await deletePostApi(post.id); // ← 削除API（自作 or import）
+            setPosts((prev) => prev.filter((p) => p.id !== post.id));
+        } catch (e: any) {
+            setError(e.message || '削除に失敗しました');
+        }
+    };
+    // 編集モーダルを開く
+    const handleEdit = (post: FeedPost) => {};
+
+    useEffect(() => {
+        if (error && user?.username) {
+            navigate(`/feed/${user.username}`);
+        }
+    }, [error, user, navigate]);
+
     if (error) {
-        return (
-            <div className="flex flex-col items-center min-h-screen justify-center text-red-500">
-                <p>エラーが発生しました: {error}</p>
-            </div>
-        );
+        // リダイレクト中は何も表示しない
+        return null;
     }
 
     return (
@@ -97,7 +112,13 @@ const FeedPage: React.FC = () => {
             <div className="w-full flex flex-col items-center">
                 {/* 読み込み中の表示は削除 */}
                 {!loading && displayPosts.length === 0 && <p className="text-gray-500">投稿がありません</p>}
-                <FeedList posts={Array.isArray(displayPosts) ? displayPosts : []} filterType={view} userId={user?.id} />
+                <FeedList
+                    posts={Array.isArray(displayPosts) ? displayPosts : []}
+                    filterType={view}
+                    userId={user?.id}
+                    handleDelete={handleDelete}
+                    handleEdit={handleEdit}
+                />
             </div>
 
             <NewPostButton onClick={() => setModalOpen(true)} />
