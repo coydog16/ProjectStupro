@@ -8,10 +8,7 @@ interface ButtonProps extends Omit<HeadlessButtonProps<'button'>, 'className'> {
 }
 
 export const Button: React.FC<ButtonProps> = ({ children, className = '', ...props }) => (
-    <HeadlessButton
-        {...props}
-        className={`rounded bg-sky-600 px-4 py-2 text-sm text-white data-active:bg-sky-700 data-hover:bg-sky-500 disabled:opacity-50 ${className}`}
-    >
+    <HeadlessButton {...props} className={`rounded px-4 py-2 text-sm font-semibold ${className}`}>
         {children}
     </HeadlessButton>
 );

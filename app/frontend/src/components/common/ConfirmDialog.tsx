@@ -26,13 +26,13 @@ export const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
             <DialogPanel className="max-w-lg w-full space-y-4 border bg-[#232225] p-8 rounded-xl shadow-xl">
                 <DialogTitle className="font-bold text-lg text-white">{title}</DialogTitle>
                 <Description>
-                    <div className="text-red-300 text-center mb-2">{message}</div>
+                    <span className="text-red-300 text-center mb-2 block">{message}</span>
                 </Description>
                 <div className="flex justify-end gap-4 mt-6">
                     <Button onClick={onCancel} className="bg-gray-600 text-gray-100">
                         {cancelLabel}
                     </Button>
-                    <Button onClick={onConfirm} className="bg-red-600 text-white">
+                    <Button onClick={onConfirm} className="bg-red-600 hover:bg-red-500 text-white">
                         {confirmLabel}
                     </Button>
                 </div>

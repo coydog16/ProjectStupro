@@ -1,5 +1,4 @@
 import { FeedPost } from '../types';
-import { getDisplayName } from './utils';
 import FeedMenu from './FeedMenu';
 
 export type FeedFilterType = 'all' | 'self';
@@ -49,50 +48,12 @@ const FeedList: React.FC<FeedListProps> = ({ posts, filterType, userId: _userId,
                     key={post.id}
                     className="relative w-full max-w-xl border-b border-gray-700/60 flex flex-row gap-6 py-7 px-4 hover:bg-gray-800/60 transition group"
                 >
-                    {/* アバター */}
-                    <div className="flex-shrink-0">
-                        {post.user?.avatar_image_id ? (
-                            <img
-                                src={`/api/images/${post.user.avatar_image_id}`}
-                                alt="avatar"
-                                className="w-12 h-12 rounded-full object-cover border-2 border-gray-700 group-hover:border-blue-500 transition"
-                            />
-                        ) : (
-                            <div
-                                className="w-12 h-12 rounded-full flex items-center justify-center text-xl font-bold"
-                                style={{
-                                    background: '#556a8b',
-                                    color: '#fffde7',
-                                }}
-                            >
-                                {post.user?.full_name?.[0] || post.user?.username?.[0] || '?'}
-                            </div>
-                        )}
-                    </div>
-                    {/* 本文・ユーザー情報 */}
-                    <div className="flex-1 min-w-0">
-                        <div className="flex flex-row items-start justify-between mb-3">
-                            {/* 名前・ユーザー名を縦並びに */}
-                            <div className="flex flex-col items-start gap-0.5">
-                                <span
-                                    className="font-bold text-gray-100 text-sm group-hover:text-blue-400 transition max-w-[8rem] truncate"
-                                    title={getDisplayName(post.user)}
-                                >
-                                    {getDisplayName(post.user)}
-                                </span>
-                                <span
-                                    className="text-gray-500 text-xs max-w-[10rem] truncate"
-                                    title={post.user?.username}
-                                >
-                                    @{post.user?.username}
-                                </span>
-                            </div>
-                            {/* 投稿日を右上・フルネームの高さに */}
-                            <span className="text-gray-600 text-xs ml-4 mt-0.5 whitespace-nowrap self-start">
-                                {new Date(post.created_at).toLocaleString()}
-                            </span>
-                        </div>
-                        <div className="text-gray-200 text-sm mt-4 mb-3 break-words whitespace-pre-line leading-relaxed">
+                    <div className="flex-1 min-w-0 flex flex-col items-start">
+                        {/* 左上端に投稿日時を本文と揃えて表示 */}
+                        <span className="text-gray-600 text-xs whitespace-nowrap mb-1 px-4">
+                            {new Date(post.created_at).toLocaleString()}
+                        </span>
+                        <div className="text-gray-200 text-sm mb-3 break-words whitespace-pre-line leading-relaxed px-4 py-2 w-full">
                             {post.content}
                         </div>
                     </div>
