@@ -1,41 +1,33 @@
-import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
+import { DropdownMenu } from '../../../components/common/DropdownMenu';
 
-export function FeedMenu({ onEdit, onDelete }: { onEdit: () => void; onDelete: () => void }) {
+interface FeedMenuProps {
+    onEdit: () => void;
+    onDelete: () => void;
+    menuLabel?: React.ReactNode; // 「…」など、トリガーの文言やアイコン
+}
+
+export function FeedMenu({
+    onEdit,
+    onDelete,
+    menuLabel = <span className="text-2xl leading-none">…</span>,
+}: FeedMenuProps) {
     return (
-        <Menu>
-            <MenuButton className="rounded p-1 hover:bg-layer/10 focus:outline-none">
-                <span className="text-2xl leading-none">…</span>
-            </MenuButton>
-            <MenuItems
-                anchor="bottom"
-                className="absolute right-0 mt-2 min-w-28 rounded bg-gray-800/95 shadow-lg border border-border/30 z-20"
+        <DropdownMenu buttonContent={menuLabel}>
+            <button
+                className="block w-full px-4 py-2 text-left text-white hover:bg-accent/80 hover:text-layer rounded-t"
+                onClick={onEdit}
+                type="button"
             >
-                <MenuItem>
-                    {({ focus }) => (
-                        <button
-                            className={`block w-full px-4 py-2 text-center text-white ${
-                                focus ? 'bg-accent/80 text-layer' : ''
-                            }`}
-                            onClick={onEdit}
-                        >
-                            EDIT
-                        </button>
-                    )}
-                </MenuItem>
-                <MenuItem>
-                    {({ focus }) => (
-                        <button
-                            className={`block w-full px-4 py-2 text-center text-white ${
-                                focus ? 'bg-danger/80 text-layer' : 'text-danger'
-                            }`}
-                            onClick={onDelete}
-                        >
-                            DELETE
-                        </button>
-                    )}
-                </MenuItem>
-            </MenuItems>
-        </Menu>
+                編集
+            </button>
+            <button
+                className="block w-full px-4 py-2 text-left text-danger hover:bg-danger/80 hover:text-layer rounded-b"
+                onClick={onDelete}
+                type="button"
+            >
+                削除
+            </button>
+        </DropdownMenu>
     );
 }
 

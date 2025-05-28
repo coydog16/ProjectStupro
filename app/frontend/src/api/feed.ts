@@ -28,3 +28,12 @@ export const deletePostApi = async (postId: number) => {
         throw new Error('投稿の削除に失敗しました');
     }
 };
+
+export const updatePostApi = async (postId: number, content: string) => {
+    try {
+        const res = await apiClient.put(`/feed/${postId}`, { content });
+        return res.data;
+    } catch (error) {
+        throw new Error('投稿の更新に失敗しました');
+    }
+};

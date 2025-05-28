@@ -1,11 +1,13 @@
 import React, { useEffect, useState, useCallback, useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { fetchFeed, createPost, deletePostApi } from '../../../api/feed';
+import { fetchFeed, createPost, deletePostApi, updatePostApi } from '../../../api/feed';
 import FeedList from '../components/FeedList';
 import SwitchNav from '../components/SwitchNav';
 import UserInfo from '../components/UserInfo';
 import NewPostButton from '../components/NewPostButton';
-import { NewPostModal } from '../components/NewPostModal';
+import { ModalNewPost } from '../components/ModalNewPost';
+import { ModalEditPost } from '../components/ModalEditPost';
+import { ConfirmDialog } from '../../../components/common/ConfirmDialog';
 import FeedBackground from '../components/FeedBackground';
 import { FeedPost } from '../types';
 
@@ -23,6 +25,10 @@ const FeedPage: React.FC = () => {
     const [error, setError] = useState<string | null>(null);
     const [view, setView] = useState<'all' | 'self'>('self');
     const [modalOpen, setModalOpen] = useState(false);
+    const [editModalOpen, setEditModalOpen] = useState(false);
+    const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+    const [editingPost, setEditingPost] = useState<FeedPost | null>(null);
+    const [deletingPost, setDeletingPost] = useState<FeedPost | null>(null);
 
     // 指定ユーザーの投稿のみ抽出
     const userPosts = useMemo(() => posts.filter((post) => post.user?.username === username), [posts, username]);
@@ -78,16 +84,16 @@ const FeedPage: React.FC = () => {
     };
 
     // 削除APIを呼んで、成功したらsetPostsでリストから除外
-    const handleDelete = async (post: FeedPost) => {
-        try {
-            await deletePostApi(post.id); // ← 削除API（自作 or import）
-            setPosts((prev) => prev.filter((p) => p.id !== post.id));
-        } catch (e: any) {
-            setError(e.message || '削除に失敗しました');
-        }
+    const handleDelete = (post: FeedPost) => {
+        setDeletingPost(post);
+        setDeleteModalOpen(true);
     };
+
     // 編集モーダルを開く
-    const handleEdit = (post: FeedPost) => {};
+    const handleEdit = (post: FeedPost) => {
+        setEditingPost(post);
+        setEditModalOpen(true);
+    };
 
     useEffect(() => {
         if (error && user?.username) {
@@ -122,7 +128,42 @@ const FeedPage: React.FC = () => {
             </div>
 
             <NewPostButton onClick={() => setModalOpen(true)} />
-            <NewPostModal isOpen={modalOpen} onClose={() => setModalOpen(false)} onSubmit={handleNewPost} />
+            <ModalNewPost isOpen={modalOpen} onClose={() => setModalOpen(false)} onSubmit={handleNewPost} />
+            <ModalEditPost
+                isOpen={editModalOpen}
+                onClose={() => setEditModalOpen(false)}
+                onSubmit={async (content) => {
+                    if (!editingPost) return;
+                    try {
+                        const updated = await updatePostApi(editingPost.id, content);
+                        setPosts((prev) =>
+                            prev.map((p) => (p.id === editingPost.id ? { ...p, content: updated.content } : p))
+                        );
+                        setEditModalOpen(false);
+                    } catch (e: any) {
+                        setError(e.message || '投稿の更新に失敗しました');
+                    }
+                }}
+                initialContent={editingPost?.content || ''}
+            />
+            <ConfirmDialog
+                isOpen={deleteModalOpen}
+                title="投稿の削除確認"
+                message="本当にこの投稿を削除しますか？この操作は取り消せません。"
+                confirmLabel="削除"
+                cancelLabel="キャンセル"
+                onConfirm={async () => {
+                    if (!deletingPost) return;
+                    try {
+                        await deletePostApi(deletingPost.id);
+                        setPosts((prev) => prev.filter((p) => p.id !== deletingPost.id));
+                        setDeleteModalOpen(false);
+                    } catch (e: any) {
+                        setError(e.message || '削除に失敗しました');
+                    }
+                }}
+                onCancel={() => setDeleteModalOpen(false)}
+            />
         </div>
     );
 };
