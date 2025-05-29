@@ -11,14 +11,11 @@ const UserInfo: React.FC<UserInfoProps> = ({ user, tasks }) => (
     <div className="w-full relative" style={{ minHeight: '180px' }}>
         {/* ユーザー情報エリア */}
         <div className="relative z-10 flex flex-row items-center pt-6 pl-8">
-            <div
-                className="w-20 h-20 rounded-full flex items-center justify-center overflow-hidden shadow-lg"
-                style={{ background: '#556a8b' }}
-            >
+            <div className="w-20 h-20 rounded-full flex items-center justify-center overflow-hidden shadow-lg bg-accent/10 border border-accent/30">
                 {user.avatar_image_file_path ? (
                     <img src={user.avatar_image_file_path} alt="avatar" className="w-full h-full object-cover" />
                 ) : (
-                    <span className="text-3xl font-bold" style={{ color: '#fffde7' }}>
+                    <span className="text-3xl font-bold text-accent">
                         {user.full_name?.[0] || user.username?.[0] || '?'}
                     </span>
                 )}
@@ -29,15 +26,13 @@ const UserInfo: React.FC<UserInfoProps> = ({ user, tasks }) => (
                     className="absolute left-0 top-1/2 -translate-y-1/2 w-full h-10 pointer-events-none"
                     style={{
                         background:
-                            'radial-gradient(circle at 50% 50%, rgba(0,0,0,0.18) 0%, rgba(0,0,0,0.08) 60%, rgba(0,0,0,0) 100%)',
+                            'radial-gradient(circle at 50% 50%, rgba(0,0,0,0.10) 0%, rgba(0,0,0,0.04) 60%, rgba(0,0,0,0) 100%)',
                         zIndex: 0,
                         filter: 'blur(1.5px)',
                     }}
                 />
-                <div className="text-xl font-bold relative z-10" style={{ color: '#fffde7' }}>
-                    {getDisplayName(user)}
-                </div>
-                <div className="text-gray-200 text-sm relative z-10">@{user?.username}</div>
+                <div className="text-xl font-bold relative z-10 text-theme">{getDisplayName(user)}</div>
+                <div className="text-accent/70 text-sm relative z-10">@{user?.username}</div>
             </div>
         </div>
         {/* タスクリストエリア */}

@@ -1,0 +1,77 @@
+/* テーマカラーのカスタムプロパティ（デフォルト：白背景・濃いグレー文字・アクセントカラー） */
+:root {
+    --color-bg: #fff;
+    --color-text: #222;
+    --color-accent: #2563eb; /* アクセント（例: ボタンやリンク）: Tailwind blue-600 */
+    --color-accent-hover: #1d4ed8; /* アクセントhover: Tailwind blue-700 */
+    --color-accent-text: #fff; /* アクセント上の文字色 */
+
+    --color-danger: #ef4444; /* Tailwind red-500 */
+    --color-danger-hover: #dc2626; /* Tailwind red-600 */
+    --color-danger-text: #fff;
+    --color-error: #f87171; /* エラー用（薄めの赤） */
+    --color-error-text: #fff;
+}
+
+[data-theme='dark'] {
+    --color-bg: #18181b;
+    --color-text: #f4f4f5;
+    --color-accent: #60a5fa; /* ダーク時のアクセント: Tailwind blue-400 */
+    --color-accent-hover: #3b82f6; /* ダーク時hover: Tailwind blue-500 */
+    --color-accent-text: #18181b; /* ダーク時のアクセント上の文字色 */
+
+    --color-danger: #f87171; /* Tailwind red-400 */
+    --color-danger-hover: #ef4444; /* Tailwind red-500 */
+    --color-danger-text: #18181b;
+    --color-error: #ef4444; /* 濃いめの赤 */
+    --color-error-text: #18181b;
+}
+
+body {
+    background: var(--color-bg);
+    color: var(--color-text);
+    transition: background 0.2s, color 0.2s;
+}
+
+.bg-theme {
+    background-color: var(--color-bg);
+}
+.text-theme {
+    color: var(--color-text);
+}
+.bg-accent {
+    background-color: var(--color-accent);
+}
+.bg-accent-hover:hover {
+    background-color: var(--color-accent-hover);
+}
+.text-accent {
+    color: var(--color-accent);
+}
+.text-accent-on {
+    color: var(--color-accent-text);
+}
+.bg-danger {
+    background-color: var(--color-danger);
+}
+.bg-danger-hover:hover {
+    background-color: var(--color-danger-hover);
+}
+.text-danger {
+    color: var(--color-danger);
+}
+.text-danger-on {
+    color: var(--color-danger-text);
+}
+.bg-error {
+    background-color: var(--color-error);
+}
+.text-error {
+    color: var(--color-error);
+}
+.text-error-on {
+    color: var(--color-error-text);
+}
+
+/* 既存のカスタムCSSやアニメーションはそのまま残す */
+/* ...existing code... */

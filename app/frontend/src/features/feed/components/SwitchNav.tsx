@@ -14,10 +14,10 @@ const SwitchNav: React.FC<SwitchNavProps> = ({ value, onChange }) => {
                 <span
                     className={`absolute bottom-[-1px] left-0 h-[90%] w-1/2 transition-all duration-300 ease-in-out z-0 ${indicatorPosition} pointer-events-none`}
                     style={{
-                        background: 'linear-gradient(90deg, rgba(37,99,235,0.55) 0%, rgba(59,130,246,0.55) 100%)',
+                        background: 'linear-gradient(90deg, var(--color-accent) 0%, var(--color-accent-hover) 100%)',
                         backdropFilter: 'blur(10px) saturate(1.3)',
                         WebkitBackdropFilter: 'blur(10px) saturate(1.3)',
-                        boxShadow: '0 2px 16px 0 #2563eb55',
+                        boxShadow: '0 2px 16px 0 var(--color-accent)55',
                     }}
                 />
                 {/* MyPostボタン */}
@@ -25,8 +25,8 @@ const SwitchNav: React.FC<SwitchNavProps> = ({ value, onChange }) => {
                     type="button"
                     className={`relative z-10 w-1/2 h-full flex items-center justify-center font-semibold text-base transition-colors duration-200 outline-none ${
                         value === 'self'
-                            ? 'bg-white/20 backdrop-blur-md text-white shadow-lg'
-                            : 'bg-transparent text-gray-300 hover:text-white'
+                            ? 'bg-accent/10 text-accent-on shadow-lg'
+                            : 'bg-transparent text-accent/70 hover:text-accent'
                     }`}
                     aria-pressed={value === 'self'}
                     onClick={() => onChange('self')}
@@ -38,8 +38,8 @@ const SwitchNav: React.FC<SwitchNavProps> = ({ value, onChange }) => {
                     type="button"
                     className={`relative z-10 w-1/2 h-full flex items-center justify-center font-semibold text-base transition-colors duration-200 outline-none ${
                         value === 'all'
-                            ? 'bg-white/20 backdrop-blur-md text-white shadow-lg'
-                            : 'bg-transparent text-gray-300 hover:text-white'
+                            ? 'bg-accent/10 text-accent-on shadow-lg'
+                            : 'bg-transparent text-accent/70 hover:text-accent'
                     }`}
                     aria-pressed={value === 'all'}
                     onClick={() => onChange('all')}

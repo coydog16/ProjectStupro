@@ -14,18 +14,18 @@ export function FeedMenu({
     return (
         <DropdownMenu buttonContent={menuLabel}>
             <button
-                className="block w-full px-4 py-2 text-left text-white hover:bg-accent/80 hover:text-layer rounded-t"
+                className="block w-full px-4 py-2 text-left text-theme hover:bg-accent/80 hover:text-accent rounded-t"
                 onClick={onEdit}
                 type="button"
             >
-                編集
+                EDIT
             </button>
             <button
-                className="block w-full px-4 py-2 text-left text-danger hover:bg-danger/80 hover:text-layer rounded-b"
+                className="block w-full px-4 py-2 text-left text-danger hover:bg-danger/80 hover:text-accent rounded-b"
                 onClick={onDelete}
                 type="button"
             >
-                削除
+                DELETE
             </button>
         </DropdownMenu>
     );

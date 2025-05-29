@@ -42,43 +42,43 @@ const FeedList: React.FC<FeedListProps> = ({ posts, filterType, userId: _userId,
     }
 
     return (
-        <div className="w-full flex flex-col items-center" style={{ background: '#232225', color: '#e0e0e0' }}>
+        <div className="w-full flex flex-col items-center bg-theme text-theme">
             {filteredPosts.map((post) => (
                 <div
                     key={post.id}
-                    className="relative w-full max-w-xl border-b border-gray-700/60 flex flex-row gap-6 py-7 px-4 hover:bg-gray-800/60 transition group"
+                    className="relative w-full max-w-xl border-b border-accent/20 flex flex-row gap-6 py-7 px-4 hover:bg-accent/10 transition group"
                 >
                     {/* すべての投稿で、filterTypeが'all'のときのみアイコン・名前・ユーザーネームを表示 */}
                     {filterType === 'all' && (
                         <div className="flex flex-col items-center min-w-[56px]">
-                            <div className="w-12 h-12 rounded-[18px] flex items-center justify-center overflow-hidden shadow-md bg-gray-700">
+                            <div className="w-12 h-12 rounded-[18px] flex items-center justify-center overflow-hidden shadow-md bg-theme border border-accent/30">
                                 {post.user?.avatar_image_file_path ? (
                                     <img
                                         src={post.user.avatar_image_file_path}
                                         alt="avatar"
-                                        className="w-10 h-10 object-cover rounded-full border border-gray-300"
+                                        className="w-10 h-10 object-cover rounded-full border border-accent/40"
                                     />
                                 ) : (
-                                    <span className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-200 text-gray-500 font-bold">
+                                    <span className="w-10 h-10 flex items-center justify-center rounded-full bg-accent/10 text-accent font-bold">
                                         {post.user?.full_name?.[0] || post.user?.username?.[0] || '?'}
                                     </span>
                                 )}
                             </div>
-                            <div className="mt-1 text-xs font-semibold text-gray-200 max-w-[72px] truncate text-center">
+                            <div className="mt-1 text-xs font-semibold text-theme max-w-[72px] truncate text-center">
                                 {post.user?.last_name || ''}{' '}
                                 {post.user?.first_name || post.user?.username || '匿名ユーザー'}
                             </div>
-                            <div className="text-[10px] text-gray-400 max-w-[72px] truncate text-center">
+                            <div className="text-[10px] text-accent max-w-[72px] truncate text-center">
                                 @{post.user?.username}
                             </div>
                         </div>
                     )}
                     <div className="flex-1 min-w-0 flex flex-col items-start">
                         {/* 左上端に投稿日時を本文と揃えて表示 */}
-                        <span className="text-gray-600 text-xs whitespace-nowrap mb-1 px-4">
+                        <span className="text-accent/70 text-xs whitespace-nowrap mb-1 px-4">
                             {new Date(post.created_at).toLocaleString()}
                         </span>
-                        <div className="text-gray-200 text-sm mb-3 break-words whitespace-pre-line leading-relaxed px-2 py-2 w-full">
+                        <div className="text-theme text-sm mb-3 break-words whitespace-pre-line leading-relaxed px-2 py-2 w-full">
                             {post.content}
                         </div>
                     </div>

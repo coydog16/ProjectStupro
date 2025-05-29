@@ -19,11 +19,11 @@ function calcProgressPercent(createdAt?: string, dueDate?: string): number {
 const TaskList: React.FC<TaskListProps> = ({ tasks }) => (
     <div className="w-full max-w-xl">
         {/* タスクラベル */}
-        <div className="text-gray-300 mb-2 text-left pl-1 tracking-widest text-xs uppercase">
+        <div className="text-accent/70 mb-2 text-left pl-1 tracking-widest text-xs uppercase">
             <span className="font-mono">TASK</span>
         </div>
         {tasks.length === 0 ? (
-            <div className="text-gray-500 text-sm text-center py-4">No Tasks</div>
+            <div className="text-accent/40 text-sm text-center py-4">No Tasks</div>
         ) : (
             <ul className="flex flex-col gap-0">
                 {tasks.map((task) => {
@@ -36,7 +36,7 @@ const TaskList: React.FC<TaskListProps> = ({ tasks }) => (
                     return (
                         <li
                             key={task.id}
-                            className="w-full relative flex flex-row items-center px-4 py-1 border border-white/10 shadow-lg overflow-hidden bg-transparent"
+                            className="w-full relative flex flex-row items-center px-4 py-1 border border-accent/20 shadow-lg overflow-hidden bg-theme"
                         >
                             {/* 進捗メーター（下部バー） */}
                             <div
@@ -48,11 +48,11 @@ const TaskList: React.FC<TaskListProps> = ({ tasks }) => (
                                 }}
                             />
                             {/* タスク内容（16文字以上は省略） */}
-                            <span className="font-semibold text-white truncate max-w-[180px] text-xs drop-shadow z-20">
+                            <span className="font-semibold text-theme truncate max-w-[180px] text-xs drop-shadow z-20">
                                 {task.content.length > 16 ? `${task.content.slice(0, 16)}…` : task.content}
                             </span>
                             {/* 期限 */}
-                            <span className="absolute bottom-1 right-3 text-xs text-gray-200 px-2 z-20">
+                            <span className="absolute bottom-1 right-3 text-xs text-accent/80 px-2 z-20">
                                 {task.task_due_date ? new Date(task.task_due_date).toLocaleDateString() : '未設定'}
                             </span>
                         </li>

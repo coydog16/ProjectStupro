@@ -1,14 +1,19 @@
-import { Button as HeadlessButton } from '@headlessui/react';
-import type { ButtonProps as HeadlessButtonProps } from '@headlessui/react';
-import React from 'react';
+import type { ButtonHTMLAttributes, ReactNode } from 'react';
 
-interface ButtonProps extends Omit<HeadlessButtonProps<'button'>, 'className'> {
-    className?: string;
-    children: React.ReactNode;
-}
-
-export const Button: React.FC<ButtonProps> = ({ children, className = '', ...props }) => (
-    <HeadlessButton {...props} className={`rounded px-4 py-2 text-sm font-semibold ${className}`}>
+/**
+ * テーマに応じてアクセントカラーが自動で適用される共通ボタン
+ * 例: <Button>保存</Button>
+ */
+export const Button = ({
+    className = '',
+    children,
+    ...props
+}: ButtonHTMLAttributes<HTMLButtonElement> & { children: ReactNode }) => (
+    <button
+        type="button"
+        className={`bg-accent text-accent-on px-4 py-2 rounded font-bold transition-colors duration-200 shadow-sm hover:bg-accent-hover disabled:opacity-60 disabled:pointer-events-none ${className}`.trim()}
+        {...props}
+    >
         {children}
-    </HeadlessButton>
+    </button>
 );

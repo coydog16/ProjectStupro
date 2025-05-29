@@ -3,17 +3,20 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import routes from './routes';
 import './App.css';
 import FeedPage from './features/feed/pages/FeedPage';
+import { Theme } from './components/common/Theme';
 
 function App() {
     return (
-        <Router>
-            <Routes>
-                {routes.map((route, index) => (
-                    <Route key={index} path={route.path} element={route.element} />
-                ))}
-                <Route path="/feed/:username" element={<FeedPage />} />
-            </Routes>
-        </Router>
+        <Theme>
+            <Router>
+                <Routes>
+                    {routes.map((route, index) => (
+                        <Route key={index} path={route.path} element={route.element} />
+                    ))}
+                    <Route path="/feed/:username" element={<FeedPage />} />
+                </Routes>
+            </Router>
+        </Theme>
     );
 }
 

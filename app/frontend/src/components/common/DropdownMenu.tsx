@@ -26,7 +26,7 @@ export const DropdownMenu: React.FC<DropdownMenuProps> = ({ buttonContent, child
         <div className="relative inline-block" ref={menuRef}>
             <button
                 type="button"
-                className="focus:outline-none flex items-center justify-start w-8 h-8 p-0 text-gray-400 hover:text-gray-200"
+                className="focus:outline-none flex items-center justify-start w-8 h-8 p-0 text-accent/70 hover:text-accent"
                 style={{ minWidth: '1.5rem', minHeight: '1.5rem' }}
                 onClick={() => setOpen((v) => !v)}
                 aria-haspopup="true"
@@ -36,7 +36,7 @@ export const DropdownMenu: React.FC<DropdownMenuProps> = ({ buttonContent, child
             </button>
             {open && (
                 <div
-                    className={`absolute mt-2 min-w-[8rem] rounded-lg bg-gray-800 shadow-lg ring-1 ring-black/10 z-50 ${
+                    className={`absolute mt-2 min-w-[8rem] rounded-lg bg-theme text-theme shadow-lg ring-1 ring-accent/10 z-50 ${
                         align === 'right' ? 'right-0' : 'left-0'
                     } animate-fade-in`}
                 >

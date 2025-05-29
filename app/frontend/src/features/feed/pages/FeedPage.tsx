@@ -8,7 +8,6 @@ import NewPostButton from '../components/NewPostButton';
 import { ModalNewPost } from '../components/ModalNewPost';
 import { ModalEditPost } from '../components/ModalEditPost';
 import { ConfirmDialog } from '../../../components/common/ConfirmDialog';
-import FeedBackground from '../components/FeedBackground';
 import { PostType } from '../../../types';
 import Loading from '../../../components/common/Loading';
 import clsx from 'clsx';
@@ -135,14 +134,11 @@ const FeedPage: React.FC = () => {
     }
 
     return (
-        <div className="flex flex-col items-center min-h-screen bg-gradient-to-br from-gray-900 via-gray-950 to-gray-800 text-gray-100">
-            <FeedBackground>
-                <div className="w-full flex flex-col items-center justify-end pb-0 mb-0">
-                    {user && <UserInfo user={user} tasks={recentTasks} />}
-                    <SwitchNav value={active} onChange={handleSwitchNav} />
-                </div>
-            </FeedBackground>
-
+        <div className="flex flex-col items-center min-h-screen bg-theme">
+            <div className="w-full flex flex-col items-center justify-end pb-0 mb-0">
+                {user && <UserInfo user={user} tasks={recentTasks} />}
+                <SwitchNav value={active} onChange={handleSwitchNav} />
+            </div>
             <div className="w-full flex flex-col items-center">
                 {initialLoading ? (
                     <Loading message="フィードを読み込み中..." />
@@ -189,7 +185,6 @@ const FeedPage: React.FC = () => {
                     </div>
                 )}
             </div>
-
             <NewPostButton onClick={() => setModalOpen(true)} />
             <ModalNewPost isOpen={modalOpen} onClose={() => setModalOpen(false)} onSubmit={handleNewPost} />
             <ModalEditPost
