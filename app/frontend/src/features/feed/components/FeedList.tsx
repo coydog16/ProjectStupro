@@ -1,5 +1,6 @@
 import { PostType } from '../../../types';
 import FeedMenu from './FeedMenu';
+import UserAvatar from '../../../components/common/UserAvatar';
 
 export type FeedFilterType = 'all' | 'self';
 
@@ -46,24 +47,17 @@ const FeedList: React.FC<FeedListProps> = ({ posts, filterType, userId: _userId,
             {filteredPosts.map((post) => (
                 <div
                     key={post.id}
-                    className="relative w-full max-w-xl border-b border-accent/20 flex flex-row gap-6 py-7 px-4 hover:bg-accent/10 transition group"
+                    className="relative w-full max-w-xl flex flex-row gap-6 py-7 px-4 hover:bg-accent/10 transition group"
                 >
                     {/* すべての投稿で、filterTypeが'all'のときのみアイコン・名前・ユーザーネームを表示 */}
                     {filterType === 'all' && (
                         <div className="flex flex-col items-center min-w-[56px]">
-                            <div className="w-12 h-12 rounded-[18px] flex items-center justify-center overflow-hidden shadow-md bg-theme border border-accent/30">
-                                {post.user?.avatar_image_file_path ? (
-                                    <img
-                                        src={post.user.avatar_image_file_path}
-                                        alt="avatar"
-                                        className="w-10 h-10 object-cover rounded-full border border-accent/40"
-                                    />
-                                ) : (
-                                    <span className="w-10 h-10 flex items-center justify-center rounded-full bg-accent/10 text-accent font-bold">
-                                        {post.user?.full_name?.[0] || post.user?.username?.[0] || '?'}
-                                    </span>
-                                )}
-                            </div>
+                            <UserAvatar
+                                src={post.user?.avatar_image_file_path}
+                                name={post.user?.full_name || post.user?.username}
+                                size={48}
+                                className="shadow-md border border-accent/30"
+                            />
                             <div className="mt-1 text-xs font-semibold text-theme max-w-[72px] truncate text-center">
                                 {post.user?.last_name || ''}{' '}
                                 {post.user?.first_name || post.user?.username || '匿名ユーザー'}

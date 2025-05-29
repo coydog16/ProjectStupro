@@ -13,6 +13,7 @@ import Loading from '../../../components/common/Loading';
 import clsx from 'clsx';
 import { useFeedSwitchNav } from '../hooks/useFeedSwitchNav';
 import { useRecentTasks } from '../hooks/useRecentTasks';
+import ThemeToggleLayout from '../../../components/layout/ThemeToggleLayout';
 
 /**
  * 投稿フィードページ
@@ -134,75 +135,77 @@ const FeedPage: React.FC = () => {
     }
 
     return (
-        <div className="flex flex-col items-center min-h-screen bg-theme">
-            <div className="w-full flex flex-col items-center justify-end pb-0 mb-0">
-                {user && <UserInfo user={user} tasks={recentTasks} />}
-                <SwitchNav value={active} onChange={handleSwitchNav} />
-            </div>
-            <div className="w-full flex flex-col items-center">
-                {initialLoading ? (
-                    <Loading message="フィードを読み込み中..." />
-                ) : (
-                    <div className="w-full flex flex-col items-center overflow-x-hidden relative min-h-screen">
-                        {/* MyPostフィード（左側に初期配置） */}
-                        <div
-                            className={clsx(
-                                'absolute w-full flex flex-col items-center top-0 left-0 will-change-transform',
-                                active === 'self' && !animating && 'translate-x-0 z-20',
-                                pending === 'self' && animating && 'animate-slide-in-left z-30',
-                                active === 'all' && !animating && '-translate-x-full z-10',
-                                pending === 'all' && animating && 'animate-slide-out-left z-10',
-                                'transition-transform duration-400'
-                            )}
-                        >
-                            <FeedList
-                                posts={selfPosts}
-                                filterType={'self'}
-                                userId={user?.id}
-                                handleDelete={handleDelete}
-                                handleEdit={handleEdit}
-                            />
+        <ThemeToggleLayout>
+            <div className="flex flex-col items-center min-h-screen bg-theme relative">
+                <div className="w-full flex flex-col items-center justify-end pb-0 mb-0">
+                    {user && <UserInfo user={user} tasks={recentTasks} />}
+                    <SwitchNav value={active} onChange={handleSwitchNav} />
+                </div>
+                <div className="w-full flex flex-col items-center">
+                    {initialLoading ? (
+                        <Loading message="フィードを読み込み中..." />
+                    ) : (
+                        <div className="w-full flex flex-col items-center overflow-x-hidden relative min-h-screen">
+                            {/* MyPostフィード（左側に初期配置） */}
+                            <div
+                                className={clsx(
+                                    'absolute w-full flex flex-col items-center top-0 left-0 will-change-transform',
+                                    active === 'self' && !animating && 'translate-x-0 z-20',
+                                    pending === 'self' && animating && 'animate-slide-in-left z-30',
+                                    active === 'all' && !animating && '-translate-x-full z-10',
+                                    pending === 'all' && animating && 'animate-slide-out-left z-10',
+                                    'transition-transform duration-400'
+                                )}
+                            >
+                                <FeedList
+                                    posts={selfPosts}
+                                    filterType={'self'}
+                                    userId={user?.id}
+                                    handleDelete={handleDelete}
+                                    handleEdit={handleEdit}
+                                />
+                            </div>
+                            {/* ALLフィード（右側に初期配置） */}
+                            <div
+                                className={clsx(
+                                    'absolute w-full flex flex-col items-center top-0 left-0 will-change-transform',
+                                    active === 'all' && !animating && 'translate-x-0 z-20',
+                                    pending === 'all' && animating && 'animate-slide-in-right z-30',
+                                    active === 'self' && !animating && 'translate-x-full z-10',
+                                    pending === 'self' && animating && 'animate-slide-out-right z-10',
+                                    'transition-transform duration-400'
+                                )}
+                            >
+                                <FeedList
+                                    posts={allPosts}
+                                    filterType={'all'}
+                                    userId={user?.id}
+                                    handleDelete={handleDelete}
+                                    handleEdit={handleEdit}
+                                />
+                            </div>
                         </div>
-                        {/* ALLフィード（右側に初期配置） */}
-                        <div
-                            className={clsx(
-                                'absolute w-full flex flex-col items-center top-0 left-0 will-change-transform',
-                                active === 'all' && !animating && 'translate-x-0 z-20',
-                                pending === 'all' && animating && 'animate-slide-in-right z-30',
-                                active === 'self' && !animating && 'translate-x-full z-10',
-                                pending === 'self' && animating && 'animate-slide-out-right z-10',
-                                'transition-transform duration-400'
-                            )}
-                        >
-                            <FeedList
-                                posts={allPosts}
-                                filterType={'all'}
-                                userId={user?.id}
-                                handleDelete={handleDelete}
-                                handleEdit={handleEdit}
-                            />
-                        </div>
-                    </div>
-                )}
+                    )}
+                </div>
+                <NewPostButton onClick={() => setModalOpen(true)} />
+                <ModalNewPost isOpen={modalOpen} onClose={() => setModalOpen(false)} onSubmit={handleNewPost} />
+                <ModalEditPost
+                    isOpen={editModalOpen}
+                    onClose={() => setEditModalOpen(false)}
+                    onSubmit={handleEditSubmit}
+                    initialContent={editingPost?.content || ''}
+                />
+                <ConfirmDialog
+                    isOpen={deleteModalOpen}
+                    title="投稿の削除確認"
+                    message="本当にこの投稿を削除しますか？この操作は取り消せません。"
+                    confirmLabel="削除"
+                    cancelLabel="キャンセル"
+                    onConfirm={handleDeleteConfirm}
+                    onCancel={() => setDeleteModalOpen(false)}
+                />
             </div>
-            <NewPostButton onClick={() => setModalOpen(true)} />
-            <ModalNewPost isOpen={modalOpen} onClose={() => setModalOpen(false)} onSubmit={handleNewPost} />
-            <ModalEditPost
-                isOpen={editModalOpen}
-                onClose={() => setEditModalOpen(false)}
-                onSubmit={handleEditSubmit}
-                initialContent={editingPost?.content || ''}
-            />
-            <ConfirmDialog
-                isOpen={deleteModalOpen}
-                title="投稿の削除確認"
-                message="本当にこの投稿を削除しますか？この操作は取り消せません。"
-                confirmLabel="削除"
-                cancelLabel="キャンセル"
-                onConfirm={handleDeleteConfirm}
-                onCancel={() => setDeleteModalOpen(false)}
-            />
-        </div>
+        </ThemeToggleLayout>
     );
 };
 

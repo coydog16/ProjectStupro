@@ -36,7 +36,7 @@ const TaskList: React.FC<TaskListProps> = ({ tasks }) => (
                     return (
                         <li
                             key={task.id}
-                            className="w-full relative flex flex-row items-center px-4 py-1 border border-accent/20 shadow-lg overflow-hidden bg-theme"
+                            className="w-full relative flex flex-row items-center px-4 py-1 shadow-lg overflow-hidden bg-theme"
                         >
                             {/* 進捗メーター（下部バー） */}
                             <div

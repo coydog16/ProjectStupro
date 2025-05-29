@@ -1,6 +1,7 @@
 import { UserType, PostType } from '../../../types';
 import { getDisplayName } from '../../../utils/userUtils';
 import TaskList from './TaskList';
+import UserAvatar from '../../../components/common/UserAvatar';
 
 interface UserInfoProps {
     user: UserType;
@@ -11,14 +12,13 @@ const UserInfo: React.FC<UserInfoProps> = ({ user, tasks }) => (
     <div className="w-full relative" style={{ minHeight: '180px' }}>
         {/* ユーザー情報エリア */}
         <div className="relative z-10 flex flex-row items-center pt-6 pl-8">
-            <div className="w-20 h-20 rounded-full flex items-center justify-center overflow-hidden shadow-lg bg-accent/10 border border-accent/30">
-                {user.avatar_image_file_path ? (
-                    <img src={user.avatar_image_file_path} alt="avatar" className="w-full h-full object-cover" />
-                ) : (
-                    <span className="text-3xl font-bold text-accent">
-                        {user.full_name?.[0] || user.username?.[0] || '?'}
-                    </span>
-                )}
+            <div className="w-20 h-20 flex items-center justify-center overflow-hidden shadow-lg bg-accent/10">
+                <UserAvatar
+                    src={user.avatar_image_file_path}
+                    name={user.full_name || user.username}
+                    size={80}
+                    className="shadow-lg"
+                />
             </div>
             <div className="ml-4 text-left relative">
                 {/* 名前の背景にうっすら黒い放射状グラデーション */}

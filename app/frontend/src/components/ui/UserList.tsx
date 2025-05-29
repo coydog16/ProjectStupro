@@ -19,35 +19,36 @@ const UserList: React.FC = () => {
             .finally(() => setLoading(false));
     }, []);
 
-    if (loading) return <div className="text-gray-400 py-8">読み込み中...</div>;
-    if (error) return <div className="text-red-400 py-8">{error}</div>;
+    if (loading) return <div className="py-8 text-theme/60">読み込み中...</div>;
+    if (error) return <div className="py-8 text-error">{error}</div>;
 
     return (
-        <div className="w-full max-w-2xl mx-auto py-8">
-            <h2 className="text-xl font-bold mb-6 text-gray-100">ユーザー一覧</h2>
+        <div className="w-full max-w-2xl mx-auto py-8 bg-theme text-theme">
+            <h2 className="text-xl font-bold mb-6 text-theme">ユーザー一覧</h2>
             <div className="flex flex-col gap-4">
                 {users.map((user) => (
-                    <div key={user.id} className="flex items-center gap-4 bg-gray-800 rounded-lg px-4 py-3 shadow">
-                        <div className="w-10 h-10 rounded-[14px] overflow-hidden bg-gray-700 flex items-center justify-center">
+                    <div
+                        key={user.id}
+                        className="flex items-center gap-4 bg-theme rounded-xl px-4 py-3 shadow border border-accent/20"
+                    >
+                        <div className="w-10 h-10 rounded-xl overflow-hidden bg-accent/10 flex items-center justify-center">
                             {user.avatar_image_file_path ? (
                                 <img
                                     src={user.avatar_image_file_path}
                                     alt="avatar"
-                                    className="w-full h-full object-cover"
+                                    className="w-full h-full object-cover rounded-xl"
                                 />
-                            ) : null}
-                            <span
-                                className="text-lg font-bold text-gray-100"
-                                style={{ display: user.avatar_image_file_path ? 'none' : 'block' }}
-                            >
-                                {user.last_name?.[0] || user.username?.[0] || '?'}
-                            </span>
+                            ) : (
+                                <span className="text-lg font-bold text-accent select-none">
+                                    {user.last_name?.[0] || user.username?.[0] || '?'}
+                                </span>
+                            )}
                         </div>
                         <div className="flex flex-col min-w-0">
-                            <span className="font-semibold text-gray-100 text-sm truncate">
+                            <span className="font-semibold text-theme text-sm truncate">
                                 {user.last_name || ''} {user.first_name || user.username || '匿名ユーザー'}
                             </span>
-                            <span className="text-xs text-gray-400 truncate">@{user.username}</span>
+                            <span className="text-xs text-accent/70 truncate">@{user.username}</span>
                         </div>
                     </div>
                 ))}

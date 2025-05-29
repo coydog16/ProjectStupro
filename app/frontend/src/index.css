@@ -2,10 +2,7 @@
 @import './theme.css';
 
 /* カスタムスタイル */
-body {
-    background-color: var(--color-gray-50);
-    color: var(--color-gray-900);
-}
+/* bodyのbackground-color, color指定を削除してテーマ変数に一元化 */
 
 .container {
     margin-left: auto;
