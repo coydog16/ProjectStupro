@@ -1,25 +1,25 @@
-import { FeedPost } from '../types';
+import { PostType } from '../../../types';
 import FeedMenu from './FeedMenu';
 
 export type FeedFilterType = 'all' | 'self';
 
 // 全投稿を返すフィルタ関数
-export function filterAllFeed(posts: FeedPost[]): FeedPost[] {
+export function filterAllFeed(posts: PostType[]): PostType[] {
     return posts;
 }
 
 // 指定ユーザーの投稿のみ返すフィルタ関数
-export function filterSelfFeed(posts: FeedPost[], userId?: number): FeedPost[] {
+export function filterSelfFeed(posts: PostType[], userId?: number): PostType[] {
     if (!userId) return [];
     return posts.filter((post) => post.user_id === userId);
 }
 
 interface FeedListProps {
-    posts: FeedPost[];
+    posts: PostType[];
     filterType: FeedFilterType;
     userId?: number;
-    handleEdit: (post: FeedPost) => void;
-    handleDelete: (post: FeedPost) => void;
+    handleEdit: (post: PostType) => void;
+    handleDelete: (post: PostType) => void;
 }
 
 const getMyUserId = () => {
@@ -56,21 +56,13 @@ const FeedList: React.FC<FeedListProps> = ({ posts, filterType, userId: _userId,
                                     <img
                                         src={post.user.avatar_image_file_path}
                                         alt="avatar"
-                                        className="w-full h-full object-cover"
-                                        onError={(e) => {
-                                            const target = e.currentTarget;
-                                            target.style.display = 'none';
-                                            const fallback = target.nextElementSibling as HTMLElement;
-                                            if (fallback) fallback.style.display = 'block';
-                                        }}
+                                        className="w-10 h-10 object-cover rounded-full border border-gray-300"
                                     />
-                                ) : null}
-                                <span
-                                    className="text-xl font-bold text-gray-100"
-                                    style={{ display: post.user?.avatar_image_file_path ? 'none' : 'block' }}
-                                >
-                                    {post.user?.last_name?.[0] || post.user?.username?.[0] || '?'}
-                                </span>
+                                ) : (
+                                    <span className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-200 text-gray-500 font-bold">
+                                        {post.user?.full_name?.[0] || post.user?.username?.[0] || '?'}
+                                    </span>
+                                )}
                             </div>
                             <div className="mt-1 text-xs font-semibold text-gray-200 max-w-[72px] truncate text-center">
                                 {post.user?.last_name || ''}{' '}

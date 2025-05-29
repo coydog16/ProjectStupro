@@ -1,7 +1,7 @@
-import { FeedPost } from '../types';
+import { PostType } from '../../../types';
 
 interface TaskListProps {
-    tasks: FeedPost[];
+    tasks: PostType[];
 }
 
 // タスク進捗率を計算（0〜100）

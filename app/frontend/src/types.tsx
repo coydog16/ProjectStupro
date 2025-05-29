@@ -1,5 +1,5 @@
 // 投稿データの型定義
-export interface FeedUser {
+export interface UserType {
     id: number;
     username: string;
     full_name?: string;
@@ -9,10 +9,10 @@ export interface FeedUser {
     avatar_image_file_path?: string | null;
 }
 
-export interface FeedPost {
+export interface PostType {
     id: number;
     user_id: number;
-    user?: FeedUser;
+    user?: UserType;
     content: string;
     is_pinned: boolean;
     pin_date?: string | null;
@@ -24,4 +24,12 @@ export interface FeedPost {
     post_type: string;
     created_at: string;
     updated_at: string;
+}
+
+export interface ImageType {
+    id: number;
+    url: string;
+    alt?: string;
+    created_at?: string;
+    updated_at?: string;
 }

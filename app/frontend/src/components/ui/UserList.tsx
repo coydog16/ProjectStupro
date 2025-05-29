@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { FeedUser } from '../../features/feed/types';
+import { UserType } from '../../types';
 import apiClient from '../../api/axios';
 
-const fetchUsers = async (): Promise<FeedUser[]> => {
+const fetchUsers = async (): Promise<UserType[]> => {
     const res = await apiClient.get('/admin/users');
     return res.data;
 };
 
 const UserList: React.FC = () => {
-    const [users, setUsers] = useState<FeedUser[]>([]);
+    const [users, setUsers] = useState<UserType[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
@@ -34,12 +34,6 @@ const UserList: React.FC = () => {
                                     src={user.avatar_image_file_path}
                                     alt="avatar"
                                     className="w-full h-full object-cover"
-                                    onError={(e) => {
-                                        const target = e.currentTarget;
-                                        target.style.display = 'none';
-                                        const fallback = target.nextElementSibling as HTMLElement;
-                                        if (fallback) fallback.style.display = 'block';
-                                    }}
                                 />
                             ) : null}
                             <span

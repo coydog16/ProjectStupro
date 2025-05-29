@@ -1,8 +1,8 @@
 import apiClient from './axios';
-import { FeedUser } from '../features/feed/types';
+import { UserType } from '../types';
 
 // ユーザー一覧取得API（管理画面用）
-export const fetchUsers = async (): Promise<FeedUser[]> => {
+export const fetchUsers = async (): Promise<UserType[]> => {
     const res = await apiClient.get('/admin/users');
     return res.data;
 };

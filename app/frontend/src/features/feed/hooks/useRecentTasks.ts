@@ -1,12 +1,12 @@
 import { useMemo } from 'react';
-import { FeedPost } from '../types';
+import { PostType } from '../../../types';
 
 /**
  * 投稿リストから直近のタスクのみを抽出するカスタムフック
  * @param posts 投稿リスト
  * @param limit 取得する件数（デフォルト3件）
  */
-export function useRecentTasks(posts: FeedPost[], limit = 3) {
+export function useRecentTasks(posts: PostType[], limit = 3) {
     return useMemo(
         () =>
             posts

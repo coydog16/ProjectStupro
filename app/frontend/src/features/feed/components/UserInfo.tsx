@@ -1,10 +1,10 @@
-import { FeedUser, FeedPost } from '../types';
+import { UserType, PostType } from '../../../types';
 import { getDisplayName } from '../components/utils';
 import TaskList from './TaskList';
 
 interface UserInfoProps {
-    user: FeedUser;
-    tasks: FeedPost[];
+    user: UserType;
+    tasks: PostType[];
 }
 
 const UserInfo: React.FC<UserInfoProps> = ({ user, tasks }) => (
@@ -15,11 +15,11 @@ const UserInfo: React.FC<UserInfoProps> = ({ user, tasks }) => (
                 className="w-20 h-20 rounded-full flex items-center justify-center overflow-hidden shadow-lg"
                 style={{ background: '#556a8b' }}
             >
-                {user?.avatar_image_file_path ? (
+                {user.avatar_image_file_path ? (
                     <img src={user.avatar_image_file_path} alt="avatar" className="w-full h-full object-cover" />
                 ) : (
                     <span className="text-3xl font-bold" style={{ color: '#fffde7' }}>
-                        {user?.full_name?.[0] || user?.username?.[0] || '?'}
+                        {user.full_name?.[0] || user.username?.[0] || '?'}
                     </span>
                 )}
             </div>

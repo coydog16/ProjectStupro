@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { fetchFeed, createPost, deletePostApi, updatePostApi } from '../../../api/feed';
 import FeedList from '../components/FeedList';
@@ -9,7 +9,7 @@ import { ModalNewPost } from '../components/ModalNewPost';
 import { ModalEditPost } from '../components/ModalEditPost';
 import { ConfirmDialog } from '../../../components/common/ConfirmDialog';
 import FeedBackground from '../components/FeedBackground';
-import { FeedPost } from '../types';
+import { PostType } from '../../../types';
 import Loading from '../../../components/common/Loading';
 import clsx from 'clsx';
 import { useFeedSwitchNav } from '../hooks/useFeedSwitchNav';
@@ -27,12 +27,12 @@ const FeedPage: React.FC = () => {
     const [modalOpen, setModalOpen] = useState(false);
     const [editModalOpen, setEditModalOpen] = useState(false);
     const [deleteModalOpen, setDeleteModalOpen] = useState(false);
-    const [editingPost, setEditingPost] = useState<FeedPost | null>(null);
-    const [deletingPost, setDeletingPost] = useState<FeedPost | null>(null);
+    const [editingPost, setEditingPost] = useState<PostType | null>(null);
+    const [deletingPost, setDeletingPost] = useState<PostType | null>(null);
 
     // 投稿一覧取得（ALL, MyPost両方を最初に取得してキャッシュ）
-    const [allPosts, setAllPosts] = useState<FeedPost[]>([]);
-    const [selfPosts, setSelfPosts] = useState<FeedPost[]>([]);
+    const [allPosts, setAllPosts] = useState<PostType[]>([]);
+    const [selfPosts, setSelfPosts] = useState<PostType[]>([]);
     const [initialLoading, setInitialLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
@@ -86,13 +86,13 @@ const FeedPage: React.FC = () => {
     };
 
     // 削除APIを呼んで、成功したらsetPostsでリストから除外
-    const handleDelete = (post: FeedPost) => {
+    const handleDelete = (post: PostType) => {
         setDeletingPost(post);
         setDeleteModalOpen(true);
     };
 
     // 投稿編集
-    const handleEdit = (post: FeedPost) => {
+    const handleEdit = (post: PostType) => {
         setEditingPost(post);
         setEditModalOpen(true);
     };
