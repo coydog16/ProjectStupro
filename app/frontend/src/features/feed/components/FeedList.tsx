@@ -48,12 +48,37 @@ const FeedList: React.FC<FeedListProps> = ({ posts, filterType, userId: _userId,
                     key={post.id}
                     className="relative w-full max-w-xl border-b border-gray-700/60 flex flex-row gap-6 py-7 px-4 hover:bg-gray-800/60 transition group"
                 >
+                    {/* すべての投稿で、filterTypeが'all'のときのみアイコン・名前・ユーザーネームを表示 */}
+                    {filterType === 'all' && (
+                        <div className="flex flex-col items-center min-w-[56px]">
+                            <div className="w-12 h-12 rounded-[18px] flex items-center justify-center overflow-hidden shadow-md bg-gray-700">
+                                {post.user?.avatar_image_id ? (
+                                    <img
+                                        src={`/api/images/${post.user.avatar_image_id}`}
+                                        alt="avatar"
+                                        className="w-full h-full object-cover"
+                                    />
+                                ) : (
+                                    <span className="text-lg font-bold text-gray-100">
+                                        {post.user?.full_name?.[0] || post.user?.username?.[0] || '?'}
+                                    </span>
+                                )}
+                            </div>
+                            <div className="mt-1 text-xs font-semibold text-gray-200 max-w-[72px] truncate text-center">
+                                {post.user?.last_name || ''}{' '}
+                                {post.user?.first_name || post.user?.username || '匿名ユーザー'}
+                            </div>
+                            <div className="text-[10px] text-gray-400 max-w-[72px] truncate text-center">
+                                @{post.user?.username}
+                            </div>
+                        </div>
+                    )}
                     <div className="flex-1 min-w-0 flex flex-col items-start">
                         {/* 左上端に投稿日時を本文と揃えて表示 */}
                         <span className="text-gray-600 text-xs whitespace-nowrap mb-1 px-4">
                             {new Date(post.created_at).toLocaleString()}
                         </span>
-                        <div className="text-gray-200 text-sm mb-3 break-words whitespace-pre-line leading-relaxed px-4 py-2 w-full">
+                        <div className="text-gray-200 text-sm mb-3 break-words whitespace-pre-line leading-relaxed px-2 py-2 w-full">
                             {post.content}
                         </div>
                     </div>

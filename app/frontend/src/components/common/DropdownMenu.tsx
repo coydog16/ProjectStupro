@@ -26,12 +26,13 @@ export const DropdownMenu: React.FC<DropdownMenuProps> = ({ buttonContent, child
         <div className="relative inline-block" ref={menuRef}>
             <button
                 type="button"
-                className="focus:outline-none"
+                className="focus:outline-none flex items-center justify-start w-8 h-8 p-0 text-gray-400 hover:text-gray-200"
+                style={{ minWidth: '1.5rem', minHeight: '1.5rem' }}
                 onClick={() => setOpen((v) => !v)}
                 aria-haspopup="true"
                 aria-expanded={open}
             >
-                {buttonContent}
+                <span className="w-4 h-4 flex items-center justify-center">{buttonContent}</span>
             </button>
             {open && (
                 <div
