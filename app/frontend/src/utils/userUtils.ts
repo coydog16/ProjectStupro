@@ -1,7 +1,5 @@
 // ユーザー名表示用ユーティリティ
-import { UserType } from '../../../types';
-export type { FeedFilterType } from './FeedList';
-export { filterAllFeed, filterSelfFeed } from './FeedList';
+import { UserType } from '../types';
 
 export const isJapanese = (str: string) => /[\u3040-\u30ff\u3400-\u4dbf\u4e00-\u9faf]/.test(str);
 

@@ -1,5 +1,5 @@
 import { UserType, PostType } from '../../../types';
-import { getDisplayName } from '../components/utils';
+import { getDisplayName } from '../../../utils/userUtils';
 import TaskList from './TaskList';
 
 interface UserInfoProps {
