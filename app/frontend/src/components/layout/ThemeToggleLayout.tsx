@@ -1,6 +1,5 @@
-// ...existing code...
 import React from 'react';
-import ThemeToggle from '../ThemeToggle';
+import ThemeToggle from '../common/ThemeToggle';
 
 /**
  * アプリ全体の共通レイアウト
