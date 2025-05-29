@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback, useMemo } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { fetchFeed, createPost, deletePostApi, updatePostApi } from '../../../api/feed';
 import FeedList from '../components/FeedList';
@@ -12,6 +12,8 @@ import FeedBackground from '../components/FeedBackground';
 import { FeedPost } from '../types';
 import Loading from '../../../components/common/Loading';
 import clsx from 'clsx';
+import { useFeedSwitchNav } from '../hooks/useFeedSwitchNav';
+import { useRecentTasks } from '../hooks/useRecentTasks';
 
 /**
  * 投稿フィードページ
@@ -58,21 +60,7 @@ const FeedPage: React.FC = () => {
     }, [username]);
 
     // スライドアニメーションの状態
-    const [active, setActive] = useState<'all' | 'self'>('self');
-    const [pending, setPending] = useState<'all' | 'self' | null>(null);
-    const [animating, setAnimating] = useState(false);
-
-    // 切り替え時のアニメーション制御
-    const handleSwitchNav = (next: 'all' | 'self') => {
-        if (active === next || animating) return;
-        setActive(next); // 先に切り替え
-        setPending(next);
-        setAnimating(true);
-        setTimeout(() => {
-            setPending(null);
-            setAnimating(false);
-        }, 400); // アニメーション時間
-    };
+    const { active, pending, animating, handleSwitchNav } = useFeedSwitchNav();
 
     // userPostsはselfPostsのエイリアスなので、userPosts自体を削除しuserの取得もselfPostsから直接取得
     // const userPosts = useMemo(() => selfPosts, [selfPosts]);
@@ -80,17 +68,7 @@ const FeedPage: React.FC = () => {
     const user = selfPosts[0]?.user ?? null;
 
     // recentTasksもselfPostsから直接取得
-    const recentTasks = useMemo(
-        () =>
-            selfPosts
-                .filter((post: FeedPost) => post.is_task)
-                .sort((a: FeedPost, b: FeedPost) => {
-                    if (!a.task_due_date || !b.task_due_date) return 0;
-                    return new Date(b.task_due_date).getTime() - new Date(a.task_due_date).getTime();
-                })
-                .slice(0, 3),
-        [selfPosts]
-    );
+    const recentTasks = useRecentTasks(selfPosts, 3);
 
     // 新規投稿
     const handleNewPost = async (content: string) => {
@@ -170,39 +148,39 @@ const FeedPage: React.FC = () => {
                     <Loading message="フィードを読み込み中..." />
                 ) : (
                     <div className="w-full flex flex-col items-center overflow-x-hidden relative min-h-screen">
-                        {/* ALLフィード（初期は画面外左） */}
-                        <div
-                            className={clsx(
-                                'absolute w-full flex flex-col items-center top-0 left-0 will-change-transform',
-                                active === 'all' && !animating && 'translate-x-0 z-20',
-                                pending === 'all' && animating && 'animate-slide-in-left z-30',
-                                active === 'self' && !animating && '-translate-x-full z-10',
-                                pending === 'self' && animating && 'animate-slide-out-left z-10',
-                                'transition-transform duration-400'
-                            )}
-                        >
-                            <FeedList
-                                posts={allPosts}
-                                filterType={'all'}
-                                userId={user?.id}
-                                handleDelete={handleDelete}
-                                handleEdit={handleEdit}
-                            />
-                        </div>
-                        {/* MyPostフィード（初期は画面内） */}
+                        {/* MyPostフィード（左側に初期配置） */}
                         <div
                             className={clsx(
                                 'absolute w-full flex flex-col items-center top-0 left-0 will-change-transform',
                                 active === 'self' && !animating && 'translate-x-0 z-20',
-                                pending === 'self' && animating && 'animate-slide-in-right z-30',
-                                active === 'all' && !animating && 'translate-x-full z-10',
-                                pending === 'all' && animating && 'animate-slide-out-right z-10',
+                                pending === 'self' && animating && 'animate-slide-in-left z-30',
+                                active === 'all' && !animating && '-translate-x-full z-10',
+                                pending === 'all' && animating && 'animate-slide-out-left z-10',
                                 'transition-transform duration-400'
                             )}
                         >
                             <FeedList
                                 posts={selfPosts}
                                 filterType={'self'}
+                                userId={user?.id}
+                                handleDelete={handleDelete}
+                                handleEdit={handleEdit}
+                            />
+                        </div>
+                        {/* ALLフィード（右側に初期配置） */}
+                        <div
+                            className={clsx(
+                                'absolute w-full flex flex-col items-center top-0 left-0 will-change-transform',
+                                active === 'all' && !animating && 'translate-x-0 z-20',
+                                pending === 'all' && animating && 'animate-slide-in-right z-30',
+                                active === 'self' && !animating && 'translate-x-full z-10',
+                                pending === 'self' && animating && 'animate-slide-out-right z-10',
+                                'transition-transform duration-400'
+                            )}
+                        >
+                            <FeedList
+                                posts={allPosts}
+                                filterType={'all'}
                                 userId={user?.id}
                                 handleDelete={handleDelete}
                                 handleEdit={handleEdit}
