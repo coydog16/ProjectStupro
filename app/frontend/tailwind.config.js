@@ -44,6 +44,19 @@ export default {
                     '0%': { '--a': '0deg' },
                     '100%': { '--a': '360deg' },
                 },
+                slideInLeft: {
+                    '0%': { transform: 'translateX(-60%)', opacity: '0' },
+                    '100%': { transform: 'translateX(0)', opacity: '1' },
+                },
+                slideInRight: {
+                    '0%': { transform: 'translateX(60%)', opacity: '0' },
+                    '100%': { transform: 'translateX(0)', opacity: '1' },
+                },
+            },
+            animation: {
+                spinGlow: 'spinGlow 1.2s linear infinite',
+                'slide-in-left': 'slideInLeft 0.4s cubic-bezier(0.4,0,0.2,1)',
+                'slide-in-right': 'slideInRight 0.4s cubic-bezier(0.4,0,0.2,1)',
             },
         },
     },
