@@ -1,4 +1,3 @@
-import React from 'react';
 import UserList from '../../../components/ui/UserList';
 
 const AdminPage: React.FC = () => {

@@ -3,7 +3,7 @@ import { FeedUser } from '../../features/feed/types';
 import apiClient from '../../api/axios';
 
 const fetchUsers = async (): Promise<FeedUser[]> => {
-    const res = await apiClient.get('/users/');
+    const res = await apiClient.get('/admin/users');
     return res.data;
 };
 
@@ -29,17 +29,25 @@ const UserList: React.FC = () => {
                 {users.map((user) => (
                     <div key={user.id} className="flex items-center gap-4 bg-gray-800 rounded-lg px-4 py-3 shadow">
                         <div className="w-10 h-10 rounded-[14px] overflow-hidden bg-gray-700 flex items-center justify-center">
-                            {user.avatar_image_id ? (
+                            {user.avatar_image_file_path ? (
                                 <img
-                                    src={`/api/images/${user.avatar_image_id}`}
+                                    src={user.avatar_image_file_path}
                                     alt="avatar"
                                     className="w-full h-full object-cover"
+                                    onError={(e) => {
+                                        const target = e.currentTarget;
+                                        target.style.display = 'none';
+                                        const fallback = target.nextElementSibling as HTMLElement;
+                                        if (fallback) fallback.style.display = 'block';
+                                    }}
                                 />
-                            ) : (
-                                <span className="text-lg font-bold text-gray-100">
-                                    {user.last_name?.[0] || user.username?.[0] || '?'}
-                                </span>
-                            )}
+                            ) : null}
+                            <span
+                                className="text-lg font-bold text-gray-100"
+                                style={{ display: user.avatar_image_file_path ? 'none' : 'block' }}
+                            >
+                                {user.last_name?.[0] || user.username?.[0] || '?'}
+                            </span>
                         </div>
                         <div className="flex flex-col min-w-0">
                             <span className="font-semibold text-gray-100 text-sm truncate">

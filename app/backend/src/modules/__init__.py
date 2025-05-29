@@ -7,11 +7,13 @@
 
 from src.modules.auth.auth_routes import auth_bp
 from src.modules.feed.feed_routes import feed_bp  # feed_bpのインポートを修正
+from src.modules.admin.admin_routes import admin_bp
 
 # すべての使用可能なブループリントのリスト
 BLUEPRINTS = [
     auth_bp,
     feed_bp,  # feed_bpをブループリントのリストに追加
+    admin_bp,  # 管理者APIを追加
     # 他のモジュールが追加されたら、ここにそのブループリントを追加する
 ]
 

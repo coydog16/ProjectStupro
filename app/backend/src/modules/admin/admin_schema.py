@@ -11,6 +11,7 @@ class AdminUserListResponse(BaseModel):
     is_active: Optional[bool]
     role: Optional[str]
     avatar_image_id: Optional[int]
+    avatar_image_file_path: Optional[str]  # 画像URLを追加
 
     class Config:
         orm_mode = True

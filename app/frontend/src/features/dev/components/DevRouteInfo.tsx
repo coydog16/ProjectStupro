@@ -1,5 +1,4 @@
-import React from 'react';
-// routes.tsxからlabelもimportして自動化
+// routes.tsxからlabelをimportして自動化
 import routes from '../../../routes';
 
 const DevRouteInfo: React.FC = () => {

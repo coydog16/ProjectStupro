@@ -15,12 +15,8 @@ const UserInfo: React.FC<UserInfoProps> = ({ user, tasks }) => (
                 className="w-20 h-20 rounded-full flex items-center justify-center overflow-hidden shadow-lg"
                 style={{ background: '#556a8b' }}
             >
-                {user?.avatar_image_id ? (
-                    <img
-                        src={`/api/images/${user.avatar_image_id}`}
-                        alt="avatar"
-                        className="w-full h-full object-cover"
-                    />
+                {user?.avatar_image_file_path ? (
+                    <img src={user.avatar_image_file_path} alt="avatar" className="w-full h-full object-cover" />
                 ) : (
                     <span className="text-3xl font-bold" style={{ color: '#fffde7' }}>
                         {user?.full_name?.[0] || user?.username?.[0] || '?'}

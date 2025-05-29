@@ -6,6 +6,7 @@ export interface FeedUser {
     first_name?: string;
     last_name?: string;
     avatar_image_id?: number | null;
+    avatar_image_file_path?: string | null;
 }
 
 export interface FeedPost {

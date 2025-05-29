@@ -52,17 +52,25 @@ const FeedList: React.FC<FeedListProps> = ({ posts, filterType, userId: _userId,
                     {filterType === 'all' && (
                         <div className="flex flex-col items-center min-w-[56px]">
                             <div className="w-12 h-12 rounded-[18px] flex items-center justify-center overflow-hidden shadow-md bg-gray-700">
-                                {post.user?.avatar_image_id ? (
+                                {post.user?.avatar_image_file_path ? (
                                     <img
-                                        src={`/api/images/${post.user.avatar_image_id}`}
+                                        src={post.user.avatar_image_file_path}
                                         alt="avatar"
                                         className="w-full h-full object-cover"
+                                        onError={(e) => {
+                                            const target = e.currentTarget;
+                                            target.style.display = 'none';
+                                            const fallback = target.nextElementSibling as HTMLElement;
+                                            if (fallback) fallback.style.display = 'block';
+                                        }}
                                     />
-                                ) : (
-                                    <span className="text-lg font-bold text-gray-100">
-                                        {post.user?.full_name?.[0] || post.user?.username?.[0] || '?'}
-                                    </span>
-                                )}
+                                ) : null}
+                                <span
+                                    className="text-xl font-bold text-gray-100"
+                                    style={{ display: post.user?.avatar_image_file_path ? 'none' : 'block' }}
+                                >
+                                    {post.user?.last_name?.[0] || post.user?.username?.[0] || '?'}
+                                </span>
                             </div>
                             <div className="mt-1 text-xs font-semibold text-gray-200 max-w-[72px] truncate text-center">
                                 {post.user?.last_name || ''}{' '}

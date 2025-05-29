@@ -9,9 +9,12 @@ from .admin_permission import admin_required
 @admin_required
 def get_admin_users():
     users = User.query.all()
-    # 必要な情報だけ返す
-    # Pydantic v2対応: model_validateを使う
-    result = [AdminUserListResponse.model_validate(u).model_dump() for u in users]
+    result = []
+    for u in users:
+        data = u.to_dict()
+        # 画像URLを追加
+        data["avatar_image_file_path"] = u.avatar_image.file_path if u.avatar_image else None
+        result.append(AdminUserListResponse.model_validate(data).model_dump())
     return jsonify(result)
 
 # 今後、ユーザー削除・権限管理・統計などもここに追加

@@ -44,6 +44,7 @@ def get_feed_handler(username=None):
                 "first_name": user.first_name,
                 "last_name": user.last_name,
                 "avatar_image_id": getattr(user, "avatar_image_id", None),
+                "avatar_image_file_path": user.avatar_image.file_path if user.avatar_image else None,  # 追加
             }
             if user else None
         )
@@ -79,6 +80,7 @@ def create_post_handler():
             "first_name": user.first_name,
             "last_name": user.last_name,
             "avatar_image_id": getattr(user, "avatar_image_id", None),
+            "avatar_image_file_path": user.avatar_image.file_path if user.avatar_image else None,  # 追加
         }
         if user else None
     )

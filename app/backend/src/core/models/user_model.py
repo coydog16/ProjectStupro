@@ -36,10 +36,8 @@ class User(db.Model):
     created_at = db.Column(db.DateTime, default=get_jst_now)
     updated_at = db.Column(db.DateTime, default=get_jst_now, onupdate=get_jst_now)
     # リレーションシップ
-    # profile = db.relationship(
-    #     'UserProfile', backref='user', uselist=False, lazy='joined')
-    # avatar_image_id = db.Column(db.Integer, db.ForeignKey('images.id'))
-    # avatar_image = db.relationship('Image', backref='users')
+    avatar_image_id = db.Column(db.Integer, db.ForeignKey('images.id'))
+    avatar_image = db.relationship('Image', backref='users')
 
     # パスワードは読み取り不可
     @property

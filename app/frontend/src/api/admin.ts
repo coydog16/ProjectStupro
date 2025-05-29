@@ -3,7 +3,7 @@ import { FeedUser } from '../features/feed/types';
 
 // ユーザー一覧取得API（管理画面用）
 export const fetchUsers = async (): Promise<FeedUser[]> => {
-    const res = await apiClient.get('/users/');
+    const res = await apiClient.get('/admin/users');
     return res.data;
 };
 
