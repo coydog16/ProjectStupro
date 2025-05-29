@@ -1,6 +1,7 @@
 import DevHome from './features/dev/DevHome';
 import LoginPage from './features/auth/pages/LoginPage';
 import FeedPage from './features/feed/pages/FeedPage';
+import DashboardPage from './features/admins/pages/DashboardPage';
 
 interface LabeledRoute {
     path: string;
@@ -24,6 +25,11 @@ const routes: LabeledRoute[] = [
         path: '/feed/',
         element: <FeedPage />,
         label: 'FeedPage',
+    },
+    {
+        path: '/admin',
+        element: <DashboardPage />,
+        label: 'AdminDashboard',
     },
 ];
 
