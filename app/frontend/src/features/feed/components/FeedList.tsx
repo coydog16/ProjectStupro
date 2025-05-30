@@ -1,6 +1,7 @@
 import { PostType } from '../../../types';
 import FeedMenu from './FeedMenu';
 import UserAvatar from '../../../components/common/UserAvatar';
+import { useEffect, useRef, useState } from 'react';
 
 export type FeedFilterType = 'all' | 'self';
 
@@ -21,6 +22,7 @@ interface FeedListProps {
     userId?: number;
     handleEdit: (post: PostType) => void;
     handleDelete: (post: PostType) => void;
+    active: 'all' | 'self';
 }
 
 const getMyUserId = () => {
@@ -28,64 +30,142 @@ const getMyUserId = () => {
     return id ? Number(id) : undefined;
 };
 
-const FeedList: React.FC<FeedListProps> = ({ posts, filterType, userId: _userId, handleEdit, handleDelete }) => {
-    // ログイン中の自分のIDを常に参照
+const FeedList: React.FC<FeedListProps> = ({
+    posts,
+    filterType,
+    userId: _userId,
+    handleEdit,
+    handleDelete,
+    active,
+}) => {
     const userId = getMyUserId();
-    // 投稿リストをフィルタリング
     const filteredPosts = filterType === 'self' ? filterSelfFeed(posts, userId) : filterAllFeed(posts);
 
-    if (filteredPosts.length === 0) {
-        return (
-            <p className="text-gray-500 text-center py-8">
-                {filterType === 'self' ? '自分の投稿はありません' : '投稿はありません'}
-            </p>
-        );
+    // 2つのFeedListを常にDOM上に並べておき、transformで表示/非表示を切り替える
+    const base = 'absolute w-full max-w-xl transition-transform duration-400';
+    let selfClass = base;
+    let allClass = base;
+    if (active === 'self') {
+        // self:中央, all:右に待機
+        selfClass += ' translate-x-0 z-20';
+        allClass += ' translate-x-full z-10';
+    } else {
+        // all:中央, self:左に待機
+        selfClass += ' -translate-x-full z-10';
+        allClass += ' translate-x-0 z-20';
     }
 
-    return (
-        <div className="w-full flex flex-col items-center bg-theme text-theme">
-            {filteredPosts.map((post) => (
-                <div
-                    key={post.id}
-                    className="relative w-full max-w-xl flex flex-row gap-6 py-7 px-4 hover:bg-accent/10 transition group"
-                >
-                    {/* すべての投稿で、filterTypeが'all'のときのみアイコン・名前・ユーザーネームを表示 */}
-                    {filterType === 'all' && (
-                        <div className="flex flex-col items-center min-w-[56px]">
-                            <UserAvatar
-                                src={post.user?.avatar_image_file_path}
-                                name={post.user?.full_name || post.user?.username}
-                                size={48}
-                                className="shadow-md border border-accent/30"
-                            />
-                            <div className="mt-1 text-xs font-semibold text-theme max-w-[72px] truncate text-center">
-                                {post.user?.last_name || ''}{' '}
-                                {post.user?.first_name || post.user?.username || '匿名ユーザー'}
+    if (filterType === 'self') {
+        return (
+            <div className={selfClass}>
+                {filteredPosts.length === 0 ? (
+                    <p className="text-gray-500 text-center py-8">自分の投稿はありません</p>
+                ) : (
+                    filteredPosts.map((post, idx) => (
+                        <div
+                            key={post.id}
+                            className={[
+                                'relative w-full flex flex-row gap-6 py-7 px-4 hover:bg-accent/10 transition group',
+                                idx !== filteredPosts.length - 1
+                                    ? 'border-b border-neutral-200 dark:border-accent/10'
+                                    : '',
+                            ].join(' ')}
+                        >
+                            <div className="flex-1 min-w-0 flex flex-col items-start">
+                                <span className="text-accent/70 text-xs whitespace-nowrap mb-1 px-4">
+                                    {new Date(post.created_at).toLocaleString()}
+                                </span>
+                                <div className="text-theme text-sm mb-3 break-words whitespace-pre-line leading-relaxed px-2 py-2 w-full">
+                                    {post.content}
+                                </div>
                             </div>
-                            <div className="text-[10px] text-accent max-w-[72px] truncate text-center">
-                                @{post.user?.username}
+                            {String(post.user_id) === String(userId) && (
+                                <div className="absolute top-2 right-2">
+                                    <FeedMenu onEdit={() => handleEdit(post)} onDelete={() => handleDelete(post)} />
+                                </div>
+                            )}
+                        </div>
+                    ))
+                )}
+            </div>
+        );
+    } else {
+        return (
+            <div className={allClass}>
+                {filteredPosts.length === 0 ? (
+                    <p className="text-gray-500 text-center py-8">投稿はありません</p>
+                ) : (
+                    filteredPosts.map((post, idx) => (
+                        <div
+                            key={post.id}
+                            className={[
+                                'relative w-full flex flex-row gap-6 py-7 px-4 hover:bg-accent/10 transition group',
+                                idx !== filteredPosts.length - 1
+                                    ? 'border-b border-neutral-200 dark:border-accent/10'
+                                    : '',
+                            ].join(' ')}
+                        >
+                            <div className="flex flex-col items-center min-w-[40px]">
+                                {(() => {
+                                    const avatarUrl = post.user?.avatar_image_file_path || undefined;
+                                    return (
+                                        <UserAvatar
+                                            src={avatarUrl}
+                                            name={post.user?.full_name || post.user?.username}
+                                            size={32}
+                                            className="shadow"
+                                        />
+                                    );
+                                })()}
+                                <div className="mt-1 text-xs font-semibold text-theme max-w-[72px] truncate text-center">
+                                    {post.user?.last_name || ''}{' '}
+                                    {post.user?.first_name || post.user?.username || '匿名ユーザー'}
+                                </div>
+                                <div className="text-[10px] text-accent max-w-[72px] truncate text-center">
+                                    @{post.user?.username}
+                                </div>
                             </div>
+                            <div className="flex-1 min-w-0 flex flex-col items-start">
+                                <span className="text-accent/70 text-xs whitespace-nowrap mb-1 px-4">
+                                    {new Date(post.created_at).toLocaleString()}
+                                </span>
+                                <div className="text-theme text-sm mb-3 break-words whitespace-pre-line leading-relaxed px-2 py-2 w-full">
+                                    {post.content}
+                                </div>
+                            </div>
+                            {String(post.user_id) === String(userId) && (
+                                <div className="absolute top-2 right-2">
+                                    <FeedMenu onEdit={() => handleEdit(post)} onDelete={() => handleDelete(post)} />
+                                </div>
+                            )}
                         </div>
-                    )}
-                    <div className="flex-1 min-w-0 flex flex-col items-start">
-                        {/* 左上端に投稿日時を本文と揃えて表示 */}
-                        <span className="text-accent/70 text-xs whitespace-nowrap mb-1 px-4">
-                            {new Date(post.created_at).toLocaleString()}
-                        </span>
-                        <div className="text-theme text-sm mb-3 break-words whitespace-pre-line leading-relaxed px-2 py-2 w-full">
-                            {post.content}
-                        </div>
-                    </div>
-                    {/* 自分の投稿だけFeedMenuを表示 */}
-                    {String(post.user_id) === String(userId) && (
-                        <div className="absolute top-2 right-2">
-                            <FeedMenu onEdit={() => handleEdit(post)} onDelete={() => handleDelete(post)} />
-                        </div>
-                    )}
-                </div>
-            ))}
-        </div>
-    );
+                    ))
+                )}
+            </div>
+        );
+    }
 };
+
+// --- ヘッダーのスライド制御用フック ---
+export function useHeaderSlideOut() {
+    const [hidden, setHidden] = useState(false);
+    const lastScroll = useRef(window.scrollY);
+
+    useEffect(() => {
+        lastScroll.current = window.scrollY; // 初期値リセット
+        const handleScroll = () => {
+            const y = window.scrollY;
+            if (y > lastScroll.current && y > 40) {
+                setHidden(true); // 下方向→隠す
+            } else if (y < lastScroll.current) {
+                setHidden(false); // 上方向→必ず表示
+            }
+            lastScroll.current = y;
+        };
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
+    return hidden;
+}
 
 export default FeedList;

@@ -1,5 +1,5 @@
 @import 'tailwindcss';
-@import './theme.css';
+@import '../theme/theme.css';
 
 /* カスタムスタイル */
 /* bodyのbackground-color, color指定を削除してテーマ変数に一元化 */

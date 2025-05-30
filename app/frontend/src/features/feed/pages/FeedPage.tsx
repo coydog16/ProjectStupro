@@ -2,24 +2,21 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { fetchFeed, createPost, deletePostApi, updatePostApi } from '../../../api/feed';
 import FeedList from '../components/FeedList';
-import SwitchNav from '../components/SwitchNav';
-import UserInfo from '../components/UserInfo';
 import NewPostButton from '../components/NewPostButton';
 import { ModalNewPost } from '../components/ModalNewPost';
 import { ModalEditPost } from '../components/ModalEditPost';
 import { ConfirmDialog } from '../../../components/common/ConfirmDialog';
 import { PostType } from '../../../types';
 import Loading from '../../../components/common/Loading';
-import clsx from 'clsx';
 import { useFeedSwitchNav } from '../hooks/useFeedSwitchNav';
 import { useRecentTasks } from '../hooks/useRecentTasks';
-import ThemeToggleLayout from '../../../components/layout/ThemeToggleLayout';
+import BaseLayout from '../../../components/layout/BaseLayout';
+import { useHeaderSlideOut } from '../components/FeedList';
 
 /**
  * 投稿フィードページ
  * - ALL/SELF切り替え
  * - 新規投稿モーダル
- * - エラー・ローディング・空データUI
  */
 const FeedPage: React.FC = () => {
     const { username } = useParams();
@@ -61,11 +58,21 @@ const FeedPage: React.FC = () => {
 
     // スライドアニメーションの状態
     const { active, pending, animating, handleSwitchNav } = useFeedSwitchNav();
+    const [prev, setPrev] = useState<'all' | 'self'>(active);
+    useEffect(() => {
+        if (active !== prev) setPrev(active);
+        // eslint-disable-next-line
+    }, [active]);
 
-    // userPostsはselfPostsのエイリアスなので、userPosts自体を削除しuserの取得もselfPostsから直接取得
-    // const userPosts = useMemo(() => selfPosts, [selfPosts]);
-    // const user = userPosts[0]?.user ?? null;
-    const user = selfPosts[0]?.user ?? null;
+    // user情報
+    const rawUser = selfPosts[0]?.user ?? null;
+    const user = rawUser
+        ? {
+              username: rawUser.username,
+              fullName: rawUser.full_name,
+              avatarUrl: rawUser.avatar_image_file_path || undefined,
+          }
+        : undefined;
 
     // recentTasksもselfPostsから直接取得
     const recentTasks = useRecentTasks(selfPosts, 3);
@@ -83,12 +90,6 @@ const FeedPage: React.FC = () => {
         } catch (e: any) {
             setError(e.message || '投稿に失敗しました');
         }
-    };
-
-    // 削除APIを呼んで、成功したらsetPostsでリストから除外
-    const handleDelete = (post: PostType) => {
-        setDeletingPost(post);
-        setDeleteModalOpen(true);
     };
 
     // 投稿編集
@@ -111,6 +112,10 @@ const FeedPage: React.FC = () => {
     };
 
     // 削除APIを呼んで、成功したら両方のリストから除外
+    const handleDelete = (post: PostType) => {
+        setDeletingPost(post);
+        setDeleteModalOpen(true);
+    };
     const handleDeleteConfirm = async () => {
         if (!deletingPost) return;
         try {
@@ -122,6 +127,9 @@ const FeedPage: React.FC = () => {
             setError(e.message || '削除に失敗しました');
         }
     };
+
+    // ヘッダーのスライドアウト状態
+    const isHeaderHidden = useHeaderSlideOut();
 
     useEffect(() => {
         if (error && user?.username) {
@@ -135,56 +143,36 @@ const FeedPage: React.FC = () => {
     }
 
     return (
-        <ThemeToggleLayout>
+        <BaseLayout
+            user={user}
+            showSwitchNav={true}
+            switchNavValue={active}
+            onSwitchNavChange={handleSwitchNav}
+            isHeaderHidden={isHeaderHidden}
+        >
             <div className="flex flex-col items-center min-h-screen bg-theme relative">
-                <div className="w-full flex flex-col items-center justify-end pb-0 mb-0">
-                    {user && <UserInfo user={user} tasks={recentTasks} />}
-                    <SwitchNav value={active} onChange={handleSwitchNav} />
-                </div>
                 <div className="w-full flex flex-col items-center">
                     {initialLoading ? (
                         <Loading message="フィードを読み込み中..." />
                     ) : (
-                        <div className="w-full flex flex-col items-center overflow-x-hidden relative min-h-screen">
-                            {/* MyPostフィード（左側に初期配置） */}
-                            <div
-                                className={clsx(
-                                    'absolute w-full flex flex-col items-center top-0 left-0 will-change-transform',
-                                    active === 'self' && !animating && 'translate-x-0 z-20',
-                                    pending === 'self' && animating && 'animate-slide-in-left z-30',
-                                    active === 'all' && !animating && '-translate-x-full z-10',
-                                    pending === 'all' && animating && 'animate-slide-out-left z-10',
-                                    'transition-transform duration-400'
-                                )}
-                            >
-                                <FeedList
-                                    posts={selfPosts}
-                                    filterType={'self'}
-                                    userId={user?.id}
-                                    handleDelete={handleDelete}
-                                    handleEdit={handleEdit}
-                                />
-                            </div>
-                            {/* ALLフィード（右側に初期配置） */}
-                            <div
-                                className={clsx(
-                                    'absolute w-full flex flex-col items-center top-0 left-0 will-change-transform',
-                                    active === 'all' && !animating && 'translate-x-0 z-20',
-                                    pending === 'all' && animating && 'animate-slide-in-right z-30',
-                                    active === 'self' && !animating && 'translate-x-full z-10',
-                                    pending === 'self' && animating && 'animate-slide-out-right z-10',
-                                    'transition-transform duration-400'
-                                )}
-                            >
-                                <FeedList
-                                    posts={allPosts}
-                                    filterType={'all'}
-                                    userId={user?.id}
-                                    handleDelete={handleDelete}
-                                    handleEdit={handleEdit}
-                                />
-                            </div>
-                        </div>
+                        <>
+                            <FeedList
+                                posts={selfPosts}
+                                filterType={'self'}
+                                userId={rawUser?.id}
+                                handleDelete={handleDelete}
+                                handleEdit={handleEdit}
+                                active={active}
+                            />
+                            <FeedList
+                                posts={allPosts}
+                                filterType={'all'}
+                                userId={rawUser?.id}
+                                handleDelete={handleDelete}
+                                handleEdit={handleEdit}
+                                active={active}
+                            />
+                        </>
                     )}
                 </div>
                 <NewPostButton onClick={() => setModalOpen(true)} />
@@ -205,7 +193,7 @@ const FeedPage: React.FC = () => {
                     onCancel={() => setDeleteModalOpen(false)}
                 />
             </div>
-        </ThemeToggleLayout>
+        </BaseLayout>
     );
 };
 

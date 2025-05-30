@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { UserType } from '../../types';
 import apiClient from '../../api/axios';
+import UserAvatar from '../common/UserAvatar';
 
 const fetchUsers = async (): Promise<UserType[]> => {
     const res = await apiClient.get('/admin/users');
@@ -31,18 +32,13 @@ const UserList: React.FC = () => {
                         key={user.id}
                         className="flex items-center gap-4 bg-theme rounded-xl px-4 py-3 shadow border border-accent/20"
                     >
-                        <div className="w-10 h-10 rounded-xl overflow-hidden bg-accent/10 flex items-center justify-center">
-                            {user.avatar_image_file_path ? (
-                                <img
-                                    src={user.avatar_image_file_path}
-                                    alt="avatar"
-                                    className="w-full h-full object-cover rounded-xl"
-                                />
-                            ) : (
-                                <span className="text-lg font-bold text-accent select-none">
-                                    {user.last_name?.[0] || user.username?.[0] || '?'}
-                                </span>
-                            )}
+                        <div className="w-8 h-8 rounded-xl overflow-hidden bg-accent/10 flex items-center justify-center">
+                            <UserAvatar
+                                src={user.avatar_image_file_path || undefined}
+                                name={user.full_name || user.username}
+                                size={32}
+                                className="shadow"
+                            />
                         </div>
                         <div className="flex flex-col min-w-0">
                             <span className="font-semibold text-theme text-sm truncate">

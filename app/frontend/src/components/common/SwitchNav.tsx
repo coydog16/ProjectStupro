@@ -1,3 +1,5 @@
+import React from 'react';
+
 interface SwitchNavProps {
     value: 'all' | 'self';
     onChange: (v: 'all' | 'self') => void;
@@ -12,6 +14,7 @@ const SwitchNav: React.FC<SwitchNavProps> = ({ value, onChange }) => {
                         text-accent/80 hover:text-accent`}
                     aria-pressed={value === 'self'}
                     onClick={() => onChange('self')}
+                    type="button"
                 >
                     SELF
                 </button>
@@ -20,6 +23,7 @@ const SwitchNav: React.FC<SwitchNavProps> = ({ value, onChange }) => {
                         text-accent/80 hover:text-accent`}
                     aria-pressed={value === 'all'}
                     onClick={() => onChange('all')}
+                    type="button"
                 >
                     ALL
                 </button>

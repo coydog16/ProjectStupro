@@ -1,7 +1,7 @@
 // src/App.tsx
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import routes from './routes';
-import './App.css';
+import './css/styles/App.css';
 import FeedPage from './features/feed/pages/FeedPage';
 import { Theme } from './components/common/Theme';
 
