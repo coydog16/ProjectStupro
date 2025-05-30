@@ -9,7 +9,6 @@ import { ConfirmDialog } from '../../../components/common/ConfirmDialog';
 import { PostType } from '../../../types';
 import Loading from '../../../components/common/Loading';
 import { useFeedSwitchNav } from '../hooks/useFeedSwitchNav';
-import { useRecentTasks } from '../hooks/useRecentTasks';
 import BaseLayout from '../../../components/layout/BaseLayout';
 import { useHeaderSlideOut } from '../components/FeedList';
 
@@ -57,12 +56,7 @@ const FeedPage: React.FC = () => {
     }, [username]);
 
     // スライドアニメーションの状態
-    const { active, pending, animating, handleSwitchNav } = useFeedSwitchNav();
-    const [prev, setPrev] = useState<'all' | 'self'>(active);
-    useEffect(() => {
-        if (active !== prev) setPrev(active);
-        // eslint-disable-next-line
-    }, [active]);
+    const { active, handleSwitchNav } = useFeedSwitchNav();
 
     // user情報
     const rawUser = selfPosts[0]?.user ?? null;
@@ -75,9 +69,6 @@ const FeedPage: React.FC = () => {
               avatarUrl: rawUser.avatar_image_file_path || undefined,
           }
         : undefined;
-
-    // recentTasksもselfPostsから直接取得
-    const recentTasks = useRecentTasks(selfPosts, 3);
 
     // 新規投稿
     const handleNewPost = async (content: string) => {
@@ -130,19 +121,18 @@ const FeedPage: React.FC = () => {
         }
     };
 
-    // ヘッダーのスライドアウト状態
+    // ヘッダーのスライドアウト状態を取得
     const isHeaderHidden = useHeaderSlideOut();
 
+    // エラー時はユーザーのフィードにリダイレクト
     useEffect(() => {
         if (error && user?.username) {
             navigate(`/feed/${user.username}`);
         }
     }, [error, user, navigate]);
 
-    if (error) {
-        // リダイレクト中は何も表示しない
-        return null;
-    }
+    // エラー時は何も表示しない
+    if (error) return null;
 
     return (
         <BaseLayout
