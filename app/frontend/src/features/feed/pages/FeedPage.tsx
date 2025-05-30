@@ -155,24 +155,14 @@ const FeedPage: React.FC = () => {
                     {initialLoading ? (
                         <Loading message="フィードを読み込み中..." />
                     ) : (
-                        <>
-                            <FeedList
-                                posts={selfPosts}
-                                filterType={'self'}
-                                userId={rawUser?.id}
-                                handleDelete={handleDelete}
-                                handleEdit={handleEdit}
-                                active={active}
-                            />
-                            <FeedList
-                                posts={allPosts}
-                                filterType={'all'}
-                                userId={rawUser?.id}
-                                handleDelete={handleDelete}
-                                handleEdit={handleEdit}
-                                active={active}
-                            />
-                        </>
+                        <FeedList
+                            posts={active === 'self' ? selfPosts : allPosts}
+                            filterType={active}
+                            userId={rawUser?.id}
+                            handleDelete={handleDelete}
+                            handleEdit={handleEdit}
+                            active={active}
+                        />
                     )}
                 </div>
                 <NewPostButton onClick={() => setModalOpen(true)} />
