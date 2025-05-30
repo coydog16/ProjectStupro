@@ -66,6 +66,8 @@ const FeedPage: React.FC = () => {
 
     // user情報
     const rawUser = selfPosts[0]?.user ?? null;
+    // デバッグ用ログ
+    console.log('FeedPage debug', { allPosts, selfPosts, active, rawUser });
     const user = rawUser
         ? {
               username: rawUser.username,

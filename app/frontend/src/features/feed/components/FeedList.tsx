@@ -39,6 +39,10 @@ const FeedList: React.FC<FeedListProps> = ({
     active,
 }) => {
     const userId = getMyUserId();
+
+    // デバッグ用ログ
+    console.log('FeedList debug', { posts, filterType, userId, active });
+
     // 受け取ったpostsをそのまま表示
     return (
         <div className="relative w-full max-w-xl mx-auto overflow-x-hidden">
