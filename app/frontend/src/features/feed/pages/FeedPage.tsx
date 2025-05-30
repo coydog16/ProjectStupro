@@ -158,12 +158,12 @@ const FeedPage: React.FC = () => {
                         <Loading message="フィードを読み込み中..." />
                     ) : (
                         <FeedList
-                            posts={active === 'self' ? selfPosts : allPosts}
-                            filterType={active}
+                            allPosts={allPosts}
+                            selfPosts={selfPosts}
+                            active={active}
                             userId={rawUser?.id}
                             handleDelete={handleDelete}
                             handleEdit={handleEdit}
-                            active={active}
                         />
                     )}
                 </div>
