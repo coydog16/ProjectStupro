@@ -153,3 +153,7 @@
 .will-change-transform {
     will-change: transform;
 }
+
+.shadow-dropdown-menu {
+    box-shadow: var(--color-dropdown-shadow);
+}

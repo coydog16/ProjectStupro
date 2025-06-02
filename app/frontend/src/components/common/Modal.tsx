@@ -15,6 +15,17 @@ export const Modal: React.FC<Omit<ModalProps, 'onClose' | 'title'> & { isOpen: b
     const [animating, setAnimating] = useState<'in' | 'out' | null>(null);
     const containerRef = useRef<HTMLDivElement>(null);
 
+    // モーダル表示中はbodyのスクロールを禁止
+    useEffect(() => {
+        if (show) {
+            const original = document.body.style.overflow;
+            document.body.style.overflow = 'hidden';
+            return () => {
+                document.body.style.overflow = original;
+            };
+        }
+    }, [show]);
+
     // isOpenがtrueになったら表示＋アニメーションin
     useEffect(() => {
         if (isOpen) {

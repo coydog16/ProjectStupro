@@ -11,6 +11,7 @@ import BaseLayout from '../../../components/layout/BaseLayout';
 import { useHeaderSlideOut } from '../../../hooks/useHeaderSlideOut';
 import { useFeedData } from '../hooks/useFeedData';
 import { useModal } from '../../../hooks/useModal';
+import { useUserByUsername } from '../../../hooks/useUserByUsername';
 
 /**
  * 投稿フィードページ
@@ -23,13 +24,15 @@ const FeedPage: React.FC = () => {
     const { active, handleSwitchNav } = useFeedSwitchNav();
     const isHeaderHidden = useHeaderSlideOut();
 
+    // ユーザー情報を独立して取得
+    const { user: userInfo } = useUserByUsername(username);
+
     // フィードデータ・CRUD・モーダル管理をカスタムフックで一括管理
     const {
         allPosts,
         selfPosts,
         initialLoading,
         error,
-        user,
         editModalOpen,
         setEditModalOpen,
         editingPost,
@@ -59,17 +62,25 @@ const FeedPage: React.FC = () => {
 
     // エラー時はユーザーのフィードにリダイレクト
     React.useEffect(() => {
-        if (error && user?.username) {
-            navigate(`/feed/${user.username}`);
+        if (error && userInfo?.username) {
+            navigate(`/feed/${userInfo.username}`);
         }
-    }, [error, user, navigate]);
+    }, [error, userInfo, navigate]);
 
     // エラー時は何も表示しない
     if (error) return null;
 
     return (
         <BaseLayout
-            user={user}
+            user={
+                userInfo
+                    ? {
+                          username: userInfo.username,
+                          fullName: userInfo.full_name || userInfo.username,
+                          avatarUrl: userInfo.avatar_image_file_path || undefined,
+                      }
+                    : undefined
+            }
             showSwitchNav={true}
             switchNavValue={active}
             onSwitchNavChange={handleSwitchNav}

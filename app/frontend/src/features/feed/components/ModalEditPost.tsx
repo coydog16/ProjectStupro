@@ -37,19 +37,35 @@ export const ModalEditPost: React.FC<ModalEditPostProps> = ({ isOpen, onClose, o
     };
 
     return (
-        <Modal isOpen={isOpen} onClose={onClose} title="投稿を編集">
+        <Modal isOpen={isOpen} onClose={onClose}>
+            <div className="flex items-center justify-between w-full mb-4">
+                {/* 左上：キャンセル */}
+                <Button
+                    onClick={onClose}
+                    className="text-accent text-lg font-bold px-2 py-1 bg-transparent shadow-none border-none hover:bg-accent/10"
+                    aria-label="キャンセル"
+                    type="button"
+                >
+                    キャンセル
+                </Button>
+                {/* 右上：NOTE更新 */}
+                <Button
+                    onClick={handleSubmit}
+                    disabled={loading}
+                    className="text-accent text-lg font-bold px-2 py-1 bg-transparent shadow-none border-none hover:bg-accent/10 disabled:opacity-50"
+                    type="button"
+                >
+                    NOTE
+                </Button>
+            </div>
             <textarea
-                className="w-full h-32 p-2 rounded bg-theme text-theme border border-accent/30 focus:outline-accent"
+                className="w-full h-40 md:h-60 flex-1 p-4 bg-theme text-theme text-lg resize-none outline-none border-none rounded-none"
                 value={content}
                 onChange={(e) => setContent(e.target.value)}
                 placeholder="投稿内容を編集..."
+                style={{ minHeight: '40vh', maxHeight: '60vh' }}
             />
             {error && <div className="text-error text-xs mt-2">{error}</div>}
-            <div className="flex justify-end gap-2 mt-4">
-                <Button onClick={handleSubmit} className="bg-accent text-accent-on" disabled={loading}>
-                    {loading ? '更新中...' : '更新する'}
-                </Button>
-            </div>
         </Modal>
     );
 };

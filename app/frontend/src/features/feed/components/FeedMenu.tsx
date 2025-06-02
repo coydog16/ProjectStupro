@@ -14,14 +14,14 @@ export function FeedMenu({
     return (
         <DropdownMenu buttonContent={menuLabel}>
             <button
-                className="block w-full px-4 py-2 text-left text-theme hover:bg-accent/80 hover:text-accent rounded-t"
+                className="block w-full px-4 py-2 text-left text-theme hover:bg-accent/80 hover:text-accent rounded-t bg-[var(--color-bg)]"
                 onClick={onEdit}
                 type="button"
             >
                 EDIT
             </button>
             <button
-                className="block w-full px-4 py-2 text-left text-danger hover:bg-danger/80 hover:text-accent rounded-b"
+                className="block w-full px-4 py-2 text-left text-danger hover:bg-danger/80 hover:text-accent rounded-b bg-[var(--color-bg)]"
                 onClick={onDelete}
                 type="button"
             >

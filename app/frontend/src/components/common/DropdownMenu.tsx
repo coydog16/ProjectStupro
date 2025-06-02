@@ -36,9 +36,10 @@ export const DropdownMenu: React.FC<DropdownMenuProps> = ({ buttonContent, child
             </button>
             {open && (
                 <div
-                    className={`absolute mt-2 min-w-[8rem] rounded-lg bg-theme text-theme shadow-lg ring-1 ring-accent/10 z-50 ${
+                    className={`absolute mt-2 min-w-[8rem] rounded-lg bg-[var(--color-bg)] text-theme z-50 shadow-dropdown-menu ${
                         align === 'right' ? 'right-0' : 'left-0'
                     } animate-fade-in`}
+                    style={{ border: 'none' }}
                 >
                     {children}
                 </div>

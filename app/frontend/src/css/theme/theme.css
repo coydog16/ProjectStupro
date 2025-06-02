@@ -13,6 +13,7 @@
     --color-error-text: #fff;
 
     --color-bg-glass: rgba(255, 255, 255, 0.6); /* ライト用すりガラス */
+    --color-dropdown-shadow: 0 8px 32px 0 rgba(60, 60, 60, 0.18), 0 1.5px 4px 0 rgba(60, 60, 60, 0.1);
 }
 
 [data-theme='dark'] {
@@ -29,6 +30,7 @@
     --color-error-text: #18181b;
 
     --color-bg-glass: rgba(35, 39, 46, 0.6); /* ダーク用すりガラス */
+    --color-dropdown-shadow: 0 8px 32px 0 rgba(220, 220, 230, 0.22), 0 1.5px 4px 0 rgba(255, 255, 255, 0.1);
 }
 
 body {

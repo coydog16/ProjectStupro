@@ -27,7 +27,7 @@ const routes: LabeledRoute[] = [
         label: 'FeedPage',
     },
     {
-        path: '/admin',
+        path: '/admin/:username',
         element: <AdminPage />,
         label: 'AdminDashboard',
     },
