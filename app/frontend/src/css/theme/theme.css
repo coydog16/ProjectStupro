@@ -11,6 +11,8 @@
     --color-danger-text: #fff;
     --color-error: #f87171; /* エラー用（薄めの赤） */
     --color-error-text: #fff;
+
+    --color-bg-glass: rgba(255, 255, 255, 0.6); /* ライト用すりガラス */
 }
 
 [data-theme='dark'] {
@@ -25,6 +27,8 @@
     --color-danger-text: #18181b;
     --color-error: #ef4444; /* 濃いめの赤 */
     --color-error-text: #18181b;
+
+    --color-bg-glass: rgba(35, 39, 46, 0.6); /* ダーク用すりガラス */
 }
 
 body {

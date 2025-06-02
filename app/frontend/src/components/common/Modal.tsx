@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { ReactNode, useEffect, useRef, useState } from 'react';
 
 interface ModalProps {
     isOpen: boolean;
@@ -7,23 +7,53 @@ interface ModalProps {
     title?: string;
 }
 
-export const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children, title }) => {
-    if (!isOpen) return null;
+export const Modal: React.FC<Omit<ModalProps, 'onClose' | 'title'> & { isOpen: boolean; onClose: () => void }> = ({
+    isOpen,
+    children,
+}) => {
+    const [show, setShow] = useState(isOpen);
+    const [animating, setAnimating] = useState<'in' | 'out' | null>(null);
+    const containerRef = useRef<HTMLDivElement>(null);
+
+    // isOpenがtrueになったら表示＋アニメーションin
+    useEffect(() => {
+        if (isOpen) {
+            setShow(true);
+            setAnimating('in');
+        } else if (show) {
+            // isOpenがfalseになったらアニメーションout
+            setAnimating('out');
+        }
+    }, [isOpen]);
+
+    // アニメーション終了時の処理
+    const handleAnimationEnd = () => {
+        if (animating === 'out') {
+            setShow(false);
+            setAnimating(null);
+        } else if (animating === 'in') {
+            setAnimating(null);
+        }
+    };
+
+    if (!show) return null;
     return (
-        <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
-            <div className="bg-theme rounded-xl p-6 w-full max-w-md shadow-xl relative">
-                {/* 右上の×ボタン */}
-                <button
-                    onClick={onClose}
-                    className="absolute top-3 right-3 text-gray-400 hover:text-accent text-2xl font-bold focus:outline-none"
-                    aria-label="閉じる"
-                    type="button"
-                >
-                    ×
-                </button>
-                {title && <h2 className="text-lg font-bold text-theme mb-4">{title}</h2>}
-                {children}
-                {/* キャンセルボタンは削除 */}
+        <div className="fixed inset-0 flex items-end justify-center z-50">
+            <div
+                ref={containerRef}
+                className={`bg-[var(--color-bg)] w-screen h-screen max-w-none rounded-none p-2 shadow-xl relative flex flex-col animate-${
+                    animating === 'out' ? 'slide-down' : 'slide-up'
+                }`}
+                style={{
+                    minHeight: '100dvh',
+                    maxHeight: '100dvh',
+                    width: '100dvw',
+                    height: '100dvh',
+                }}
+                onAnimationEnd={handleAnimationEnd}
+            >
+                {/* 子要素を上詰めに */}
+                <div className="flex-1 flex flex-col justify-start w-full">{children}</div>
             </div>
         </div>
     );

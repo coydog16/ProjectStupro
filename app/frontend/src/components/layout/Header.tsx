@@ -29,8 +29,12 @@ const Header: React.FC<HeaderProps> = ({ user, showSwitchNav, switchNavValue, on
     return (
         <header
             className={[
-                'w-full flex flex-col bg-theme sticky top-0 z-40 transition-transform duration-300',
+                'w-full flex flex-col sticky top-0 z-40 transition-transform duration-300',
                 isHidden ? '-translate-y-full' : 'translate-y-0',
+                'backdrop-blur-md',
+                'bg-[var(--color-bg-glass)]', // カスタムCSS変数で管理
+                'border-b border-neutral-200 dark:border-accent/10',
+                'shadow-[0_2px_16px_0_rgba(0,0,0,0.04)]',
             ].join(' ')}
         >
             <div className="flex items-center justify-between px-4 py-2">
