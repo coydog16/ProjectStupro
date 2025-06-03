@@ -5,7 +5,7 @@ from src.core.database import db
 from src.core.models.user_model import User
 from src.core.schemas.user_schema import UserResponse
 from src.core.services.auth_service import AuthService
-from .validators import validate_register_data
+from ..validators import validate_register_data
 
 
 # --- LOGIN HANDLER ---

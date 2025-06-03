@@ -39,36 +39,23 @@ const FeedList: React.FC<FeedListProps> = ({
     // ローカルストレージからユーザーIDを取得
     const userId = getMyUserId();
 
-    // デバッグ用ログ（開発時のみ有効化すると良い）
-    // console.log('FeedList debug', { allPosts, selfPosts, active, userId });
+    // 配置順をSELF(左)・ALL(右)に変更
+    // スライド方向も逆転: SELFを選択→左からスライドイン, ALLを選択→右からスライドイン
+    // transform値: SELF=0%, ALL=-100%
+    let transformStyle = 'translateX(0%)';
+    if (active === 'all') {
+        transformStyle = 'translateX(-100%)';
+    }
 
-    // 横並びスライドでALL/SELFリストを切り替え
     return (
         <div className="relative w-full max-w-xl mx-auto overflow-x-hidden">
             <div
                 className="flex transition-transform duration-300"
                 style={{
-                    transform: active === 'all' ? 'translateX(0%)' : 'translateX(-100%)',
+                    transform: transformStyle,
                 }}
             >
-                {/* ALLリスト */}
-                <div className="w-full shrink-0">
-                    {allPosts.length === 0 ? (
-                        <p className="text-gray-500 text-center py-8">投稿はありません</p>
-                    ) : (
-                        allPosts.map((post, idx) => (
-                            <FeedListItem
-                                key={post.id}
-                                post={post}
-                                isLast={idx === allPosts.length - 1}
-                                userId={userId}
-                                handleEdit={handleEdit}
-                                handleDelete={handleDelete}
-                            />
-                        ))
-                    )}
-                </div>
-                {/* SELFリスト */}
+                {/* SELFリスト（左側） */}
                 <div className="w-full shrink-0">
                     {selfPosts.length === 0 ? (
                         <p className="text-gray-500 text-center py-8">自分の投稿はありません</p>
@@ -78,6 +65,23 @@ const FeedList: React.FC<FeedListProps> = ({
                                 key={post.id}
                                 post={post}
                                 isLast={idx === selfPosts.length - 1}
+                                userId={userId}
+                                handleEdit={handleEdit}
+                                handleDelete={handleDelete}
+                            />
+                        ))
+                    )}
+                </div>
+                {/* ALLリスト（右側） */}
+                <div className="w-full shrink-0">
+                    {allPosts.length === 0 ? (
+                        <p className="text-gray-500 text-center py-8">投稿はありません</p>
+                    ) : (
+                        allPosts.map((post, idx) => (
+                            <FeedListItem
+                                key={post.id}
+                                post={post}
+                                isLast={idx === allPosts.length - 1}
                                 userId={userId}
                                 handleEdit={handleEdit}
                                 handleDelete={handleDelete}

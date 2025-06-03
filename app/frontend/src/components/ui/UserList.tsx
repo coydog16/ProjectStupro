@@ -62,7 +62,8 @@ const UserList: React.FC = () => {
                 {users.map((user) => (
                     <div
                         key={user.id}
-                        className="flex items-center gap-4 bg-theme rounded-xl px-4 py-3 shadow border border-accent/20"
+                        className="flex items-center gap-4 bg-theme rounded-xl px-4 py-3 shadow border border-accent/20 cursor-pointer hover:bg-accent/5 transition"
+                        onClick={() => window.location.assign(`/users/${user.username}`)}
                     >
                         <div className="w-8 h-8 rounded-xl overflow-hidden bg-accent/10 flex items-center justify-center">
                             <UserAvatar

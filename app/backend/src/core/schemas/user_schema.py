@@ -7,7 +7,7 @@
 
 from pydantic import BaseModel, Field, EmailStr, field_validator
 from typing import Optional
-from datetime import datetime
+from datetime import date, datetime
 
 
 class UserCreate(BaseModel):
@@ -92,4 +92,27 @@ class UserResponse(BaseModel):
                 "updated_at": "2025-05-20T10:00:00+09:00",
             }
         },
+    }
+
+
+class EmployeeDetailsSchema(BaseModel):
+    id: int
+    user_id: int
+    birth_date: Optional[date] = None
+    tel: Optional[str] = None
+    job_title: Optional[str] = None
+    joined_at: Optional[date] = None
+    employment_type: Optional[str] = None
+    paid_leave_remain: Optional[int] = None
+    join_reason: Optional[str] = None
+    address: Optional[str] = None
+    qualifications: Optional[str] = None
+    work_history: Optional[str] = None
+    marital_status: Optional[bool] = None
+    skill_sheet_path: Optional[str] = None
+    created_at: Optional[datetime] = None
+    updated_at: Optional[datetime] = None
+
+    model_config = {
+        "from_attributes": True
     }

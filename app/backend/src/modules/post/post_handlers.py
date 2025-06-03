@@ -1,22 +1,21 @@
 """
-Feed（投稿一覧）APIハンドラ
+Post（投稿）APIハンドラ
 --------------------------
 投稿の取得・作成・編集・削除のロジックを実装。
 """
 
 from flask import request, jsonify
 from flask_jwt_extended import jwt_required, get_jwt_identity
-from src.core.models.post_model import Post
+from src.modules.post.post_model import Post
 from src.core.models.user_model import User
-from src.core.schemas.post_schema import (
-    PostResponse, PostCreate, PostUpdate
+from src.modules.post.post_schema import (
+    PostCreate, PostUpdate, PostResponse
 )
 from src.core.database import db
 
-
 # 投稿一覧取得
 @jwt_required(optional=True)
-def get_feed_handler(username=None):
+def get_post_handler(username=None):
     """
     投稿一覧を取得。
     - username指定時: 指定ユーザーの投稿のみ返す
@@ -50,7 +49,6 @@ def get_feed_handler(username=None):
         )
         result.append(post_dict)
     return jsonify(result), 200
-
 
 # 新規投稿
 @jwt_required()
@@ -86,7 +84,6 @@ def create_post_handler():
     )
     return jsonify(post_dict), 201
 
-
 # 投稿編集
 @jwt_required()
 def update_post_handler(post_id):
@@ -109,7 +106,6 @@ def update_post_handler(post_id):
     db.session.commit()
     # Pydantic v2対応: from_ormの代わりにmodel_validateを使用
     return jsonify(PostResponse.model_validate(post).model_dump()), 200
-
 
 # 投稿削除
 @jwt_required()

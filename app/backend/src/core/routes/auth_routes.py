@@ -7,7 +7,7 @@ from flask import Blueprint
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from src.core.models.user_model import User
 from src.core.schemas.user_schema import UserResponse
-from .auth_handlers import (
+from ..handlers.auth_handlers import (
     login_handler,
     register_handler,
     refresh_token_handler,

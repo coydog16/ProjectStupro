@@ -89,11 +89,11 @@ def create_app(config_name="dev"):
 def register_blueprints(app):
     """アプリケーションにブループリントを登録する関数"""
     try:
-        # モジュール群からすべてのブループリントをインポート
-        from src.modules import BLUEPRINTS
+        # モジュール群とcore群からすべてのブループリントをインポート
+        from src.modules import BLUEPRINTS as MODULE_BLUEPRINTS
+        from src.core import BLUEPRINTS as CORE_BLUEPRINTS
 
-        # すべてのブループリントを登録
-        for blueprint in BLUEPRINTS:
+        for blueprint in MODULE_BLUEPRINTS + CORE_BLUEPRINTS:
             app.register_blueprint(blueprint)
             app.logger.info(
                 f"ブループリント {blueprint.name} を登録しました。URLプレフィックス: {blueprint.url_prefix}"

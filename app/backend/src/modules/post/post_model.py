@@ -9,22 +9,17 @@ Post（投稿）モデル
 
 from datetime import datetime
 from zoneinfo import ZoneInfo
-
 from src.core.database import db
-
 
 # タイムゾーン定数
 JST = ZoneInfo("Asia/Tokyo")
-
 
 def get_jst_now():
     """現在の日本時間を返します。"""
     return datetime.now(tz=ZoneInfo("UTC")).astimezone(JST)
 
-
 class Post(db.Model):
     """投稿（Post）モデル：タスク・記事・通常投稿などを柔軟に扱える基盤モデル"""
-
     __tablename__ = "posts"
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
@@ -62,9 +57,3 @@ class Post(db.Model):
             "created_at": self.created_at.isoformat() if self.created_at else None,
             "updated_at": self.updated_at.isoformat() if self.updated_at else None,
         }
-
-    def __repr__(self):
-        """
-        Postインスタンスのデバッグ用文字列表現。
-        """
-        return f"<Post id={self.id} user_id={self.user_id} type={self.post_type}>"

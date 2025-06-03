@@ -6,6 +6,8 @@
 from datetime import datetime
 from zoneinfo import ZoneInfo
 from sqlalchemy import select
+from sqlalchemy import Column, Integer, String, Date, Text, Boolean, ForeignKey, DateTime
+from sqlalchemy.orm import relationship
 
 from src.core.database import db
 from src.core.security import get_password_hash, verify_password

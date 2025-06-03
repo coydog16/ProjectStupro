@@ -1,6 +1,6 @@
 # 管理者APIルート定義
 from flask import Blueprint
-from .admin_handlers import *
+from ..handlers.admin_handlers import *
 
 admin_bp = Blueprint('admin', __name__, url_prefix='/api/admin')
 

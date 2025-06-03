@@ -7,6 +7,12 @@ export interface UserType {
     last_name?: string;
     avatar_image_id?: number | null;
     avatar_image_file_path?: string | null;
+    email?: string;
+    role?: string;
+    created_at?: string;
+    updated_at?: string;
+    is_active?: boolean;
+    bio?: string;
 }
 
 export interface PostType {

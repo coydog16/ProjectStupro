@@ -7,5 +7,6 @@ class ImageResponse(BaseModel):
     file_path: str
     uploaded_at: Optional[datetime]
 
-    class Config:
-        orm_mode = True
+    model_config = {
+        "from_attributes": True
+    }
